@@ -1,0 +1,414 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		F2A51FF41B10E00700924912 /* Agrume.h in Headers */ = {isa = PBXBuildFile; fileRef = F2A51FF31B10E00700924912 /* Agrume.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		F2A51FFA1B10E00700924912 /* Agrume.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F2A51FEE1B10E00700924912 /* Agrume.framework */; };
+		F2A520011B10E00700924912 /* AgrumeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2A520001B10E00700924912 /* AgrumeTests.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		F2A51FFB1B10E00700924912 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = F2A51FE51B10E00700924912 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = F2A51FED1B10E00700924912;
+			remoteInfo = Agrume;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		F2A51FEE1B10E00700924912 /* Agrume.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Agrume.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		F2A51FF21B10E00700924912 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		F2A51FF31B10E00700924912 /* Agrume.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Agrume.h; sourceTree = "<group>"; };
+		F2A51FF91B10E00700924912 /* AgrumeTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = AgrumeTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		F2A51FFF1B10E00700924912 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		F2A520001B10E00700924912 /* AgrumeTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AgrumeTests.swift; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		F2A51FEA1B10E00700924912 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		F2A51FF61B10E00700924912 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				F2A51FFA1B10E00700924912 /* Agrume.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		F2A51FE41B10E00700924912 = {
+			isa = PBXGroup;
+			children = (
+				F2A51FF01B10E00700924912 /* Agrume */,
+				F2A51FFD1B10E00700924912 /* AgrumeTests */,
+				F2A51FEF1B10E00700924912 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		F2A51FEF1B10E00700924912 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				F2A51FEE1B10E00700924912 /* Agrume.framework */,
+				F2A51FF91B10E00700924912 /* AgrumeTests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		F2A51FF01B10E00700924912 /* Agrume */ = {
+			isa = PBXGroup;
+			children = (
+				F2A51FF31B10E00700924912 /* Agrume.h */,
+				F2A51FF11B10E00700924912 /* Supporting Files */,
+			);
+			path = Agrume;
+			sourceTree = "<group>";
+		};
+		F2A51FF11B10E00700924912 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				F2A51FF21B10E00700924912 /* Info.plist */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		F2A51FFD1B10E00700924912 /* AgrumeTests */ = {
+			isa = PBXGroup;
+			children = (
+				F2A520001B10E00700924912 /* AgrumeTests.swift */,
+				F2A51FFE1B10E00700924912 /* Supporting Files */,
+			);
+			path = AgrumeTests;
+			sourceTree = "<group>";
+		};
+		F2A51FFE1B10E00700924912 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				F2A51FFF1B10E00700924912 /* Info.plist */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXHeadersBuildPhase section */
+		F2A51FEB1B10E00700924912 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				F2A51FF41B10E00700924912 /* Agrume.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXHeadersBuildPhase section */
+
+/* Begin PBXNativeTarget section */
+		F2A51FED1B10E00700924912 /* Agrume */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = F2A520041B10E00700924912 /* Build configuration list for PBXNativeTarget "Agrume" */;
+			buildPhases = (
+				F2A51FE91B10E00700924912 /* Sources */,
+				F2A51FEA1B10E00700924912 /* Frameworks */,
+				F2A51FEB1B10E00700924912 /* Headers */,
+				F2A51FEC1B10E00700924912 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = Agrume;
+			productName = Agrume;
+			productReference = F2A51FEE1B10E00700924912 /* Agrume.framework */;
+			productType = "com.apple.product-type.framework";
+		};
+		F2A51FF81B10E00700924912 /* AgrumeTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = F2A520071B10E00700924912 /* Build configuration list for PBXNativeTarget "AgrumeTests" */;
+			buildPhases = (
+				F2A51FF51B10E00700924912 /* Sources */,
+				F2A51FF61B10E00700924912 /* Frameworks */,
+				F2A51FF71B10E00700924912 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				F2A51FFC1B10E00700924912 /* PBXTargetDependency */,
+			);
+			name = AgrumeTests;
+			productName = AgrumeTests;
+			productReference = F2A51FF91B10E00700924912 /* AgrumeTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		F2A51FE51B10E00700924912 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0630;
+				ORGANIZATIONNAME = Schnaub;
+				TargetAttributes = {
+					F2A51FED1B10E00700924912 = {
+						CreatedOnToolsVersion = 6.3.2;
+					};
+					F2A51FF81B10E00700924912 = {
+						CreatedOnToolsVersion = 6.3.2;
+					};
+				};
+			};
+			buildConfigurationList = F2A51FE81B10E00700924912 /* Build configuration list for PBXProject "Agrume" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = F2A51FE41B10E00700924912;
+			productRefGroup = F2A51FEF1B10E00700924912 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				F2A51FED1B10E00700924912 /* Agrume */,
+				F2A51FF81B10E00700924912 /* AgrumeTests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		F2A51FEC1B10E00700924912 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		F2A51FF71B10E00700924912 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		F2A51FE91B10E00700924912 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		F2A51FF51B10E00700924912 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				F2A520011B10E00700924912 /* AgrumeTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		F2A51FFC1B10E00700924912 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = F2A51FED1B10E00700924912 /* Agrume */;
+			targetProxy = F2A51FFB1B10E00700924912 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		F2A520021B10E00700924912 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.3;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Debug;
+		};
+		F2A520031B10E00700924912 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.3;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Release;
+		};
+		F2A520051B10E00700924912 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				INFOPLIST_FILE = Agrume/Info.plist;
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+			};
+			name = Debug;
+		};
+		F2A520061B10E00700924912 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				INFOPLIST_FILE = Agrume/Info.plist;
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+			};
+			name = Release;
+		};
+		F2A520081B10E00700924912 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SDKROOT)/Developer/Library/Frameworks",
+					"$(inherited)",
+				);
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				INFOPLIST_FILE = AgrumeTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		F2A520091B10E00700924912 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SDKROOT)/Developer/Library/Frameworks",
+					"$(inherited)",
+				);
+				INFOPLIST_FILE = AgrumeTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		F2A51FE81B10E00700924912 /* Build configuration list for PBXProject "Agrume" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				F2A520021B10E00700924912 /* Debug */,
+				F2A520031B10E00700924912 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		F2A520041B10E00700924912 /* Build configuration list for PBXNativeTarget "Agrume" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				F2A520051B10E00700924912 /* Debug */,
+				F2A520061B10E00700924912 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+		F2A520071B10E00700924912 /* Build configuration list for PBXNativeTarget "AgrumeTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				F2A520081B10E00700924912 /* Debug */,
+				F2A520091B10E00700924912 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = F2A51FE51B10E00700924912 /* Project object */;
+}
