@@ -1,0 +1,509 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		F20F5BD41B134CAF00F9F499 /* Agrume.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F2A520401B130CC000924912 /* Agrume.framework */; };
+		F2A5201B1B130C7E00924912 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2A5201A1B130C7E00924912 /* AppDelegate.swift */; };
+		F2A5201D1B130C7E00924912 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2A5201C1B130C7E00924912 /* ViewController.swift */; };
+		F2A520201B130C7E00924912 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F2A5201E1B130C7E00924912 /* Main.storyboard */; };
+		F2A520221B130C7E00924912 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F2A520211B130C7E00924912 /* Images.xcassets */; };
+		F2A520251B130C7E00924912 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = F2A520231B130C7E00924912 /* LaunchScreen.xib */; };
+		F2A520311B130C7E00924912 /* Agrume_ExampleTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2A520301B130C7E00924912 /* Agrume_ExampleTests.swift */; };
+		F2D9598E1B1A133800073772 /* SingleImageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2D9598D1B1A133800073772 /* SingleImageViewController.swift */; };
+		F2D959911B1A140200073772 /* SingleURLViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2D959901B1A140200073772 /* SingleURLViewController.swift */; };
+		F2D959931B1A153F00073772 /* MultipleImagesCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2D959921B1A153F00073772 /* MultipleImagesCollectionViewController.swift */; };
+		F2D959951B1A15ED00073772 /* DemoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2D959941B1A15ED00073772 /* DemoCell.swift */; };
+		F2D959971B1A199F00073772 /* MultipleURLsCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2D959961B1A199F00073772 /* MultipleURLsCollectionViewController.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		F2A5202B1B130C7E00924912 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = F2A5200D1B130C7E00924912 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = F2A520141B130C7E00924912;
+			remoteInfo = "Agrume Example";
+		};
+		F2A5203F1B130CC000924912 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = F2A5203A1B130CC000924912 /* Agrume.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = F2A51FEE1B10E00700924912;
+			remoteInfo = Agrume;
+		};
+		F2A520411B130CC000924912 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = F2A5203A1B130CC000924912 /* Agrume.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = F2A51FF91B10E00700924912;
+			remoteInfo = AgrumeTests;
+		};
+		F2A520431B130CC800924912 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = F2A5203A1B130CC000924912 /* Agrume.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = F2A51FED1B10E00700924912;
+			remoteInfo = Agrume;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		F2A520151B130C7E00924912 /* Agrume Example.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Agrume Example.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		F2A520191B130C7E00924912 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		F2A5201A1B130C7E00924912 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		F2A5201C1B130C7E00924912 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		F2A5201F1B130C7E00924912 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		F2A520211B130C7E00924912 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
+		F2A520241B130C7E00924912 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
+		F2A5202A1B130C7E00924912 /* Agrume ExampleTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Agrume ExampleTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		F2A5202F1B130C7E00924912 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		F2A520301B130C7E00924912 /* Agrume_ExampleTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Agrume_ExampleTests.swift; sourceTree = "<group>"; };
+		F2A5203A1B130CC000924912 /* Agrume.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Agrume.xcodeproj; path = ../Agrume.xcodeproj; sourceTree = "<group>"; };
+		F2D9598D1B1A133800073772 /* SingleImageViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SingleImageViewController.swift; sourceTree = "<group>"; };
+		F2D959901B1A140200073772 /* SingleURLViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SingleURLViewController.swift; sourceTree = "<group>"; };
+		F2D959921B1A153F00073772 /* MultipleImagesCollectionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MultipleImagesCollectionViewController.swift; sourceTree = "<group>"; };
+		F2D959941B1A15ED00073772 /* DemoCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DemoCell.swift; sourceTree = "<group>"; };
+		F2D959961B1A199F00073772 /* MultipleURLsCollectionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MultipleURLsCollectionViewController.swift; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		F2A520121B130C7E00924912 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				F20F5BD41B134CAF00F9F499 /* Agrume.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		F2A520271B130C7E00924912 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		F2A5200C1B130C7E00924912 = {
+			isa = PBXGroup;
+			children = (
+				F2A5203A1B130CC000924912 /* Agrume.xcodeproj */,
+				F2A520171B130C7E00924912 /* Agrume Example */,
+				F2A5202D1B130C7E00924912 /* Agrume ExampleTests */,
+				F2A520161B130C7E00924912 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		F2A520161B130C7E00924912 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				F2A520151B130C7E00924912 /* Agrume Example.app */,
+				F2A5202A1B130C7E00924912 /* Agrume ExampleTests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		F2A520171B130C7E00924912 /* Agrume Example */ = {
+			isa = PBXGroup;
+			children = (
+				F2A5201A1B130C7E00924912 /* AppDelegate.swift */,
+				F2A5201C1B130C7E00924912 /* ViewController.swift */,
+				F2A5201E1B130C7E00924912 /* Main.storyboard */,
+				F2A520211B130C7E00924912 /* Images.xcassets */,
+				F2A520231B130C7E00924912 /* LaunchScreen.xib */,
+				F2A520181B130C7E00924912 /* Supporting Files */,
+				F2D9598D1B1A133800073772 /* SingleImageViewController.swift */,
+				F2D959901B1A140200073772 /* SingleURLViewController.swift */,
+				F2D959921B1A153F00073772 /* MultipleImagesCollectionViewController.swift */,
+				F2D959941B1A15ED00073772 /* DemoCell.swift */,
+				F2D959961B1A199F00073772 /* MultipleURLsCollectionViewController.swift */,
+			);
+			path = "Agrume Example";
+			sourceTree = "<group>";
+		};
+		F2A520181B130C7E00924912 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				F2A520191B130C7E00924912 /* Info.plist */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		F2A5202D1B130C7E00924912 /* Agrume ExampleTests */ = {
+			isa = PBXGroup;
+			children = (
+				F2A520301B130C7E00924912 /* Agrume_ExampleTests.swift */,
+				F2A5202E1B130C7E00924912 /* Supporting Files */,
+			);
+			path = "Agrume ExampleTests";
+			sourceTree = "<group>";
+		};
+		F2A5202E1B130C7E00924912 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				F2A5202F1B130C7E00924912 /* Info.plist */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		F2A5203B1B130CC000924912 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				F2A520401B130CC000924912 /* Agrume.framework */,
+				F2A520421B130CC000924912 /* AgrumeTests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		F2A520141B130C7E00924912 /* Agrume Example */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = F2A520341B130C7E00924912 /* Build configuration list for PBXNativeTarget "Agrume Example" */;
+			buildPhases = (
+				F2A520111B130C7E00924912 /* Sources */,
+				F2A520121B130C7E00924912 /* Frameworks */,
+				F2A520131B130C7E00924912 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				F2A520441B130CC800924912 /* PBXTargetDependency */,
+			);
+			name = "Agrume Example";
+			productName = "Agrume Example";
+			productReference = F2A520151B130C7E00924912 /* Agrume Example.app */;
+			productType = "com.apple.product-type.application";
+		};
+		F2A520291B130C7E00924912 /* Agrume ExampleTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = F2A520371B130C7E00924912 /* Build configuration list for PBXNativeTarget "Agrume ExampleTests" */;
+			buildPhases = (
+				F2A520261B130C7E00924912 /* Sources */,
+				F2A520271B130C7E00924912 /* Frameworks */,
+				F2A520281B130C7E00924912 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				F2A5202C1B130C7E00924912 /* PBXTargetDependency */,
+			);
+			name = "Agrume ExampleTests";
+			productName = "Agrume ExampleTests";
+			productReference = F2A5202A1B130C7E00924912 /* Agrume ExampleTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		F2A5200D1B130C7E00924912 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0630;
+				ORGANIZATIONNAME = Schnaub;
+				TargetAttributes = {
+					F2A520141B130C7E00924912 = {
+						CreatedOnToolsVersion = 6.3.2;
+					};
+					F2A520291B130C7E00924912 = {
+						CreatedOnToolsVersion = 6.3.2;
+						TestTargetID = F2A520141B130C7E00924912;
+					};
+				};
+			};
+			buildConfigurationList = F2A520101B130C7E00924912 /* Build configuration list for PBXProject "Agrume Example" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = F2A5200C1B130C7E00924912;
+			productRefGroup = F2A520161B130C7E00924912 /* Products */;
+			projectDirPath = "";
+			projectReferences = (
+				{
+					ProductGroup = F2A5203B1B130CC000924912 /* Products */;
+					ProjectRef = F2A5203A1B130CC000924912 /* Agrume.xcodeproj */;
+				},
+			);
+			projectRoot = "";
+			targets = (
+				F2A520141B130C7E00924912 /* Agrume Example */,
+				F2A520291B130C7E00924912 /* Agrume ExampleTests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXReferenceProxy section */
+		F2A520401B130CC000924912 /* Agrume.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = Agrume.framework;
+			remoteRef = F2A5203F1B130CC000924912 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		F2A520421B130CC000924912 /* AgrumeTests.xctest */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = AgrumeTests.xctest;
+			remoteRef = F2A520411B130CC000924912 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+/* End PBXReferenceProxy section */
+
+/* Begin PBXResourcesBuildPhase section */
+		F2A520131B130C7E00924912 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				F2A520201B130C7E00924912 /* Main.storyboard in Resources */,
+				F2A520251B130C7E00924912 /* LaunchScreen.xib in Resources */,
+				F2A520221B130C7E00924912 /* Images.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		F2A520281B130C7E00924912 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		F2A520111B130C7E00924912 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				F2D959911B1A140200073772 /* SingleURLViewController.swift in Sources */,
+				F2A5201D1B130C7E00924912 /* ViewController.swift in Sources */,
+				F2D959951B1A15ED00073772 /* DemoCell.swift in Sources */,
+				F2D9598E1B1A133800073772 /* SingleImageViewController.swift in Sources */,
+				F2A5201B1B130C7E00924912 /* AppDelegate.swift in Sources */,
+				F2D959971B1A199F00073772 /* MultipleURLsCollectionViewController.swift in Sources */,
+				F2D959931B1A153F00073772 /* MultipleImagesCollectionViewController.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		F2A520261B130C7E00924912 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				F2A520311B130C7E00924912 /* Agrume_ExampleTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		F2A5202C1B130C7E00924912 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = F2A520141B130C7E00924912 /* Agrume Example */;
+			targetProxy = F2A5202B1B130C7E00924912 /* PBXContainerItemProxy */;
+		};
+		F2A520441B130CC800924912 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = Agrume;
+			targetProxy = F2A520431B130CC800924912 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		F2A5201E1B130C7E00924912 /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				F2A5201F1B130C7E00924912 /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+		F2A520231B130C7E00924912 /* LaunchScreen.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				F2A520241B130C7E00924912 /* Base */,
+			);
+			name = LaunchScreen.xib;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		F2A520321B130C7E00924912 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.3;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		F2A520331B130C7E00924912 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.3;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = iphoneos;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		F2A520351B130C7E00924912 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				INFOPLIST_FILE = "Agrume Example/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		F2A520361B130C7E00924912 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				INFOPLIST_FILE = "Agrume Example/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
+		F2A520381B130C7E00924912 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SDKROOT)/Developer/Library/Frameworks",
+					"$(inherited)",
+				);
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				INFOPLIST_FILE = "Agrume ExampleTests/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Agrume Example.app/Agrume Example";
+			};
+			name = Debug;
+		};
+		F2A520391B130C7E00924912 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SDKROOT)/Developer/Library/Frameworks",
+					"$(inherited)",
+				);
+				INFOPLIST_FILE = "Agrume ExampleTests/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Agrume Example.app/Agrume Example";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		F2A520101B130C7E00924912 /* Build configuration list for PBXProject "Agrume Example" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				F2A520321B130C7E00924912 /* Debug */,
+				F2A520331B130C7E00924912 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		F2A520341B130C7E00924912 /* Build configuration list for PBXNativeTarget "Agrume Example" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				F2A520351B130C7E00924912 /* Debug */,
+				F2A520361B130C7E00924912 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		F2A520371B130C7E00924912 /* Build configuration list for PBXNativeTarget "Agrume ExampleTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				F2A520381B130C7E00924912 /* Debug */,
+				F2A520391B130C7E00924912 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = F2A5200D1B130C7E00924912 /* Project object */;
+}

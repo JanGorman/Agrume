@@ -10,6 +10,10 @@
 		F2A51FF41B10E00700924912 /* Agrume.h in Headers */ = {isa = PBXBuildFile; fileRef = F2A51FF31B10E00700924912 /* Agrume.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		F2A51FFA1B10E00700924912 /* Agrume.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F2A51FEE1B10E00700924912 /* Agrume.framework */; };
 		F2A520011B10E00700924912 /* AgrumeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2A520001B10E00700924912 /* AgrumeTests.swift */; };
+		F2A5200B1B10E29B00924912 /* Agrume.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2A5200A1B10E29B00924912 /* Agrume.swift */; };
+		F2D9598C1B1A108800073772 /* AgrumeCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2D9598B1B1A108800073772 /* AgrumeCell.swift */; };
+		F2DC79D41B17012300818A8C /* UIViewExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2DC79D31B17012300818A8C /* UIViewExtensions.swift */; };
+		F2DC79D61B170C4B00818A8C /* ImageDownloader.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2DC79D51B170C4B00818A8C /* ImageDownloader.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -29,6 +33,10 @@
 		F2A51FF91B10E00700924912 /* AgrumeTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = AgrumeTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		F2A51FFF1B10E00700924912 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		F2A520001B10E00700924912 /* AgrumeTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AgrumeTests.swift; sourceTree = "<group>"; };
+		F2A5200A1B10E29B00924912 /* Agrume.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Agrume.swift; sourceTree = "<group>"; };
+		F2D9598B1B1A108800073772 /* AgrumeCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AgrumeCell.swift; sourceTree = "<group>"; };
+		F2DC79D31B17012300818A8C /* UIViewExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIViewExtensions.swift; sourceTree = "<group>"; };
+		F2DC79D51B170C4B00818A8C /* ImageDownloader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageDownloader.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -73,6 +81,10 @@
 			children = (
 				F2A51FF31B10E00700924912 /* Agrume.h */,
 				F2A51FF11B10E00700924912 /* Supporting Files */,
+				F2A5200A1B10E29B00924912 /* Agrume.swift */,
+				F2DC79D31B17012300818A8C /* UIViewExtensions.swift */,
+				F2DC79D51B170C4B00818A8C /* ImageDownloader.swift */,
+				F2D9598B1B1A108800073772 /* AgrumeCell.swift */,
 			);
 			path = Agrume;
 			sourceTree = "<group>";
@@ -209,6 +221,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F2D9598C1B1A108800073772 /* AgrumeCell.swift in Sources */,
+				F2DC79D41B17012300818A8C /* UIViewExtensions.swift in Sources */,
+				F2DC79D61B170C4B00818A8C /* ImageDownloader.swift in Sources */,
+				F2A5200B1B10E29B00924912 /* Agrume.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -323,6 +339,7 @@
 		F2A520051B10E00700924912 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
 				DEFINES_MODULE = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
@@ -332,12 +349,14 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
 			name = Debug;
 		};
 		F2A520061B10E00700924912 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
 				DEFINES_MODULE = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
@@ -399,6 +418,7 @@
 				F2A520061B10E00700924912 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		F2A520071B10E00700924912 /* Build configuration list for PBXNativeTarget "AgrumeTests" */ = {
 			isa = XCConfigurationList;
@@ -407,6 +427,7 @@
 				F2A520091B10E00700924912 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
