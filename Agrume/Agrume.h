@@ -2,9 +2,6 @@
 //  Agrume.h
 //  Agrume
 //
-//  Created by Jan Gorman on 23/05/15.
-//  Copyright (c) 2015 Schnaub. All rights reserved.
-//
 
 #import <UIKit/UIKit.h>
 
