@@ -114,7 +114,7 @@ extension AgrumeCell: UIGestureRecognizerDelegate {
         if let pan = gestureRecognizer as? UIPanGestureRecognizer where notZoomed() {
             let velocity = pan.velocityInView(scrollView)
             return abs(velocity.y) > abs(velocity.x)
-        } else if let swipe = gestureRecognizer as? UISwipeGestureRecognizer where notZoomed() {
+        } else if let _ = gestureRecognizer as? UISwipeGestureRecognizer where notZoomed() {
             return false
         } else if let tap = gestureRecognizer as? UITapGestureRecognizer where tap == singleTapGesture && !notZoomed() {
             return false
@@ -123,7 +123,7 @@ extension AgrumeCell: UIGestureRecognizerDelegate {
     }
     
     func gestureRecognizer(gestureRecognizer: UIGestureRecognizer, shouldReceiveTouch touch: UITouch) -> Bool {
-        if let pan = gestureRecognizer as? UIPanGestureRecognizer {
+        if let _ = gestureRecognizer as? UIPanGestureRecognizer {
             return notZoomed()
         }
         return true

@@ -11,7 +11,7 @@ class ImageDownloader {
         let session = NSURLSession.sharedSession()
         let request = NSURLRequest(URL: url)
         let dataTask = session.dataTaskWithRequest(request) {
-            data, response, error in
+            data, _, error in
             if error != nil {
                 completion(image: nil)
                 return
