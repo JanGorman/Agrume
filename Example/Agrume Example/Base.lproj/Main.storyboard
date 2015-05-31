@@ -177,7 +177,7 @@
                 </collectionViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="roC-NH-QyC" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="467" y="1583"/>
+            <point key="canvasLocation" x="477" y="1545"/>
         </scene>
         <!--Single Image View Controller-->
         <scene sceneID="Lh6-OX-hiT">
@@ -230,55 +230,6 @@
             </objects>
             <point key="canvasLocation" x="-913" y="831"/>
         </scene>
-        <!--Multiple Images Collection View Controller-->
-        <scene sceneID="sid-Rq-dIJ">
-            <objects>
-                <collectionViewController id="MVg-ND-uHx" customClass="MultipleImagesCollectionViewController" customModule="Agrume_Example" customModuleProvider="target" sceneMemberID="viewController">
-                    <collectionView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" pagingEnabled="YES" dataMode="prototypes" id="F37-yA-fOv">
-                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                        <collectionViewFlowLayout key="collectionViewLayout" scrollDirection="horizontal" minimumLineSpacing="0.0" minimumInteritemSpacing="0.0" id="RzO-NZ-EpK">
-                            <size key="itemSize" width="100" height="100"/>
-                            <size key="headerReferenceSize" width="0.0" height="0.0"/>
-                            <size key="footerReferenceSize" width="0.0" height="0.0"/>
-                            <inset key="sectionInset" minX="0.0" minY="20" maxX="0.0" maxY="0.0"/>
-                        </collectionViewFlowLayout>
-                        <cells>
-                            <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="Cell" id="z8F-zp-zKA" customClass="DemoCell" customModule="Agrume_Example" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
-                                <autoresizingMask key="autoresizingMask"/>
-                                <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
-                                    <rect key="frame" x="0.0" y="0.0" width="100" height="100"/>
-                                    <autoresizingMask key="autoresizingMask"/>
-                                    <subviews>
-                                        <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="rMi-Jp-Cu7">
-                                            <rect key="frame" x="0.0" y="0.0" width="100" height="100"/>
-                                        </imageView>
-                                    </subviews>
-                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                                </view>
-                                <constraints>
-                                    <constraint firstItem="rMi-Jp-Cu7" firstAttribute="leading" secondItem="z8F-zp-zKA" secondAttribute="leading" id="8DN-H0-rrE"/>
-                                    <constraint firstAttribute="trailing" secondItem="rMi-Jp-Cu7" secondAttribute="trailing" id="CZb-U0-zgG"/>
-                                    <constraint firstItem="rMi-Jp-Cu7" firstAttribute="top" secondItem="z8F-zp-zKA" secondAttribute="top" id="TQv-03-oYw"/>
-                                    <constraint firstAttribute="bottom" secondItem="rMi-Jp-Cu7" secondAttribute="bottom" id="rXm-Pc-SE8"/>
-                                </constraints>
-                                <connections>
-                                    <outlet property="imageView" destination="rMi-Jp-Cu7" id="Db2-3n-UTv"/>
-                                </connections>
-                            </collectionViewCell>
-                        </cells>
-                        <connections>
-                            <outlet property="dataSource" destination="MVg-ND-uHx" id="is9-P1-v4p"/>
-                            <outlet property="delegate" destination="MVg-ND-uHx" id="LFj-FF-qzA"/>
-                        </connections>
-                    </collectionView>
-                </collectionViewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="o7S-0Y-ARm" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="467" y="1583"/>
-        </scene>
         <!--MultipleUR Ls Collection View Controller-->
         <scene sceneID="VQT-Zl-Xfk">
             <objects>
@@ -326,7 +277,7 @@
                 </collectionViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="05x-RK-Jls" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="467" y="2269"/>
+            <point key="canvasLocation" x="477" y="2229"/>
         </scene>
     </scenes>
 </document>

@@ -72,7 +72,6 @@ public class Agrume: UIViewController {
         blurView.autoresizingMask = .FlexibleWidth | .FlexibleHeight
         return blurView
     }()
-    
     private lazy var collectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         layout.minimumInteritemSpacing = 0
@@ -87,7 +86,6 @@ public class Agrume: UIViewController {
         collectionView.backgroundColor = UIColor.clearColor()
         collectionView.delaysContentTouches = false
         collectionView.showsHorizontalScrollIndicator = false
-        collectionView.delegate = self
         return collectionView
     }()
     private lazy var spinner: UIActivityIndicatorView = {
@@ -341,12 +339,3 @@ extension Agrume: UICollectionViewDataSource {
     }
     
 }
-
-extension Agrume: UICollectionViewDelegate, UIScrollViewDelegate {
-    
-    public func collectionView(collectionView: UICollectionView, willDisplayCell cell: UICollectionViewCell, forItemAtIndexPath indexPath: NSIndexPath) {
-        didScroll?(index: indexPath.row)
-    }
-
-}
-
