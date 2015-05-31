@@ -1,6 +1,6 @@
 # Agrume
 
-An iOS image view written in Swift with support for multiple images.
+An iOS image viewer written in Swift with support for multiple images.
 
 ## Requirements
 
