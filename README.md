@@ -17,7 +17,7 @@ The easiest way is through [CocoaPods](http://cocoapods.org). Simply add the dep
 pod `Agrume`, `~> 1`
 ```
 
-Or [Carthage]()(https://github.com/Carthage/Carthage). Add the depdency to your `Cartfile` and then `carthage update`:
+Or [Carthage](https://github.com/Carthage/Carthage). Add the depdency to your `Cartfile` and then `carthage update`:
 
 ```ogdl
 github "JanGorman/Carthage" >= 1
