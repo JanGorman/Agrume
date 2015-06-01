@@ -82,6 +82,7 @@ public class Agrume: UIViewController {
         let collectionView = UICollectionView(frame: self.view.bounds, collectionViewLayout: layout)
         collectionView.registerClass(AgrumeCell.self, forCellWithReuseIdentifier: Agrume.ReuseIdentifier)
         collectionView.dataSource = self
+        collectionView.delegate = self
         collectionView.pagingEnabled = true
         collectionView.backgroundColor = UIColor.clearColor()
         collectionView.delaysContentTouches = false
@@ -338,4 +339,12 @@ extension Agrume: UICollectionViewDataSource {
         }
     }
     
+}
+
+extension Agrume: UICollectionViewDelegate {
+
+    public func collectionView(collectionView: UICollectionView, willDisplayCell cell: UICollectionViewCell, forItemAtIndexPath indexPath: NSIndexPath) {
+        didScroll?(index: indexPath.row)
+    }
+
 }
