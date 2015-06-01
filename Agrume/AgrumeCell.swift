@@ -58,6 +58,7 @@ class AgrumeCell: UICollectionViewCell {
     }
     
     override func prepareForReuse() {
+        imageView.image = nil
         scrollView.zoomScale = 1
         updateScrollViewAndImageViewForCurrentMetrics()
     }
