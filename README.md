@@ -1,3 +1,5 @@
+[![Carthage compatible](https://img.shields.io/badge/Carthage-compatible-4BC51D.svg?style=flat)](https://github.com/Carthage/Carthage)
+
 # Agrume
 
 An iOS image viewer written in Swift with support for multiple images.
@@ -13,6 +15,12 @@ The easiest way is through [CocoaPods](http://cocoapods.org). Simply add the dep
 
 ```ruby
 pod `Agrume`, `~> 1`
+```
+
+Or [Carthage]()(https://github.com/Carthage/Carthage). Add the depdency to your `Cartfile` and then `carthage update`:
+
+```ogdl
+github "JanGorman/Carthage" >= 1
 ```
 
 ## How
