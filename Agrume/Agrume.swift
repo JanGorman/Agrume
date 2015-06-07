@@ -5,11 +5,12 @@
 
 import UIKit
 
+
 public class Agrume: UIViewController {
-    
+
     private static let TransitionAnimationDuration: NSTimeInterval = 0.3
     private static let MaxScalingForExpandingOffscreen: CGFloat = 1.25
-    
+
     private static let ReuseIdentifier = "ReuseIdentifier"
 
     private var images: [UIImage]!
@@ -17,27 +18,30 @@ public class Agrume: UIViewController {
     private var startIndex: Int?
     private var backgroundBlurStyle: UIBlurEffectStyle!
     
+    public typealias DownloadCompletion = (image: UIImage?) -> Void
+    
     public var didDismiss: (() -> Void)?
     public var didScroll: ((index: Int) -> Void)?
+    public var download: ((url: NSURL, completion: DownloadCompletion) -> Void)?
 
     public convenience init(image: UIImage, backgroundBlurStyle: UIBlurEffectStyle? = .Dark) {
         self.init(image: image, imageURL: nil, backgroundBlurStyle: backgroundBlurStyle)
     }
-    
+
     public convenience init(imageURL: NSURL, backgroundBlurStyle: UIBlurEffectStyle? = .Dark) {
         self.init(image: nil, imageURL: imageURL, backgroundBlurStyle: backgroundBlurStyle)
     }
-    
+
     public convenience init(images: [UIImage], startIndex: Int? = nil, backgroundBlurStyle: UIBlurEffectStyle? = .Dark) {
         self.init(image: nil, images: images, startIndex: startIndex, backgroundBlurStyle: backgroundBlurStyle)
     }
-    
+
     public convenience init(imageURLs: [NSURL], startIndex: Int? = nil, backgroundBlurStyle: UIBlurEffectStyle? = .Dark) {
         self.init(image: nil, imageURLs: imageURLs, startIndex: startIndex, backgroundBlurStyle: backgroundBlurStyle)
     }
 
     private init(image: UIImage? = nil, imageURL: NSURL? = nil, images: [UIImage]? = nil, imageURLs: [NSURL]? = nil,
-        startIndex: Int? = nil, backgroundBlurStyle: UIBlurEffectStyle? = .Dark) {
+                 startIndex: Int? = nil, backgroundBlurStyle: UIBlurEffectStyle? = .Dark) {
         self.images = images
         if let image = image {
             self.images = [image]
@@ -46,13 +50,13 @@ public class Agrume: UIViewController {
         if let imageURL = imageURL {
             self.imageURLs = [imageURL]
         }
-            
+
         self.startIndex = startIndex
         self.backgroundBlurStyle = backgroundBlurStyle!
         super.init(nibName: nil, bundle: nil)
-            
+
         NSNotificationCenter.defaultCenter().addObserver(self, selector: Selector("orientationDidChange"),
-            name: UIDeviceOrientationDidChangeNotification, object: nil)
+                name: UIDeviceOrientationDidChangeNotification, object: nil)
     }
 
     deinit {
@@ -63,7 +67,7 @@ public class Agrume: UIViewController {
     required public init(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }
-    
+
     private var backgroundSnapshot: UIImage!
     private var backgroundImageView: UIImageView!
     private lazy var blurView: UIVisualEffectView = {
@@ -78,7 +82,7 @@ public class Agrume: UIViewController {
         layout.minimumLineSpacing = 0
         layout.scrollDirection = .Horizontal
         layout.itemSize = self.view.bounds.size
-        
+
         let collectionView = UICollectionView(frame: self.view.bounds, collectionViewLayout: layout)
         collectionView.registerClass(AgrumeCell.self, forCellWithReuseIdentifier: Agrume.ReuseIdentifier)
         collectionView.dataSource = self
@@ -101,23 +105,23 @@ public class Agrume: UIViewController {
 
     override public func viewDidLoad() {
         super.viewDidLoad()
-        
+
         view.autoresizingMask = .FlexibleHeight | .FlexibleWidth
         backgroundImageView = UIImageView(frame: view.bounds)
         backgroundImageView.image = backgroundSnapshot
         view.addSubview(backgroundImageView)
         view.addSubview(blurView)
         view.addSubview(collectionView)
-        
+
         if let index = startIndex {
             collectionView.scrollToItemAtIndexPath(NSIndexPath(forRow: index, inSection: 0), atScrollPosition: .allZeros,
-                animated: false)
+                    animated: false)
         }
         view.addSubview(spinner)
     }
-    
+
     private var lastUsedOrientation: UIInterfaceOrientation!
-    
+
     public override func viewWillAppear(animated: Bool) {
         lastUsedOrientation = UIApplication.sharedApplication().statusBarOrientation
     }
@@ -126,34 +130,34 @@ public class Agrume: UIViewController {
 
     public func showFrom(viewController: UIViewController) {
         backgroundSnapshot = viewController.view.snapshot()
-    
+
         view.userInteractionEnabled = false
         initialOrientation = UIApplication.sharedApplication().statusBarOrientation
-        
+
         viewController.presentViewController(self, animated: false) {
             self.collectionView.alpha = 0
             self.collectionView.frame = self.view.bounds
             let scaling = Agrume.MaxScalingForExpandingOffscreen
             self.collectionView.transform = CGAffineTransformMakeScale(scaling, scaling)
-            
+
             dispatch_async(dispatch_get_main_queue()) {
                 UIView.animateWithDuration(Agrume.TransitionAnimationDuration,
-                    delay: 0,
-                    options: .BeginFromCurrentState | .CurveEaseInOut,
-                    animations: {
-                        [weak self] in
-                        self?.collectionView.alpha = 1
-                        self?.collectionView.transform = CGAffineTransformIdentity
-                    },
-                    completion: {
-                        [weak self] finished in
-                        self?.view.userInteractionEnabled = finished
-                    }
+                        delay: 0,
+                        options: .BeginFromCurrentState | .CurveEaseInOut,
+                        animations: {
+                            [weak self] in
+                            self?.collectionView.alpha = 1
+                            self?.collectionView.transform = CGAffineTransformIdentity
+                        },
+                        completion: {
+                            [weak self] finished in
+                            self?.view.userInteractionEnabled = finished
+                        }
                 )
             }
         }
     }
-    
+
 }
 
 extension Agrume {
@@ -176,7 +180,7 @@ extension Agrume {
             }
         }
     }
-    
+
     public override func viewWillTransitionToSize(size: CGSize, withTransitionCoordinator coordinator: UIViewControllerTransitionCoordinator) {
         coordinator.animateAlongsideTransition({
             [weak self] _ in
@@ -186,11 +190,11 @@ extension Agrume {
             self?.lastUsedOrientation = UIApplication.sharedApplication().statusBarOrientation
         }
     }
-    
+
     func updateLayoutsForCurrentOrientation() {
         var transform = CGAffineTransformIdentity
         if initialOrientation == .Portrait {
-            switch(UIApplication.sharedApplication().statusBarOrientation) {
+            switch (UIApplication.sharedApplication().statusBarOrientation) {
             case .LandscapeLeft:
                 transform = CGAffineTransformMakeRotation(CGFloat(M_PI_2))
             case .LandscapeRight:
@@ -201,7 +205,7 @@ extension Agrume {
                 break
             }
         } else if initialOrientation == .PortraitUpsideDown {
-            switch(UIApplication.sharedApplication().statusBarOrientation) {
+            switch (UIApplication.sharedApplication().statusBarOrientation) {
             case .LandscapeLeft:
                 transform = CGAffineTransformMakeRotation(CGFloat(-M_PI_2))
             case .LandscapeRight:
@@ -212,7 +216,7 @@ extension Agrume {
                 break
             }
         } else if initialOrientation == .LandscapeLeft {
-            switch(UIApplication.sharedApplication().statusBarOrientation) {
+            switch (UIApplication.sharedApplication().statusBarOrientation) {
             case .LandscapeRight:
                 transform = CGAffineTransformMakeRotation(CGFloat(M_PI))
             case .Portrait:
@@ -223,7 +227,7 @@ extension Agrume {
                 break
             }
         } else if initialOrientation == .LandscapeRight {
-            switch(UIApplication.sharedApplication().statusBarOrientation) {
+            switch (UIApplication.sharedApplication().statusBarOrientation) {
             case .LandscapeLeft:
                 transform = CGAffineTransformMakeRotation(CGFloat(M_PI))
             case .Portrait:
@@ -234,7 +238,7 @@ extension Agrume {
                 break
             }
         }
-        
+
         backgroundImageView.center = view.center
         backgroundImageView.transform = CGAffineTransformConcat(transform, CGAffineTransformMakeScale(1, 1))
 
@@ -258,25 +262,32 @@ extension Agrume {
 }
 
 extension Agrume: UICollectionViewDataSource {
-    
+
     // MARK: UICollectionViewDataSource
-    
+
     public func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return images?.count > 0 ? images.count : imageURLs.count
     }
-    
+
     public func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
         downloadTask?.cancel()
-        
+
         let cell = collectionView.dequeueReusableCellWithReuseIdentifier(Agrume.ReuseIdentifier, forIndexPath: indexPath) as! AgrumeCell
 
         if let images = self.images {
             cell.image = images[indexPath.row]
         } else if let imageURLs = self.imageURLs {
             spinner.alpha = 1
-            downloadImage(imageURLs[indexPath.row]) {
-                image in
+            let completion: DownloadCompletion = {
+                [weak self] image in
                 cell.image = image
+                self?.spinner.alpha = 0
+            }
+
+            if let download = download {
+                download(url: imageURLs[indexPath.row], completion: completion)
+            } else {
+                downloadImage(imageURLs[indexPath.row], completion: completion)
             }
         }
         // Only allow panning if horizontal swiping fails. Horizontal swiping is only active for zoomed in images
@@ -286,13 +297,10 @@ extension Agrume: UICollectionViewDataSource {
         return cell
     }
 
-    func downloadImage(url: NSURL, completion: (image: UIImage?) -> Void) {
+    func downloadImage(url: NSURL, completion: DownloadCompletion) {
         downloadTask = ImageDownloader.downloadImage(url) {
-            [weak self] image in
-            if let downloadedImage = image {
-                completion(image: downloadedImage)
-                self?.spinner.alpha = 0
-            }
+            image in
+            completion(image: image)
         }
     }
 
@@ -300,18 +308,18 @@ extension Agrume: UICollectionViewDataSource {
         return {
             [weak self] in
             UIView.animateWithDuration(Agrume.TransitionAnimationDuration,
-                delay: 0,
-                options: .BeginFromCurrentState | .CurveEaseInOut,
-                animations: {
-                    self?.collectionView.alpha = 0
-                    self?.blurView.alpha = 0
-                },
-                completion: {
-                    _ in
-                   self?.presentingViewController?.dismissViewControllerAnimated(false) {
-                       self?.didDismiss?()
-                   }
-                }
+                    delay: 0,
+                    options: .BeginFromCurrentState | .CurveEaseInOut,
+                    animations: {
+                        self?.collectionView.alpha = 0
+                        self?.blurView.alpha = 0
+                    },
+                    completion: {
+                        _ in
+                        self?.presentingViewController?.dismissViewControllerAnimated(false) {
+                            self?.didDismiss?()
+                        }
+                    }
             )
         }
     }
@@ -322,23 +330,23 @@ extension Agrume: UICollectionViewDataSource {
             self?.view.userInteractionEnabled = false
 
             UIView.animateWithDuration(Agrume.TransitionAnimationDuration,
-                delay: 0,
-                options: .BeginFromCurrentState | .CurveEaseInOut,
-                animations: {
-                    self?.collectionView.alpha = 0
-                    self?.blurView.alpha = 0
-                    let scaling = Agrume.MaxScalingForExpandingOffscreen
-                    self?.collectionView.transform = CGAffineTransformMakeScale(scaling, scaling)
-                },
-                completion: {
-                    _ in
-                    self?.presentingViewController?.dismissViewControllerAnimated(false) {
-                        self?.didDismiss?()
-                    }
-            })
+                    delay: 0,
+                    options: .BeginFromCurrentState | .CurveEaseInOut,
+                    animations: {
+                        self?.collectionView.alpha = 0
+                        self?.blurView.alpha = 0
+                        let scaling = Agrume.MaxScalingForExpandingOffscreen
+                        self?.collectionView.transform = CGAffineTransformMakeScale(scaling, scaling)
+                    },
+                    completion: {
+                        _ in
+                        self?.presentingViewController?.dismissViewControllerAnimated(false) {
+                            self?.didDismiss?()
+                        }
+                    })
         }
     }
-    
+
 }
 
 extension Agrume: UICollectionViewDelegate {

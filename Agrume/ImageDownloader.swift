@@ -6,7 +6,7 @@
 import Foundation
 
 class ImageDownloader {
-    
+
     class func downloadImage(url: NSURL, completion: (image: UIImage?) -> Void) -> NSURLSessionDataTask {
         let session = NSURLSession.sharedSession()
         let request = NSURLRequest(URL: url)
@@ -29,5 +29,5 @@ class ImageDownloader {
         dataTask.resume()
         return dataTask
     }
-    
+
 }

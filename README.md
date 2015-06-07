@@ -57,6 +57,30 @@ agrume.showFrom(self)
 
 This shows a way of keeping the zoomed library and the one in the background synced.
 
+If you want to take control of downloading images (e.g. for caching), you can also set a download closure that calls back to Agrume to set the image. I can recommend [MapleBacon](https://github.com/zalando/MapleBacon).
+
+```swift
+import Agrume
+import MapleBacon
+
+@IBAction func openURL(sender: AnyObject) {
+	let agrume = Agrume(imageURL: NSURL(string: "https://dl.dropboxusercontent.com/u/512759/MapleBacon.png")!, backgroundBlurStyle: .Light)
+	agrume.download = {
+		url, completion in
+		let manager = ImageManager.sharedManager
+		manager.downloadImageAtURL(url) {
+			imageInstance, error in
+			if error == nil {
+				completion(image: imageInstance.image)
+			} else {
+				completion(image: nil)
+			}
+		}
+	}
+	agrume.showFrom(self)
+}
+```
+
 ## Acknowledgements
 
 Agrume was inspired by the phenomal work done by Jared Sinclair on [JTSImageViewController](https://github.com/jaredsinclair/JTSImageViewController). This project wouldn't have seen the light of day as quickly without it.
