@@ -73,7 +73,7 @@ public class Agrume: UIViewController {
     private lazy var blurView: UIVisualEffectView = {
         let blurView = UIVisualEffectView(effect: UIBlurEffect(style: self.backgroundBlurStyle))
         blurView.frame = self.view.bounds
-        blurView.autoresizingMask = .FlexibleWidth | .FlexibleHeight
+        blurView.autoresizingMask = [.FlexibleWidth, .FlexibleHeight]
         return blurView
     }()
     private lazy var collectionView: UICollectionView = {
@@ -106,7 +106,7 @@ public class Agrume: UIViewController {
     override public func viewDidLoad() {
         super.viewDidLoad()
 
-        view.autoresizingMask = .FlexibleHeight | .FlexibleWidth
+        view.autoresizingMask = [.FlexibleHeight, .FlexibleWidth]
         backgroundImageView = UIImageView(frame: view.bounds)
         backgroundImageView.image = backgroundSnapshot
         view.addSubview(backgroundImageView)
@@ -114,7 +114,7 @@ public class Agrume: UIViewController {
         view.addSubview(collectionView)
 
         if let index = startIndex {
-            collectionView.scrollToItemAtIndexPath(NSIndexPath(forRow: index, inSection: 0), atScrollPosition: .allZeros,
+            collectionView.scrollToItemAtIndexPath(NSIndexPath(forRow: index, inSection: 0), atScrollPosition: [],
                     animated: false)
         }
         view.addSubview(spinner)
@@ -143,7 +143,7 @@ public class Agrume: UIViewController {
             dispatch_async(dispatch_get_main_queue()) {
                 UIView.animateWithDuration(Agrume.TransitionAnimationDuration,
                         delay: 0,
-                        options: .BeginFromCurrentState | .CurveEaseInOut,
+                        options: [.BeginFromCurrentState, .CurveEaseInOut],
                         animations: {
                             [weak self] in
                             self?.collectionView.alpha = 1
@@ -297,53 +297,49 @@ extension Agrume: UICollectionViewDataSource {
         return cell
     }
 
-    func downloadImage(url: NSURL, completion: DownloadCompletion) {
+    private func downloadImage(url: NSURL, completion: DownloadCompletion) {
         downloadTask = ImageDownloader.downloadImage(url) {
             image in
             completion(image: image)
         }
     }
 
-    func dismissAfterFlick() -> (() -> Void) {
+    private func dismissAfterFlick() -> (() -> Void) {
         return {
-            [weak self] in
             UIView.animateWithDuration(Agrume.TransitionAnimationDuration,
                     delay: 0,
-                    options: .BeginFromCurrentState | .CurveEaseInOut,
+                    options: [.BeginFromCurrentState, .CurveEaseInOut],
                     animations: {
-                        self?.collectionView.alpha = 0
-                        self?.blurView.alpha = 0
+                        self.collectionView.alpha = 0
+                        self.blurView.alpha = 0
                     },
-                    completion: {
-                        _ in
-                        self?.presentingViewController?.dismissViewControllerAnimated(false) {
-                            self?.didDismiss?()
-                        }
-                    }
-            )
+                    completion: self.dismissCompletion())
         }
     }
 
-    func dismissByExpanding() -> (() -> Void) {
+    private func dismissByExpanding() -> (() -> Void) {
         return {
-            [weak self] in
-            self?.view.userInteractionEnabled = false
+            self.view.userInteractionEnabled = false
 
             UIView.animateWithDuration(Agrume.TransitionAnimationDuration,
                     delay: 0,
-                    options: .BeginFromCurrentState | .CurveEaseInOut,
+                    options: [.BeginFromCurrentState, .CurveEaseInOut],
                     animations: {
-                        self?.collectionView.alpha = 0
-                        self?.blurView.alpha = 0
+                        self.collectionView.alpha = 0
+                        self.blurView.alpha = 0
                         let scaling = Agrume.MaxScalingForExpandingOffscreen
-                        self?.collectionView.transform = CGAffineTransformMakeScale(scaling, scaling)
+                        self.collectionView.transform = CGAffineTransformMakeScale(scaling, scaling)
                     },
-                    completion: {
-                        _ in
-                        self?.presentingViewController?.dismissViewControllerAnimated(false) {
-                            self?.didDismiss?()
-                        }
-                    })
+                    completion: self.dismissCompletion())
+        }
+    }
+    
+    private func dismissCompletion() -> ((Bool) -> Void) {
+        return {
+            _ in
+            self.presentingViewController?.dismissViewControllerAnimated(false) {
+                self.didDismiss?()
+            }
         }
     }
 

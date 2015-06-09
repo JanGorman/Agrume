@@ -49,7 +49,7 @@ class MultipleURLsCollectionViewController: UICollectionViewController {
         agrume.didScroll = {
             [unowned self] index in
             self.collectionView?.scrollToItemAtIndexPath(NSIndexPath(forRow: index, inSection: 0),
-                    atScrollPosition: .allZeros,
+                    atScrollPosition: [],
                     animated: false)
         }
         agrume.showFrom(self)

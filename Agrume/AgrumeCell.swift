@@ -82,7 +82,7 @@ class AgrumeCell: UICollectionViewCell {
     }()
     lazy var swipeGesture: UISwipeGestureRecognizer = {
         let swipeGesture = UISwipeGestureRecognizer(target: self, action: nil)
-        swipeGesture.direction = .Left | .Right
+        swipeGesture.direction = [.Left, .Right]
         swipeGesture.delegate = self
         return swipeGesture
     }()
@@ -158,7 +158,7 @@ extension AgrumeCell: UIGestureRecognizerDelegate {
         CATransaction.commit()
     }
 
-    private func contentInsetForScrollView(#atScale: CGFloat) -> UIEdgeInsets {
+    private func contentInsetForScrollView(atScale atScale: CGFloat) -> UIEdgeInsets {
         let boundsWidth = CGRectGetWidth(scrollView.bounds)
         let boundsHeight = CGRectGetHeight(scrollView.bounds)
         let contentWidth = max(image?.size.width ?? 0, boundsWidth)
@@ -211,7 +211,7 @@ extension AgrumeCell: UIGestureRecognizerDelegate {
     }
 
     func dismissPan(gesture: UIPanGestureRecognizer) {
-        var translation = gesture.translationInView(gesture.view!)
+        let translation = gesture.translationInView(gesture.view!)
         let locationInView = gesture.locationInView(gesture.view)
         let velocity = gesture.velocityInView(gesture.view)
         let vectorDistance = sqrt(pow(velocity.x, 2) + pow(velocity.y, 2))
@@ -262,7 +262,7 @@ extension AgrumeCell: UIGestureRecognizerDelegate {
                 self.dismiss()
             }
         }
-        animator.removeBehavior(attachmentBehavior)
+        animator.removeBehavior(attachmentBehavior!)
         animator.addBehavior(push)
     }
 
@@ -284,7 +284,7 @@ extension AgrumeCell: UIGestureRecognizerDelegate {
                     delay: 0,
                     usingSpringWithDamping: 0.7,
                     initialSpringVelocity: 0,
-                    options: .AllowUserInteraction | .BeginFromCurrentState,
+                    options: [.AllowUserInteraction, .BeginFromCurrentState],
                     animations: {
                         if !self.isDraggingImage {
                             self.imageView.transform = CGAffineTransformIdentity
@@ -345,7 +345,7 @@ extension AgrumeCell: UIGestureRecognizerDelegate {
         let offset = UIOffset(horizontal: locationInView.x - imageCenter.x, vertical: locationInView.y - imageCenter.y)
         imageDragOffsetFromImageCenter = offset
         attachmentBehavior = UIAttachmentBehavior(item: imageView, offsetFromCenter: offset, attachedToAnchor: anchor)
-        animator.addBehavior(attachmentBehavior)
+        animator.addBehavior(attachmentBehavior!)
 
         let modifier = UIDynamicItemBehavior(items: [imageView])
         modifier.angularResistance = angularResistance(view: imageView)
@@ -353,17 +353,17 @@ extension AgrumeCell: UIGestureRecognizerDelegate {
         animator.addBehavior(modifier)
     }
 
-    private func angularResistance(#view: UIView) -> CGFloat {
+    private func angularResistance(view view: UIView) -> CGFloat {
         let defaultResistance: CGFloat = 4
         return appropriateValue(defaultValue: defaultResistance) * factor(forView: view)
     }
 
-    private func density(#view: UIView) -> CGFloat {
+    private func density(view view: UIView) -> CGFloat {
         let defaultDensity: CGFloat = 0.5
         return appropriateValue(defaultValue: defaultDensity) * factor(forView: view)
     }
 
-    private func appropriateValue(#defaultValue: CGFloat) -> CGFloat {
+    private func appropriateValue(defaultValue defaultValue: CGFloat) -> CGFloat {
         let screenWidth = CGRectGetWidth(UIScreen.mainScreen().bounds)
         let screenHeight = CGRectGetHeight(UIScreen.mainScreen().bounds)
         // Default value that works well for the screenSize adjusted for the actual size of the device
@@ -394,7 +394,7 @@ extension AgrumeCell: UIScrollViewDelegate {
         }
     }
 
-    func scrollViewDidEndZooming(scrollView: UIScrollView, withView view: UIView!, atScale scale: CGFloat) {
+    func scrollViewDidEndZooming(scrollView: UIScrollView, withView view: UIView?, atScale scale: CGFloat) {
         scrollView.scrollEnabled = scale > 1
         scrollView.contentInset = contentInsetForScrollView(atScale: scale)
     }

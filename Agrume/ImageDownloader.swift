@@ -7,7 +7,7 @@ import Foundation
 
 class ImageDownloader {
 
-    class func downloadImage(url: NSURL, completion: (image: UIImage?) -> Void) -> NSURLSessionDataTask {
+    class func downloadImage(url: NSURL, completion: (image: UIImage?) -> Void) -> NSURLSessionDataTask? {
         let session = NSURLSession.sharedSession()
         let request = NSURLRequest(URL: url)
         let dataTask = session.dataTaskWithRequest(request) {
@@ -17,7 +17,7 @@ class ImageDownloader {
                 return
             }
             dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0)) {
-                if let image = UIImage(data: data) {
+                if let data = data, image = UIImage(data: data) {
                     dispatch_async(dispatch_get_main_queue()) {
                         completion(image: image)
                     }
@@ -26,7 +26,7 @@ class ImageDownloader {
                 }
             }
         }
-        dataTask.resume()
+        dataTask?.resume()
         return dataTask
     }
 
