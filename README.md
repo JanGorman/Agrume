@@ -20,7 +20,7 @@ pod 'Agrume', :git => 'https://github.com/JanGorman/Agrume.git', :branch => 'swi
 Or [Carthage](https://github.com/Carthage/Carthage). Add the depdency to your `Cartfile` and then `carthage update`:
 
 ```ogdl
-github "JanGorman/Carthage" "swift/2.0"
+github "JanGorman/Agrume" "swift/2.0"
 ```
 
 ## How
