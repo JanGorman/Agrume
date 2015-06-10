@@ -334,7 +334,7 @@ extension Agrume: UICollectionViewDataSource {
                     options: .BeginFromCurrentState | .CurveEaseInOut,
                     animations: {
                         self?.collectionView.alpha = 0
-                        self?.blurView.alpha = 0
+                        self?.blurView.removeFromSuperview()
                         let scaling = Agrume.MaxScalingForExpandingOffscreen
                         self?.collectionView.transform = CGAffineTransformMakeScale(scaling, scaling)
                     },
