@@ -6,7 +6,7 @@
 import UIKit
 
 
-public class Agrume: UIViewController {
+public final class Agrume: UIViewController {
 
     private static let TransitionAnimationDuration: NSTimeInterval = 0.3
     private static let MaxScalingForExpandingOffscreen: CGFloat = 1.25
@@ -292,8 +292,8 @@ extension Agrume: UICollectionViewDataSource {
         }
         // Only allow panning if horizontal swiping fails. Horizontal swiping is only active for zoomed in images
         collectionView.panGestureRecognizer.requireGestureRecognizerToFail(cell.swipeGesture)
-        cell.dismissAfterFlick = dismissAfterFlick()
-        cell.dismissByExpanding = dismissByExpanding()
+        cell.dismissAfterFlick = dismissAfterFlick
+        cell.dismissByExpanding = dismissByExpanding
         return cell
     }
 
@@ -304,7 +304,7 @@ extension Agrume: UICollectionViewDataSource {
         }
     }
 
-    private func dismissAfterFlick() -> (() -> Void) {
+    private var dismissAfterFlick: (() -> Void) {
         return {
             UIView.animateWithDuration(Agrume.TransitionAnimationDuration,
                     delay: 0,
@@ -313,11 +313,11 @@ extension Agrume: UICollectionViewDataSource {
                         self.collectionView.alpha = 0
                         self.blurView.alpha = 0
                     },
-                    completion: self.dismissCompletion())
+                    completion: self.dismissCompletion)
         }
     }
 
-    private func dismissByExpanding() -> (() -> Void) {
+    private var dismissByExpanding: (() -> Void) {
         return {
             self.view.userInteractionEnabled = false
 
@@ -330,11 +330,11 @@ extension Agrume: UICollectionViewDataSource {
                         let scaling = Agrume.MaxScalingForExpandingOffscreen
                         self.collectionView.transform = CGAffineTransformMakeScale(scaling, scaling)
                     },
-                    completion: self.dismissCompletion())
+                    completion: self.dismissCompletion)
         }
     }
     
-    private func dismissCompletion() -> ((Bool) -> Void) {
+    private var dismissCompletion: ((Bool) -> Void) {
         return {
             _ in
             self.presentingViewController?.dismissViewControllerAnimated(false) {

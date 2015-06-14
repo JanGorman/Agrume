@@ -5,7 +5,7 @@
 
 import Foundation
 
-class ImageDownloader {
+final class ImageDownloader {
 
     class func downloadImage(url: NSURL, completion: (image: UIImage?) -> Void) -> NSURLSessionDataTask? {
         let session = NSURLSession.sharedSession()

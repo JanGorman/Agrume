@@ -6,7 +6,7 @@
 import UIKit
 import Agrume
 
-class SingleURLViewController: UIViewController {
+final class SingleURLViewController: UIViewController {
 
     @IBAction func openURL(sender: AnyObject) {
         let agrume = Agrume(imageURL: NSURL(string: "https://dl.dropboxusercontent.com/u/512759/MapleBacon.png")!,

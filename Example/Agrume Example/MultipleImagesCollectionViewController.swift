@@ -6,7 +6,7 @@
 import UIKit
 import Agrume
 
-class MultipleImagesCollectionViewController: UICollectionViewController {
+final class MultipleImagesCollectionViewController: UICollectionViewController {
 
     private let identifier = "Cell"
 

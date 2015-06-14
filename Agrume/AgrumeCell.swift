@@ -5,7 +5,7 @@
 
 import UIKit
 
-class AgrumeCell: UICollectionViewCell {
+final class AgrumeCell: UICollectionViewCell {
 
     private static let TargetZoomForDoubleTap: CGFloat = 3
     private static let MinFlickDismissalVelocity: CGFloat = 800
@@ -266,7 +266,7 @@ extension AgrumeCell: UIGestureRecognizerDelegate {
         animator.addBehavior(push)
     }
 
-    func isImageViewOffscreen() -> Bool {
+    private func isImageViewOffscreen() -> Bool {
         let visibleRect = scrollView.convertRect(contentView.bounds, fromView: contentView)
         return animator.itemsInRect(visibleRect).count == 0
     }
