@@ -159,7 +159,6 @@ public class Agrume: UIViewController {
     }
 
     public func dismiss() {
-        println("Dismiss called")
         self.dismissAfterFlick()()
     }
 
