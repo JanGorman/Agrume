@@ -158,6 +158,16 @@ public class Agrume: UIViewController {
         }
     }
 
+    public func dismiss() {
+        self.dismissAfterFlick()()
+    }
+
+    public func showImageAtIndex(index : Int) {
+        collectionView.scrollToItemAtIndexPath(NSIndexPath(forRow: index, inSection: 0), atScrollPosition: .allZeros,
+            animated: true)
+    }
+    
+
 }
 
 extension Agrume {
