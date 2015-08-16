@@ -64,7 +64,7 @@ public final class Agrume: UIViewController {
         NSNotificationCenter.defaultCenter().removeObserver(self)
     }
 
-    required public init(coder aDecoder: NSCoder) {
+    required public init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }
 
@@ -159,11 +159,11 @@ public final class Agrume: UIViewController {
     }
 
     public func dismiss() {
-        self.dismissAfterFlick()()
+        self.dismissAfterFlick()
     }
 
     public func showImageAtIndex(index : Int) {
-        collectionView.scrollToItemAtIndexPath(NSIndexPath(forRow: index, inSection: 0), atScrollPosition: .allZeros,
+        collectionView.scrollToItemAtIndexPath(NSIndexPath(forRow: index, inSection: 0), atScrollPosition: [],
             animated: true)
     }
     

@@ -26,7 +26,7 @@ final class ImageDownloader {
                 }
             }
         }
-        dataTask?.resume()
+        dataTask.resume()
         return dataTask
     }
 
