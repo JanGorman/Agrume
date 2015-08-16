@@ -17,7 +17,7 @@ The easiest way is through [CocoaPods](http://cocoapods.org). Simply add the dep
 pod 'Agrume', :git => 'https://github.com/JanGorman/Agrume.git', :branch => 'swift/2.0'
 ```
 
-Or [Carthage](https://github.com/Carthage/Carthage). Add the depdency to your `Cartfile` and then `carthage update`:
+Or [Carthage](https://github.com/Carthage/Carthage). Add the dependency to your `Cartfile` and then `carthage update`:
 
 ```ogdl
 github "JanGorman/Agrume" "swift/2.0"

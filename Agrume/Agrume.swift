@@ -129,7 +129,7 @@ public final class Agrume: UIViewController {
     private var initialOrientation: UIInterfaceOrientation!
 
     public func showFrom(viewController: UIViewController) {
-        backgroundSnapshot = viewController.view.snapshot()
+        backgroundSnapshot = UIApplication.sharedApplication().delegate?.window??.rootViewController?.view.snapshot()
 
         view.userInteractionEnabled = false
         initialOrientation = UIApplication.sharedApplication().statusBarOrientation
@@ -157,6 +157,16 @@ public final class Agrume: UIViewController {
             }
         }
     }
+
+    public func dismiss() {
+        self.dismissAfterFlick()()
+    }
+
+    public func showImageAtIndex(index : Int) {
+        collectionView.scrollToItemAtIndexPath(NSIndexPath(forRow: index, inSection: 0), atScrollPosition: .allZeros,
+            animated: true)
+    }
+    
 
 }
 
