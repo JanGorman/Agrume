@@ -138,7 +138,7 @@ public final class Agrume: UIViewController {
         dispatch_async(dispatch_get_main_queue()) {
             self.collectionView.alpha = 0
             self.collectionView.frame = self.view.bounds
-            let scaling = InitialScalingToExpandFrom
+            let scaling = Agrume.InitialScalingToExpandFrom
             self.collectionView.transform = CGAffineTransformMakeScale(scaling, scaling)
         
             viewController.presentViewController(self, animated: false) {
