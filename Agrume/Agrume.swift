@@ -9,6 +9,7 @@ import UIKit
 public final class Agrume: UIViewController {
 
     private static let TransitionAnimationDuration: NSTimeInterval = 0.3
+    private static let InitialScalingToExpandFrom: CGFloat = 0.6
     private static let MaxScalingForExpandingOffscreen: CGFloat = 1.25
 
     private static let ReuseIdentifier = "ReuseIdentifier"
@@ -133,26 +134,26 @@ public final class Agrume: UIViewController {
 
         view.userInteractionEnabled = false
         initialOrientation = UIApplication.sharedApplication().statusBarOrientation
-
-        viewController.presentViewController(self, animated: false) {
+    
+        dispatch_async(dispatch_get_main_queue()) {
             self.collectionView.alpha = 0
             self.collectionView.frame = self.view.bounds
-            let scaling = Agrume.MaxScalingForExpandingOffscreen
+            let scaling = InitialScalingToExpandFrom
             self.collectionView.transform = CGAffineTransformMakeScale(scaling, scaling)
-
-            dispatch_async(dispatch_get_main_queue()) {
+        
+            viewController.presentViewController(self, animated: false) {
                 UIView.animateWithDuration(Agrume.TransitionAnimationDuration,
-                        delay: 0,
-                        options: [.BeginFromCurrentState, .CurveEaseInOut],
-                        animations: {
-                            [weak self] in
-                            self?.collectionView.alpha = 1
-                            self?.collectionView.transform = CGAffineTransformIdentity
-                        },
-                        completion: {
-                            [weak self] finished in
-                            self?.view.userInteractionEnabled = finished
-                        }
+                    delay: 0,
+                    options: [.BeginFromCurrentState, .CurveEaseInOut],
+                    animations: {
+                        [weak self] in
+                        self?.collectionView.alpha = 1
+                        self?.collectionView.transform = CGAffineTransformIdentity
+                    },
+                    completion: {
+                        [weak self] finished in
+                        self?.view.userInteractionEnabled = finished
+                    }
                 )
             }
         }
