@@ -314,39 +314,41 @@ extension Agrume: UICollectionViewDataSource {
 
     private var dismissAfterFlick: (() -> Void) {
         return {
+            [weak self] in
             UIView.animateWithDuration(Agrume.TransitionAnimationDuration,
                     delay: 0,
                     options: [.BeginFromCurrentState, .CurveEaseInOut],
                     animations: {
-                        self.collectionView.alpha = 0
-                        self.blurView.alpha = 0
+                        self?.collectionView.alpha = 0
+                        self?.blurView.alpha = 0
                     },
-                    completion: self.dismissCompletion)
+                    completion: self?.dismissCompletion)
         }
     }
 
     private var dismissByExpanding: (() -> Void) {
         return {
-            self.view.userInteractionEnabled = false
+            [weak self] in
+            self?.view.userInteractionEnabled = false
 
             UIView.animateWithDuration(Agrume.TransitionAnimationDuration,
                     delay: 0,
                     options: [.BeginFromCurrentState, .CurveEaseInOut],
                     animations: {
-                        self.collectionView.alpha = 0
-                        self.blurView.alpha = 0
+                        self?.collectionView.alpha = 0
+                        self?.blurView.alpha = 0
                         let scaling = Agrume.MaxScalingForExpandingOffscreen
-                        self.collectionView.transform = CGAffineTransformMakeScale(scaling, scaling)
+                        self?.collectionView.transform = CGAffineTransformMakeScale(scaling, scaling)
                     },
-                    completion: self.dismissCompletion)
+                    completion: self?.dismissCompletion)
         }
     }
     
     private var dismissCompletion: ((Bool) -> Void) {
         return {
-            _ in
-            self.presentingViewController?.dismissViewControllerAnimated(false) {
-                self.didDismiss?()
+            [weak self] _ in
+            self?.presentingViewController?.dismissViewControllerAnimated(false) {
+                self?.didDismiss?()
             }
         }
     }
