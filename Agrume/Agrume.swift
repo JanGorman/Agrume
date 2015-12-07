@@ -180,9 +180,7 @@ extension Agrume {
         let landscapeToLandscape = UIDeviceOrientationIsLandscape(orientation) && UIDeviceOrientationIsLandscape(lastUsedOrientation)
         let portraitToPortrait = UIDeviceOrientationIsPortrait(orientation) && UIDeviceOrientationIsLandscape(lastUsedOrientation)
         if landscapeToLandscape || portraitToPortrait {
-            guard orientation != lastUsedOrientation else {
-                return
-            }
+            guard orientation != lastUsedOrientation else { return }
             lastUsedOrientation = orientation
             UIView.animateWithDuration(0.6) {
                 [weak self] in
