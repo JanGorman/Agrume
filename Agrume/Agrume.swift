@@ -121,19 +121,19 @@ public final class Agrume: UIViewController {
         view.addSubview(spinner)
     }
 
-    private var lastUsedOrientation: UIInterfaceOrientation!
+    private var lastUsedOrientation: UIDeviceOrientation!
 
     public override func viewWillAppear(animated: Bool) {
-        lastUsedOrientation = UIApplication.sharedApplication().statusBarOrientation
+        lastUsedOrientation = UIDeviceOrientation(rawValue: UIApplication.sharedApplication().statusBarOrientation.rawValue)
     }
 
-    private var initialOrientation: UIInterfaceOrientation!
+    private var initialOrientation: UIDeviceOrientation!
 
     public func showFrom(viewController: UIViewController) {
         backgroundSnapshot = UIApplication.sharedApplication().delegate?.window??.rootViewController?.view.snapshot()
 
         view.userInteractionEnabled = false
-        initialOrientation = UIApplication.sharedApplication().statusBarOrientation
+        initialOrientation = UIDeviceOrientation(rawValue: UIApplication.sharedApplication().statusBarOrientation.rawValue)
     
         dispatch_async(dispatch_get_main_queue()) {
             self.collectionView.alpha = 0
@@ -177,14 +177,11 @@ extension Agrume {
 
     func orientationDidChange() {
         let orientation = UIDevice.currentDevice().orientation
-        let landscapeToLandscape = UIDeviceOrientationIsLandscape(orientation) && UIInterfaceOrientationIsLandscape(lastUsedOrientation)
-        let portraitToPortrait = UIDeviceOrientationIsPortrait(orientation) && UIInterfaceOrientationIsLandscape(lastUsedOrientation)
+        let landscapeToLandscape = UIDeviceOrientationIsLandscape(orientation) && UIDeviceOrientationIsLandscape(lastUsedOrientation)
+        let portraitToPortrait = UIDeviceOrientationIsPortrait(orientation) && UIDeviceOrientationIsLandscape(lastUsedOrientation)
         if landscapeToLandscape || portraitToPortrait {
-            let newOrientation = UIInterfaceOrientation(rawValue: orientation.rawValue)
-            if newOrientation == lastUsedOrientation {
-                return
-            }
-            lastUsedOrientation = newOrientation!
+            guard orientation != lastUsedOrientation else { return }
+            lastUsedOrientation = orientation
             UIView.animateWithDuration(0.6) {
                 [weak self] in
                 self?.updateLayoutsForCurrentOrientation()
@@ -198,7 +195,7 @@ extension Agrume {
             self?.updateLayoutsForCurrentOrientation()
         }) {
             [weak self] _ in
-            self?.lastUsedOrientation = UIApplication.sharedApplication().statusBarOrientation
+            self?.lastUsedOrientation = UIDeviceOrientation(rawValue: UIApplication.sharedApplication().statusBarOrientation.rawValue)
         }
     }
 
@@ -317,39 +314,41 @@ extension Agrume: UICollectionViewDataSource {
 
     private var dismissAfterFlick: (() -> Void) {
         return {
+            [weak self] in
             UIView.animateWithDuration(Agrume.TransitionAnimationDuration,
                     delay: 0,
                     options: [.BeginFromCurrentState, .CurveEaseInOut],
                     animations: {
-                        self.collectionView.alpha = 0
-                        self.blurView.alpha = 0
+                        self?.collectionView.alpha = 0
+                        self?.blurView.alpha = 0
                     },
-                    completion: self.dismissCompletion)
+                    completion: self?.dismissCompletion)
         }
     }
 
     private var dismissByExpanding: (() -> Void) {
         return {
-            self.view.userInteractionEnabled = false
+            [weak self] in
+            self?.view.userInteractionEnabled = false
 
             UIView.animateWithDuration(Agrume.TransitionAnimationDuration,
                     delay: 0,
                     options: [.BeginFromCurrentState, .CurveEaseInOut],
                     animations: {
-                        self.collectionView.alpha = 0
-                        self.blurView.alpha = 0
+                        self?.collectionView.alpha = 0
+                        self?.blurView.alpha = 0
                         let scaling = Agrume.MaxScalingForExpandingOffscreen
-                        self.collectionView.transform = CGAffineTransformMakeScale(scaling, scaling)
+                        self?.collectionView.transform = CGAffineTransformMakeScale(scaling, scaling)
                     },
-                    completion: self.dismissCompletion)
+                    completion: self?.dismissCompletion)
         }
     }
     
     private var dismissCompletion: ((Bool) -> Void) {
         return {
-            _ in
-            self.presentingViewController?.dismissViewControllerAnimated(false) {
-                self.didDismiss?()
+            [weak self] _ in
+            self?.presentingViewController?.dismissViewControllerAnimated(false) {
+                self?.didDismiss?()
             }
         }
     }
