@@ -71,6 +71,11 @@ public final class Agrume: UIViewController {
 
     private var backgroundSnapshot: UIImage!
     private var backgroundImageView: UIImageView!
+    private lazy var blurContainerView: UIView = {
+        let view = UIView(frame: self.view.bounds)
+        view.autoresizingMask = [.FlexibleWidth, .FlexibleHeight]
+        return view
+    }()
     private lazy var blurView: UIVisualEffectView = {
         let blurView = UIVisualEffectView(effect: UIBlurEffect(style: self.backgroundBlurStyle))
         blurView.frame = self.view.bounds
@@ -111,7 +116,8 @@ public final class Agrume: UIViewController {
         backgroundImageView = UIImageView(frame: view.bounds)
         backgroundImageView.image = backgroundSnapshot
         view.addSubview(backgroundImageView)
-        view.addSubview(blurView)
+        blurContainerView.addSubview(blurView)
+        view.addSubview(blurContainerView)
         view.addSubview(collectionView)
 
         if let index = startIndex {
@@ -319,7 +325,7 @@ extension Agrume: UICollectionViewDataSource {
                     options: [.BeginFromCurrentState, .CurveEaseInOut],
                     animations: {
                         self?.collectionView.alpha = 0
-                        self?.blurView.alpha = 0
+                        self?.blurContainerView.alpha = 0
                     },
                     completion: self?.dismissCompletion)
         }
@@ -335,7 +341,7 @@ extension Agrume: UICollectionViewDataSource {
                     options: [.BeginFromCurrentState, .CurveEaseInOut],
                     animations: {
                         self?.collectionView.alpha = 0
-                        self?.blurView.alpha = 0
+                        self?.blurContainerView.alpha = 0
                         let scaling = Agrume.MaxScalingForExpandingOffscreen
                         self?.collectionView.transform = CGAffineTransformMakeScale(scaling, scaling)
                     },
