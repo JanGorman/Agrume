@@ -64,18 +64,18 @@ final class AgrumeCell: UICollectionViewCell {
     }
 
     private lazy var singleTapGesture: UITapGestureRecognizer = {
-        let singleTapGesture = UITapGestureRecognizer(target: self, action: Selector("singleTap:"))
+        let singleTapGesture = UITapGestureRecognizer(target: self, action: #selector(AgrumeCell.singleTap(_:)))
         singleTapGesture.requireGestureRecognizerToFail(self.doubleTapGesture)
         singleTapGesture.delegate = self
         return singleTapGesture
     }()
     private lazy var doubleTapGesture: UITapGestureRecognizer = {
-        let doubleTapGesture = UITapGestureRecognizer(target: self, action: Selector("doubleTap:"))
+        let doubleTapGesture = UITapGestureRecognizer(target: self, action: #selector(AgrumeCell.doubleTap(_:)))
         doubleTapGesture.numberOfTapsRequired = 2
         return doubleTapGesture
     }()
     private lazy var panGesture: UIPanGestureRecognizer = {
-        let panGesture = UIPanGestureRecognizer(target: self, action: Selector("dismissPan:"))
+        let panGesture = UIPanGestureRecognizer(target: self, action: #selector(AgrumeCell.dismissPan(_:)))
         panGesture.maximumNumberOfTouches = 1
         panGesture.delegate = self
         return panGesture
@@ -130,7 +130,7 @@ extension AgrumeCell: UIGestureRecognizerDelegate {
         return true
     }
 
-    func doubleTap(sender: UITapGestureRecognizer) {
+    @objc private func doubleTap(sender: UITapGestureRecognizer) {
         let point = scrollView.convertPoint(sender.locationInView(sender.view), fromView: sender.view)
         let targetZoom: CGRect
         let targetInsets: UIEdgeInsets
@@ -198,7 +198,7 @@ extension AgrumeCell: UIGestureRecognizerDelegate {
         return inset
     }
 
-    func singleTap(gesture: UITapGestureRecognizer) {
+    @objc private func singleTap(gesture: UITapGestureRecognizer) {
         dismiss()
     }
 
@@ -210,7 +210,7 @@ extension AgrumeCell: UIGestureRecognizerDelegate {
         }
     }
 
-    func dismissPan(gesture: UIPanGestureRecognizer) {
+    @objc private func dismissPan(gesture: UIPanGestureRecognizer) {
         let translation = gesture.translationInView(gesture.view!)
         let locationInView = gesture.locationInView(gesture.view)
         let velocity = gesture.velocityInView(gesture.view)

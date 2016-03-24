@@ -56,7 +56,7 @@ public final class Agrume: UIViewController {
         self.backgroundBlurStyle = backgroundBlurStyle!
         super.init(nibName: nil, bundle: nil)
 
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: Selector("orientationDidChange"),
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(Agrume.orientationDidChange),
                 name: UIDeviceOrientationDidChangeNotification, object: nil)
     }
 
