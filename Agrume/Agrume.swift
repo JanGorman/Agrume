@@ -200,99 +200,96 @@ public final class Agrume: UIViewController {
 
 extension Agrume {
 
-    // MARK: Rotation
+  // MARK: Rotation
 
-    func orientationDidChange() {
-      let orientation = UIDevice.currentDevice().orientation
-      guard let lastOrientation = lastUsedOrientation else { return }
-      let landscapeToLandscape = UIDeviceOrientationIsLandscape(orientation) && UIDeviceOrientationIsLandscape(lastOrientation)
-      let portraitToPortrait = UIDeviceOrientationIsPortrait(orientation) && UIDeviceOrientationIsPortrait(lastOrientation)
-      guard (landscapeToLandscape || portraitToPortrait) && orientation != lastUsedOrientation else { return }
-      lastUsedOrientation = orientation
-      UIView.animateWithDuration(0.6) {
-        [weak self] in
-        self?.updateLayoutsForCurrentOrientation()
+  func orientationDidChange() {
+    let orientation = UIDevice.currentDevice().orientation
+    guard let lastOrientation = lastUsedOrientation else { return }
+    let landscapeToLandscape = UIDeviceOrientationIsLandscape(orientation) && UIDeviceOrientationIsLandscape(lastOrientation)
+    let portraitToPortrait = UIDeviceOrientationIsPortrait(orientation) && UIDeviceOrientationIsPortrait(lastOrientation)
+    guard (landscapeToLandscape || portraitToPortrait) && orientation != lastUsedOrientation else { return }
+    lastUsedOrientation = orientation
+    UIView.animateWithDuration(0.6) {
+      [weak self] in
+      self?.updateLayoutsForCurrentOrientation()
+    }
+  }
+
+  public override func viewWillTransitionToSize(size: CGSize, withTransitionCoordinator
+    coordinator: UIViewControllerTransitionCoordinator) {
+    coordinator.animateAlongsideTransition({ [weak self] _ in
+      self?.updateLayoutsForCurrentOrientation()
+    }) { [weak self] _ in
+      let statusBarOrientation = UIApplication.sharedApplication().statusBarOrientation.rawValue
+      self?.lastUsedOrientation = UIDeviceOrientation(rawValue: statusBarOrientation)
+    }
+  }
+
+  func updateLayoutsForCurrentOrientation() {
+    var transform = CGAffineTransformIdentity
+    if initialOrientation == .Portrait {
+      switch (UIApplication.sharedApplication().statusBarOrientation) {
+      case .LandscapeLeft:
+        transform = CGAffineTransformMakeRotation(CGFloat(M_PI_2))
+      case .LandscapeRight:
+        transform = CGAffineTransformMakeRotation(CGFloat(-M_PI_2))
+      case .PortraitUpsideDown:
+        transform = CGAffineTransformMakeRotation(CGFloat(M_PI))
+      default:
+          break
+      }
+    } else if initialOrientation == .PortraitUpsideDown {
+      switch (UIApplication.sharedApplication().statusBarOrientation) {
+      case .LandscapeLeft:
+        transform = CGAffineTransformMakeRotation(CGFloat(-M_PI_2))
+      case .LandscapeRight:
+        transform = CGAffineTransformMakeRotation(CGFloat(M_PI_2))
+      case .Portrait:
+        transform = CGAffineTransformMakeRotation(CGFloat(M_PI))
+      default:
+        break
+      }
+    } else if initialOrientation == .LandscapeLeft {
+      switch (UIApplication.sharedApplication().statusBarOrientation) {
+      case .LandscapeRight:
+        transform = CGAffineTransformMakeRotation(CGFloat(M_PI))
+      case .Portrait:
+        transform = CGAffineTransformMakeRotation(CGFloat(-M_PI_2))
+      case .PortraitUpsideDown:
+        transform = CGAffineTransformMakeRotation(CGFloat(M_PI_2))
+      default:
+        break
+      }
+    } else if initialOrientation == .LandscapeRight {
+      switch (UIApplication.sharedApplication().statusBarOrientation) {
+      case .LandscapeLeft:
+        transform = CGAffineTransformMakeRotation(CGFloat(M_PI))
+      case .Portrait:
+        transform = CGAffineTransformMakeRotation(CGFloat(M_PI_2))
+      case .PortraitUpsideDown:
+        transform = CGAffineTransformMakeRotation(CGFloat(-M_PI_2))
+      default:
+        break
       }
     }
 
-    public override func viewWillTransitionToSize(size: CGSize, withTransitionCoordinator
-      coordinator: UIViewControllerTransitionCoordinator) {
-      coordinator.animateAlongsideTransition({
-        [weak self] _ in
-        self?.updateLayoutsForCurrentOrientation()
-      }) {
-        [weak self] _ in
-        let statusBarOrientation = UIApplication.sharedApplication().statusBarOrientation.rawValue
-        self?.lastUsedOrientation = UIDeviceOrientation(rawValue: statusBarOrientation)
+    backgroundImageView.center = view.center
+    backgroundImageView.transform = CGAffineTransformConcat(transform, CGAffineTransformMakeScale(1, 1))
+
+    spinner.center = view.center
+    collectionView.frame = view.bounds
+
+    let layout = collectionView.collectionViewLayout as! UICollectionViewFlowLayout
+    layout.itemSize = view.bounds.size
+    layout.invalidateLayout()
+    // Apply update two runloops into the future
+    dispatch_async(dispatch_get_main_queue()) {
+      dispatch_async(dispatch_get_main_queue()) { [unowned self] in
+        for visibleCell in self.collectionView.visibleCells() as! [AgrumeCell] {
+          visibleCell.updateScrollViewAndImageViewForCurrentMetrics()
+        }
       }
     }
-
-    func updateLayoutsForCurrentOrientation() {
-      var transform = CGAffineTransformIdentity
-      if initialOrientation == .Portrait {
-        switch (UIApplication.sharedApplication().statusBarOrientation) {
-        case .LandscapeLeft:
-            transform = CGAffineTransformMakeRotation(CGFloat(M_PI_2))
-        case .LandscapeRight:
-            transform = CGAffineTransformMakeRotation(CGFloat(-M_PI_2))
-        case .PortraitUpsideDown:
-            transform = CGAffineTransformMakeRotation(CGFloat(M_PI))
-        default:
-            break
-        }
-      } else if initialOrientation == .PortraitUpsideDown {
-        switch (UIApplication.sharedApplication().statusBarOrientation) {
-        case .LandscapeLeft:
-            transform = CGAffineTransformMakeRotation(CGFloat(-M_PI_2))
-        case .LandscapeRight:
-            transform = CGAffineTransformMakeRotation(CGFloat(M_PI_2))
-        case .Portrait:
-            transform = CGAffineTransformMakeRotation(CGFloat(M_PI))
-        default:
-            break
-        }
-      } else if initialOrientation == .LandscapeLeft {
-        switch (UIApplication.sharedApplication().statusBarOrientation) {
-        case .LandscapeRight:
-            transform = CGAffineTransformMakeRotation(CGFloat(M_PI))
-        case .Portrait:
-            transform = CGAffineTransformMakeRotation(CGFloat(-M_PI_2))
-        case .PortraitUpsideDown:
-            transform = CGAffineTransformMakeRotation(CGFloat(M_PI_2))
-        default:
-            break
-        }
-      } else if initialOrientation == .LandscapeRight {
-        switch (UIApplication.sharedApplication().statusBarOrientation) {
-        case .LandscapeLeft:
-            transform = CGAffineTransformMakeRotation(CGFloat(M_PI))
-        case .Portrait:
-            transform = CGAffineTransformMakeRotation(CGFloat(M_PI_2))
-        case .PortraitUpsideDown:
-            transform = CGAffineTransformMakeRotation(CGFloat(-M_PI_2))
-        default:
-            break
-        }
-      }
-
-      backgroundImageView.center = view.center
-      backgroundImageView.transform = CGAffineTransformConcat(transform, CGAffineTransformMakeScale(1, 1))
-
-      spinner.center = view.center
-      collectionView.frame = view.bounds
-
-      let layout = collectionView.collectionViewLayout as! UICollectionViewFlowLayout
-      layout.itemSize = view.bounds.size
-      layout.invalidateLayout()
-      // Apply update two runloops into the future
-      dispatch_async(dispatch_get_main_queue()) {
-        dispatch_async(dispatch_get_main_queue()) {
-          [unowned self] in
-          for visibleCell in self.collectionView.visibleCells() as! [AgrumeCell] {
-            visibleCell.updateScrollViewAndImageViewForCurrentMetrics()
-          }
-        }
-      }
   }
 
 }
