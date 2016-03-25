@@ -98,7 +98,9 @@
 				F2A5202D1B130C7E00924912 /* Agrume ExampleTests */,
 				F2A520161B130C7E00924912 /* Products */,
 			);
+			indentWidth = 2;
 			sourceTree = "<group>";
+			tabWidth = 2;
 		};
 		F2A520161B130C7E00924912 /* Products */ = {
 			isa = PBXGroup;

@@ -1,4 +1,7 @@
 [![Carthage compatible](https://img.shields.io/badge/Carthage-compatible-4BC51D.svg?style=flat)](https://github.com/Carthage/Carthage)
+[![Version](https://img.shields.io/cocoapods/v/Agrume.svg?style=flat)](http://cocoapods.org/pods/Agrume)
+[![License](https://img.shields.io/cocoapods/l/Agrume.svg?style=flat)](http://cocoapods.org/pods/Agrume)
+[![Platform](https://img.shields.io/cocoapods/p/Agrume.svg?style=flat)](http://cocoapods.org/pods/Agrume)
 
 # Agrume
 
@@ -37,10 +40,10 @@ For just a single image it's as easy as
 import Agrume
 
 @IBAction func openImage(sender: AnyObject) {
-	if let image = UIImage(named: "…") {
-		let agrume = Agrume(image: image)
-		agrume.showFrom(self)	
-	}
+  if let image = UIImage(named: "…") {
+	let agrume = Agrume(image: image)
+	agrume.showFrom(self)	
+  }
 }
 ```
 
@@ -50,11 +53,10 @@ If you're displaying a `UICollectionView` and want to add support for zooming, y
 
 ```swift
 let agrume = Agrume(images: images, startIndex: indexPath.row, backgroundBlurStyle: .Light)
-agrume.didScroll = {
-	[unowned self] index in
-    self.collectionView?.scrollToItemAtIndexPath(NSIndexPath(forRow: index, inSection: 0),
-    	atScrollPosition: .allZeros,
-        animated: false)
+agrume.didScroll = { [unowned self] index in
+  self.collectionView?.scrollToItemAtIndexPath(NSIndexPath(forRow: index, inSection: 0),
+    											atScrollPosition: .allZeros,
+									            animated: false)
 }
 agrume.showFrom(self)
 ```
@@ -68,26 +70,32 @@ import Agrume
 import MapleBacon
 
 @IBAction func openURL(sender: AnyObject) {
-	let agrume = Agrume(imageURL: NSURL(string: "https://dl.dropboxusercontent.com/u/512759/MapleBacon.png")!, backgroundBlurStyle: .Light)
-	agrume.download = {
-		url, completion in
-		let manager = ImageManager.sharedManager
-		manager.downloadImageAtURL(url) {
-			imageInstance, error in
-			if error == nil {
-				completion(image: imageInstance.image)
-			} else {
-				completion(image: nil)
-			}
+  let agrume = Agrume(imageURL: NSURL(string: "https://dl.dropboxusercontent.com/u/512759/MapleBacon.png")!, backgroundBlurStyle: .Light)
+	agrume.download = { url, completion in
+	  let manager = ImageManager.sharedManager
+	  manager.downloadImageAtURL(url) { imageInstance, error in
+		if error == nil {
+		  completion(image: imageInstance.image)
+		} else {
+		  completion(image: nil)
 		}
 	}
-	agrume.showFrom(self)
+  }
+  agrume.showFrom(self)
 }
 ```
 
-## Acknowledgements
+For more dynamic library needs you can implement the `AgrumeDataSource` protocol that supplies images to Agrume. Agrume will query the data source for the number of images and if that number changes, reload it's scrolling image view.
 
-Agrume was inspired by the phenomal work done by Jared Sinclair on [JTSImageViewController](https://github.com/jaredsinclair/JTSImageViewController). This project wouldn't have seen the light of day as quickly without it.
+```swift
+import Agrume
+
+let dataSource: AgrumeDataSource = MyDataSourceImplementation()
+let agrume = Agrume(dataSource: dataSource)
+
+agrume.showFrom(self)
+
+```
 
 ## Licence
 

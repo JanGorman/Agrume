@@ -65,7 +65,9 @@
 				F2A51FFD1B10E00700924912 /* AgrumeTests */,
 				F2A51FEF1B10E00700924912 /* Products */,
 			);
+			indentWidth = 2;
 			sourceTree = "<group>";
+			tabWidth = 2;
 		};
 		F2A51FEF1B10E00700924912 /* Products */ = {
 			isa = PBXGroup;
