@@ -5,6 +5,11 @@
 
 import UIKit
 
+public protocol AgrumeDataSource {
+	
+	var numberOfImages: Int { get }
+	func imageForIndex (index: Int, completion: (UIImage?) -> ())
+}
 
 public final class Agrume: UIViewController {
 
@@ -18,6 +23,7 @@ public final class Agrume: UIViewController {
     private var imageURLs: [NSURL]!
     private var startIndex: Int?
     private var backgroundBlurStyle: UIBlurEffectStyle!
+	private var dataSource: AgrumeDataSource?
     
     public typealias DownloadCompletion = (image: UIImage?) -> Void
     
@@ -33,6 +39,10 @@ public final class Agrume: UIViewController {
         self.init(image: nil, imageURL: imageURL, backgroundBlurStyle: backgroundBlurStyle)
     }
 
+	public convenience init(dataSource: AgrumeDataSource, startIndex: Int? = nil, backgroundBlurStyle: UIBlurEffectStyle? = .Dark) {
+		self.init(image: nil, images: nil, dataSource: dataSource, startIndex: startIndex, backgroundBlurStyle: backgroundBlurStyle)
+	}
+	
     public convenience init(images: [UIImage], startIndex: Int? = nil, backgroundBlurStyle: UIBlurEffectStyle? = .Dark) {
         self.init(image: nil, images: images, startIndex: startIndex, backgroundBlurStyle: backgroundBlurStyle)
     }
@@ -41,7 +51,7 @@ public final class Agrume: UIViewController {
         self.init(image: nil, imageURLs: imageURLs, startIndex: startIndex, backgroundBlurStyle: backgroundBlurStyle)
     }
 
-    private init(image: UIImage? = nil, imageURL: NSURL? = nil, images: [UIImage]? = nil, imageURLs: [NSURL]? = nil,
+	private init(image: UIImage? = nil, imageURL: NSURL? = nil, images: [UIImage]? = nil, dataSource: AgrumeDataSource? = nil, imageURLs: [NSURL]? = nil,
                  startIndex: Int? = nil, backgroundBlurStyle: UIBlurEffectStyle? = .Dark) {
         self.images = images
         if let image = image {
@@ -52,6 +62,7 @@ public final class Agrume: UIViewController {
             self.imageURLs = [imageURL]
         }
 
+		self.dataSource = dataSource
         self.startIndex = startIndex
         self.backgroundBlurStyle = backgroundBlurStyle!
         super.init(nibName: nil, bundle: nil)
@@ -174,7 +185,11 @@ public final class Agrume: UIViewController {
             animated: true)
     }
     
-
+	public func reload() {
+		dispatch_async (dispatch_get_main_queue()) {
+			self.collectionView.reloadData()
+		}
+	}
 }
 
 extension Agrume {
@@ -279,6 +294,11 @@ extension Agrume: UICollectionViewDataSource {
     // MARK: UICollectionViewDataSource
 
     public func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+		
+		if let dataSource = self.dataSource {
+			return dataSource.numberOfImages
+		}
+		
         return images?.count > 0 ? images.count : imageURLs.count
     }
 
@@ -302,7 +322,18 @@ extension Agrume: UICollectionViewDataSource {
             } else {
                 downloadImage(imageURLs[indexPath.row], completion: completion)
             }
-        }
+		} else if let dataSource = self.dataSource {
+			spinner.alpha = 1
+			let index = indexPath.row
+			
+			dataSource.imageForIndex(index) { [weak self] image in
+				if collectionView.indexPathsForVisibleItems().contains(indexPath) {
+					
+					cell.image = image
+					self?.spinner.alpha = 0
+				}
+			}
+		}
         // Only allow panning if horizontal swiping fails. Horizontal swiping is only active for zoomed in images
         collectionView.panGestureRecognizer.requireGestureRecognizerToFail(cell.swipeGesture)
         cell.dismissAfterFlick = dismissAfterFlick
@@ -364,6 +395,24 @@ extension Agrume: UICollectionViewDelegate {
 
     public func collectionView(collectionView: UICollectionView, willDisplayCell cell: UICollectionViewCell, forItemAtIndexPath indexPath: NSIndexPath) {
         didScroll?(index: indexPath.row)
+		
+		if let dataSource = self.dataSource {
+			let collectionViewCount = collectionView.numberOfItemsInSection(0)
+			let dataSourceCount = dataSource.numberOfImages
+			
+			guard collectionViewCount != dataSourceCount // if dataSource hasn't changed the amount of images then there is no need to reload (we assume that the same number shall result in the same data)
+				else {
+					return
+			}
+			
+			if indexPath.row >= dataSourceCount { // if the dataSource number of images has been decreased and we got out of bounds
+				showImageAtIndex(dataSourceCount - 1)
+				reload()
+			} else if indexPath.row == collectionViewCount - 1 { // if we are at the last element of the collection but we are not out of bounds
+				reload()
+			}
+
+		}
     }
 
 }
