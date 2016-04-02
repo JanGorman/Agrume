@@ -327,12 +327,12 @@ extension Agrume: UICollectionViewDataSource {
 			let index = indexPath.row
 			
 			dataSource.imageForIndex(index) { [weak self] image in
-				dispatch_async(dispatch_get_main_queue()) {
-					if collectionView.indexPathsForVisibleItems().contains(indexPath) {
-						cell.image = image
-						self?.spinner.alpha = 0
-					}
-				}
+        dispatch_async(dispatch_get_main_queue()) {
+          if collectionView.indexPathsForVisibleItems().contains(indexPath) {
+            cell.image = image
+            self?.spinner.alpha = 0
+          }
+        }
 			}
 		}
     // Only allow panning if horizontal swiping fails. Horizontal swiping is only active for zoomed in images
