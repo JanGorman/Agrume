@@ -15,7 +15,18 @@ public protocol AgrumeDataSource {
   /// - Parameter index: The index (collection view item) being displayed
   /// - Parameter completion: The completion that returns the image to be shown at the index
 	func imageForIndex(index: Int, completion: (UIImage?) -> Void)
+  
+  
+  // Return the image that is used as backgroundSnapshot image 
+  func backgroundImage() -> UIImage?
 
+}
+
+extension  AgrumeDataSource {
+  
+  func backgroundImage() -> UIImage?{
+    return UIApplication.sharedApplication().delegate?.window??.rootViewController?.view.snapshot()
+  }
 }
 
 public final class Agrume: UIViewController {
@@ -154,8 +165,8 @@ public final class Agrume: UIViewController {
   private var initialOrientation: UIDeviceOrientation!
 
   public func showFrom(viewController: UIViewController) {
-      backgroundSnapshot = UIApplication.sharedApplication().delegate?.window??.rootViewController?.view.snapshot()
-
+      backgroundSnapshot = dataSource?.backgroundImage()
+    
       view.userInteractionEnabled = false
       initialOrientation = UIDeviceOrientation(rawValue: UIApplication.sharedApplication().statusBarOrientation.rawValue)
   
