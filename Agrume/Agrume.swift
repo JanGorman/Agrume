@@ -277,8 +277,15 @@ extension Agrume {
     backgroundImageView.transform = CGAffineTransformConcat(transform, CGAffineTransformMakeScale(1, 1))
 
     spinner.center = view.center
+    
+    let width = collectionView.bounds.size.width
+    let page = Int((collectionView.contentOffset.x + (0.5 * width)) / width)
+    
     collectionView.frame = view.bounds
-
+    
+    let updatedOffset = CGFloat(page) * collectionView.frame.size.width
+    collectionView.contentOffset = CGPoint(x: updatedOffset, y: collectionView.contentOffset.y)
+    
     let layout = collectionView.collectionViewLayout as! UICollectionViewFlowLayout
     layout.itemSize = view.bounds.size
     layout.invalidateLayout()
