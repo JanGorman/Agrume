@@ -29,8 +29,8 @@ public final class Agrume: UIViewController {
   private var images: [UIImage]!
   private var imageURLs: [NSURL]!
   private var startIndex: Int?
-  private var backgroundBlurStyle: UIBlurEffectStyle!
-  private var dataSource: AgrumeDataSource?
+  private let backgroundBlurStyle: UIBlurEffectStyle
+  private let dataSource: AgrumeDataSource?
     
   public typealias DownloadCompletion = (image: UIImage?) -> Void
     
@@ -46,8 +46,10 @@ public final class Agrume: UIViewController {
       self.init(image: nil, imageURL: imageURL, backgroundBlurStyle: backgroundBlurStyle)
   }
 
-	public convenience init(dataSource: AgrumeDataSource, startIndex: Int? = nil, backgroundBlurStyle: UIBlurEffectStyle? = .Dark) {
-		self.init(image: nil, images: nil, dataSource: dataSource, startIndex: startIndex, backgroundBlurStyle: backgroundBlurStyle)
+	public convenience init(dataSource: AgrumeDataSource, startIndex: Int? = nil,
+	                        backgroundBlurStyle: UIBlurEffectStyle? = .Dark) {
+		self.init(image: nil, images: nil, dataSource: dataSource, startIndex: startIndex,
+		          backgroundBlurStyle: backgroundBlurStyle)
 	}
 	
   public convenience init(images: [UIImage], startIndex: Int? = nil, backgroundBlurStyle: UIBlurEffectStyle? = .Dark) {
@@ -58,8 +60,10 @@ public final class Agrume: UIViewController {
       self.init(image: nil, imageURLs: imageURLs, startIndex: startIndex, backgroundBlurStyle: backgroundBlurStyle)
   }
 
-	private init(image: UIImage? = nil, imageURL: NSURL? = nil, images: [UIImage]? = nil, dataSource: AgrumeDataSource? = nil,
-	             imageURLs: [NSURL]? = nil, startIndex: Int? = nil, backgroundBlurStyle: UIBlurEffectStyle? = .Dark) {
+	private init(image: UIImage? = nil, imageURL: NSURL? = nil, images: [UIImage]? = nil,
+	             dataSource: AgrumeDataSource? = nil, imageURLs: [NSURL]? = nil, startIndex: Int? = nil,
+	             backgroundBlurStyle: UIBlurEffectStyle? = .Dark) {
+    assert(backgroundBlurStyle != nil)
     self.images = images
     if let image = image {
       self.images = [image]
@@ -73,6 +77,8 @@ public final class Agrume: UIViewController {
     self.startIndex = startIndex
     self.backgroundBlurStyle = backgroundBlurStyle!
     super.init(nibName: nil, bundle: nil)
+    
+    UIDevice.currentDevice().beginGeneratingDeviceOrientationNotifications()
 
     NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(Agrume.orientationDidChange),
                                                      name: UIDeviceOrientationDidChangeNotification, object: nil)
@@ -80,23 +86,40 @@ public final class Agrume: UIViewController {
 
   deinit {
     downloadTask?.cancel()
+    UIDevice.currentDevice().endGeneratingDeviceOrientationNotifications()
     NSNotificationCenter.defaultCenter().removeObserver(self)
   }
 
   required public init?(coder aDecoder: NSCoder) {
-    super.init(coder: aDecoder)
+    fatalError("Not implemented")
+  }
+
+  private func frameForCurrentDeviceOrientation() -> CGRect {
+    let bounds = view.bounds
+    if UIDeviceOrientationIsLandscape(currentDeviceOrientation()) {
+      if bounds.width / bounds.height > bounds.height / bounds.width {
+        return bounds
+      } else {
+        return CGRect(origin: bounds.origin, size: CGSize(width: bounds.height, height: bounds.width))
+      }
+    }
+    return bounds
+  }
+
+  private func currentDeviceOrientation() -> UIDeviceOrientation {
+    return UIDevice.currentDevice().orientation
   }
 
   private var backgroundSnapshot: UIImage!
   private var backgroundImageView: UIImageView!
   private lazy var blurContainerView: UIView = {
-    let view = UIView(frame: self.view.bounds)
+    let view = UIView(frame: self.view.frame)
     view.autoresizingMask = [.FlexibleWidth, .FlexibleHeight]
     return view
   }()
   private lazy var blurView: UIVisualEffectView = {
     let blurView = UIVisualEffectView(effect: UIBlurEffect(style: self.backgroundBlurStyle))
-    blurView.frame = self.view.bounds
+    blurView.frame = self.view.frame
     blurView.autoresizingMask = [.FlexibleWidth, .FlexibleHeight]
     return blurView
   }()
@@ -105,9 +128,9 @@ public final class Agrume: UIViewController {
     layout.minimumInteritemSpacing = 0
     layout.minimumLineSpacing = 0
     layout.scrollDirection = .Horizontal
-    layout.itemSize = self.view.bounds.size
+    layout.itemSize = self.view.frame.size
 
-    let collectionView = UICollectionView(frame: self.view.bounds, collectionViewLayout: layout)
+    let collectionView = UICollectionView(frame: self.view.frame, collectionViewLayout: layout)
     collectionView.registerClass(AgrumeCell.self, forCellWithReuseIdentifier: Agrume.ReuseIdentifier)
     collectionView.dataSource = self
     collectionView.delegate = self
@@ -129,9 +152,8 @@ public final class Agrume: UIViewController {
 
   override public func viewDidLoad() {
     super.viewDidLoad()
-
     view.autoresizingMask = [.FlexibleHeight, .FlexibleWidth]
-    backgroundImageView = UIImageView(frame: view.bounds)
+    backgroundImageView = UIImageView(frame: view.frame)
     backgroundImageView.image = backgroundSnapshot
     view.addSubview(backgroundImageView)
     blurContainerView.addSubview(blurView)
@@ -148,41 +170,44 @@ public final class Agrume: UIViewController {
   private var lastUsedOrientation: UIDeviceOrientation?
 
   public override func viewWillAppear(animated: Bool) {
-      lastUsedOrientation = UIDeviceOrientation(rawValue: UIApplication.sharedApplication().statusBarOrientation.rawValue)
+    lastUsedOrientation = currentDeviceOrientation()
+  }
+
+  private func deviceOrientationFromStatusBarOrientation() -> UIDeviceOrientation {
+    return UIDeviceOrientation(rawValue: UIApplication.sharedApplication().statusBarOrientation.rawValue)!
   }
 
   private var initialOrientation: UIDeviceOrientation!
 
   public func showFrom(viewController: UIViewController) {
-      backgroundSnapshot = UIApplication.sharedApplication().delegate?.window??.rootViewController?.view.snapshot()
+    backgroundSnapshot = UIApplication.sharedApplication().delegate?.window??.rootViewController?.view.snapshot()
+    view.frame = frameForCurrentDeviceOrientation()
+    view.userInteractionEnabled = false
+    initialOrientation = deviceOrientationFromStatusBarOrientation()
+    updateLayoutsForCurrentOrientation()
 
-      view.userInteractionEnabled = false
-      initialOrientation = UIDeviceOrientation(rawValue: UIApplication.sharedApplication().statusBarOrientation.rawValue)
+    dispatch_async(dispatch_get_main_queue()) {
+      self.collectionView.alpha = 0
+      self.collectionView.frame = self.view.frame
+      let scaling = Agrume.InitialScalingToExpandFrom
+      self.collectionView.transform = CGAffineTransformMakeScale(scaling, scaling)
   
-      dispatch_async(dispatch_get_main_queue()) {
-        self.collectionView.alpha = 0
-        self.collectionView.frame = self.view.bounds
-        let scaling = Agrume.InitialScalingToExpandFrom
-        self.collectionView.transform = CGAffineTransformMakeScale(scaling, scaling)
-    
-        viewController.presentViewController(self, animated: false) {
-          UIView.animateWithDuration(Agrume.TransitionAnimationDuration,
-                                     delay: 0,
-                                     options: [.BeginFromCurrentState, .CurveEaseInOut],
-                                     animations: {
-                                      [weak self] in
+      viewController.presentViewController(self, animated: false) {
+        UIView.animateWithDuration(Agrume.TransitionAnimationDuration,
+                                   delay: 0,
+                                   options: [.BeginFromCurrentState, .CurveEaseInOut],
+                                   animations: { [weak self] in
                                       self?.collectionView.alpha = 1
                                       self?.collectionView.transform = CGAffineTransformIdentity
-                                     }, completion: {
-                                      [weak self] finished in
+                                   }, completion: { [weak self] finished in
                                       self?.view.userInteractionEnabled = finished
-                                     })
-          }
+                                   })
         }
+      }
   }
 
   public func dismiss() {
-      self.dismissAfterFlick()
+    self.dismissAfterFlick()
   }
 
   public func showImageAtIndex(index : Int) {
@@ -202,33 +227,31 @@ extension Agrume {
 
   // MARK: Rotation
 
-  func orientationDidChange() {
-    let orientation = UIDevice.currentDevice().orientation
+  @objc private func orientationDidChange() {
+    let orientation = currentDeviceOrientation()
     guard let lastOrientation = lastUsedOrientation else { return }
     let landscapeToLandscape = UIDeviceOrientationIsLandscape(orientation) && UIDeviceOrientationIsLandscape(lastOrientation)
     let portraitToPortrait = UIDeviceOrientationIsPortrait(orientation) && UIDeviceOrientationIsPortrait(lastOrientation)
     guard (landscapeToLandscape || portraitToPortrait) && orientation != lastUsedOrientation else { return }
     lastUsedOrientation = orientation
-    UIView.animateWithDuration(0.6) {
-      [weak self] in
+    UIView.animateWithDuration(0.6) { [weak self] in
       self?.updateLayoutsForCurrentOrientation()
     }
   }
 
-  public override func viewWillTransitionToSize(size: CGSize, withTransitionCoordinator
-    coordinator: UIViewControllerTransitionCoordinator) {
+  public override func viewWillTransitionToSize(size: CGSize,
+                                                withTransitionCoordinator coordinator: UIViewControllerTransitionCoordinator) {
     coordinator.animateAlongsideTransition({ [weak self] _ in
       self?.updateLayoutsForCurrentOrientation()
-    }) { [weak self] _ in
-      let statusBarOrientation = UIApplication.sharedApplication().statusBarOrientation.rawValue
-      self?.lastUsedOrientation = UIDeviceOrientation(rawValue: statusBarOrientation)
-    }
+    }, completion: { [weak self] _ in
+      self?.lastUsedOrientation = self?.deviceOrientationFromStatusBarOrientation()
+    })
   }
 
-  func updateLayoutsForCurrentOrientation() {
+  private func updateLayoutsForCurrentOrientation() {
     var transform = CGAffineTransformIdentity
     if initialOrientation == .Portrait {
-      switch (UIApplication.sharedApplication().statusBarOrientation) {
+      switch (currentDeviceOrientation()) {
       case .LandscapeLeft:
         transform = CGAffineTransformMakeRotation(CGFloat(M_PI_2))
       case .LandscapeRight:
@@ -236,10 +259,10 @@ extension Agrume {
       case .PortraitUpsideDown:
         transform = CGAffineTransformMakeRotation(CGFloat(M_PI))
       default:
-          break
+        break
       }
     } else if initialOrientation == .PortraitUpsideDown {
-      switch (UIApplication.sharedApplication().statusBarOrientation) {
+      switch (currentDeviceOrientation()) {
       case .LandscapeLeft:
         transform = CGAffineTransformMakeRotation(CGFloat(-M_PI_2))
       case .LandscapeRight:
@@ -250,7 +273,7 @@ extension Agrume {
         break
       }
     } else if initialOrientation == .LandscapeLeft {
-      switch (UIApplication.sharedApplication().statusBarOrientation) {
+      switch (currentDeviceOrientation()) {
       case .LandscapeRight:
         transform = CGAffineTransformMakeRotation(CGFloat(M_PI))
       case .Portrait:
@@ -261,7 +284,7 @@ extension Agrume {
         break
       }
     } else if initialOrientation == .LandscapeRight {
-      switch (UIApplication.sharedApplication().statusBarOrientation) {
+      switch (currentDeviceOrientation()) {
       case .LandscapeLeft:
         transform = CGAffineTransformMakeRotation(CGFloat(M_PI))
       case .Portrait:
@@ -277,24 +300,20 @@ extension Agrume {
     backgroundImageView.transform = CGAffineTransformConcat(transform, CGAffineTransformMakeScale(1, 1))
 
     spinner.center = view.center
-    
-    let width = collectionView.bounds.size.width
-    let page = Int((collectionView.contentOffset.x + (0.5 * width)) / width)
-    
-    collectionView.frame = view.bounds
-    
-    let updatedOffset = CGFloat(page) * collectionView.frame.size.width
-    collectionView.contentOffset = CGPoint(x: updatedOffset, y: collectionView.contentOffset.y)
-    
-    let layout = collectionView.collectionViewLayout as! UICollectionViewFlowLayout
-    layout.itemSize = view.bounds.size
-    layout.invalidateLayout()
-    // Apply update two runloops into the future
-    dispatch_async(dispatch_get_main_queue()) {
-      dispatch_async(dispatch_get_main_queue()) { [unowned self] in
-        for visibleCell in self.collectionView.visibleCells() as! [AgrumeCell] {
-          visibleCell.updateScrollViewAndImageViewForCurrentMetrics()
-        }
+
+    collectionView.performBatchUpdates({ [unowned self] in
+      self.collectionView.collectionViewLayout.invalidateLayout()
+      self.collectionView.frame = self.view.frame
+      let width = self.collectionView.frame.width
+      let page = Int((self.collectionView.contentOffset.x + (0.5 * width)) / width)
+      let updatedOffset = CGFloat(page) * self.collectionView.frame.width
+      self.collectionView.contentOffset = CGPoint(x: updatedOffset, y: self.collectionView.contentOffset.y)
+
+      let layout = self.collectionView.collectionViewLayout as! UICollectionViewFlowLayout
+      layout.itemSize = self.view.frame.size
+    }) { _ in
+      for visibleCell in self.collectionView.visibleCells() as! [AgrumeCell] {
+        visibleCell.updateScrollViewAndImageViewForCurrentMetrics()
       }
     }
   }
@@ -310,10 +329,12 @@ extension Agrume: UICollectionViewDataSource {
     return images?.count > 0 ? images.count : imageURLs.count
   }
 
-  public func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
+  public func collectionView(collectionView: UICollectionView,
+                             cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
     downloadTask?.cancel()
 
-    let cell = collectionView.dequeueReusableCellWithReuseIdentifier(Agrume.ReuseIdentifier, forIndexPath: indexPath) as! AgrumeCell
+    let cell = collectionView.dequeueReusableCellWithReuseIdentifier(Agrume.ReuseIdentifier,
+                                                                     forIndexPath: indexPath) as! AgrumeCell
 
     if let images = self.images {
       cell.image = images[indexPath.row]
