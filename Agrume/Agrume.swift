@@ -39,7 +39,7 @@ public final class Agrume: UIViewController {
   public var download: ((url: NSURL, completion: DownloadCompletion) -> Void)?
   public var statusBarStyle: UIStatusBarStyle? {
     didSet {
-      self.setNeedsStatusBarAppearanceUpdate()
+      setNeedsStatusBarAppearanceUpdate()
     }
   }
 
@@ -441,10 +441,7 @@ extension Agrume {
 
   // MARK: Status Bar
   public override func preferredStatusBarStyle() -> UIStatusBarStyle {
-    if let statusBarStyle = self.statusBarStyle {
-      return statusBarStyle
-    }
-    return super.preferredStatusBarStyle()
+    return statusBarStyle ?? super.preferredStatusBarStyle()
   }
 
 }
