@@ -31,12 +31,17 @@ public final class Agrume: UIViewController {
   private var startIndex: Int?
   private let backgroundBlurStyle: UIBlurEffectStyle
   private let dataSource: AgrumeDataSource?
-    
+
   public typealias DownloadCompletion = (image: UIImage?) -> Void
     
   public var didDismiss: (() -> Void)?
   public var didScroll: ((index: Int) -> Void)?
   public var download: ((url: NSURL, completion: DownloadCompletion) -> Void)?
+  public var statusBarStyle: UIStatusBarStyle? {
+    didSet {
+      self.setNeedsStatusBarAppearanceUpdate()
+    }
+  }
 
   public convenience init(image: UIImage, backgroundBlurStyle: UIBlurEffectStyle? = .Dark) {
       self.init(image: image, imageURL: nil, backgroundBlurStyle: backgroundBlurStyle)
@@ -428,6 +433,18 @@ extension Agrume: UICollectionViewDelegate {
 				reload()
 			}
 		}
+  }
+
+}
+
+extension Agrume {
+
+  // MARK: Status Bar
+  public override func preferredStatusBarStyle() -> UIStatusBarStyle {
+    if let statusBarStyle = self.statusBarStyle {
+      return statusBarStyle
+    }
+    return super.preferredStatusBarStyle()
   }
 
 }
