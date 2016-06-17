@@ -97,7 +97,7 @@ agrume.showFrom(self)
 
 ```
 
-You can customize the status bar appearance when displaying the zoomed in view. `Agrume` has a `statusBar` property:
+You can customize the status bar appearance when displaying the zoomed in view. `Agrume` has a `statusBarStyle` property:
 
 ```swift
 let agrume = Agrume(image: image)
