@@ -97,6 +97,14 @@ agrume.showFrom(self)
 
 ```
 
+You can customize the status bar appearance when displaying the zoomed in view. `Agrume` has a `statusBar` property:
+
+```swift
+let agrume = Agrume(image: image)
+agrume.statusBarStyle = .LightContent
+agrume.showFrom(self)
+```
+
 ## Licence
 
 Agrume is released under the MIT license. See LICENSE for details
