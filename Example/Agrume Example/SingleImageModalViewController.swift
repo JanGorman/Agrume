@@ -10,11 +10,11 @@ final class SingleImageModalViewController: UIViewController {
 
     @IBAction func openImage(sender: AnyObject) {
         let agrume = Agrume(image: UIImage(named: "MapleBacon")!)
-        agrume.showFrom(self, backgroundSnapshotVC: self.navigationController)
+        agrume.showFrom(self, backgroundSnapshotVC: navigationController)
     }
 
     @IBAction func close(sender: AnyObject) {
-        self.presentingViewController?.dismissViewControllerAnimated(true, completion: .None)
+        presentingViewController?.dismissViewControllerAnimated(true, completion: .None)
     }
 
 }

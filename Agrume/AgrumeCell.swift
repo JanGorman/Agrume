@@ -5,6 +5,13 @@
 
 import UIKit
 
+protocol AgrumeCellDelegate: class {
+  
+  func dismissAfterFlick()
+  func dismissAfterTap()
+  
+}
+
 final class AgrumeCell: UICollectionViewCell {
 
   private static let TargetZoomForDoubleTap: CGFloat = 3
@@ -37,19 +44,15 @@ final class AgrumeCell: UICollectionViewCell {
       updateScrollViewAndImageViewForCurrentMetrics()
     }
   }
-  var dismissAfterFlick: (() -> Void)!
-  var dismissByExpanding: (() -> Void)!
+  weak var delegate: AgrumeCellDelegate?
 
   override init(frame: CGRect) {
     super.init(frame: frame)
 
-    backgroundColor = UIColor.clearColor()
-
+    backgroundColor = .clearColor()
     contentView.addSubview(scrollView)
     scrollView.addSubview(imageView)
-
     setupGestureRecognizers()
-
     animator = UIDynamicAnimator(referenceView: scrollView)
   }
 
@@ -64,18 +67,18 @@ final class AgrumeCell: UICollectionViewCell {
   }
 
   private lazy var singleTapGesture: UITapGestureRecognizer = {
-    let singleTapGesture = UITapGestureRecognizer(target: self, action: #selector(AgrumeCell.singleTap(_:)))
+    let singleTapGesture = UITapGestureRecognizer(target: self, action: #selector(singleTap))
     singleTapGesture.requireGestureRecognizerToFail(self.doubleTapGesture)
     singleTapGesture.delegate = self
     return singleTapGesture
   }()
   private lazy var doubleTapGesture: UITapGestureRecognizer = {
-    let doubleTapGesture = UITapGestureRecognizer(target: self, action: #selector(AgrumeCell.doubleTap(_:)))
+    let doubleTapGesture = UITapGestureRecognizer(target: self, action: #selector(doubleTap))
     doubleTapGesture.numberOfTapsRequired = 2
     return doubleTapGesture
   }()
   private lazy var panGesture: UIPanGestureRecognizer = {
-    let panGesture = UIPanGestureRecognizer(target: self, action: #selector(AgrumeCell.dismissPan(_:)))
+    let panGesture = UIPanGestureRecognizer(target: self, action: #selector(dismissPan))
     panGesture.maximumNumberOfTouches = 1
     panGesture.delegate = self
     return panGesture
@@ -147,9 +150,9 @@ extension AgrumeCell: UIGestureRecognizerDelegate {
     contentView.userInteractionEnabled = false
 
     CATransaction.begin()
-    CATransaction.setCompletionBlock { [weak self] in
-      self?.scrollView.contentInset = targetInsets
-      self?.contentView.userInteractionEnabled = true
+    CATransaction.setCompletionBlock { [unowned self] in
+      self.scrollView.contentInset = targetInsets
+      self.contentView.userInteractionEnabled = true
     }
     scrollView.zoomToRect(targetZoom, animated: true)
     CATransaction.commit()
@@ -188,9 +191,9 @@ extension AgrumeCell: UIGestureRecognizerDelegate {
     if minContentWidth > contentView.bounds.width && minContentHeight > contentView.bounds.height {
       inset = UIEdgeInsetsZero
     } else {
-      let verticalDiff = max(boundsHeight - minContentHeight, 0)
-      let horizontalDiff = max(boundsWidth - minContentWidth, 0)
-      inset = UIEdgeInsets(top: verticalDiff / 2, left: horizontalDiff / 2, bottom: verticalDiff / 2, right: horizontalDiff / 2)
+      let verticalDiff = max(boundsHeight - minContentHeight, 0) / 2
+      let horizontalDiff = max(boundsWidth - minContentWidth, 0) / 2
+      inset = UIEdgeInsets(top: verticalDiff, left: horizontalDiff, bottom: verticalDiff, right: horizontalDiff)
     }
     return inset
   }
@@ -201,9 +204,9 @@ extension AgrumeCell: UIGestureRecognizerDelegate {
 
   private func dismiss() {
     if flickedToDismiss {
-      dismissAfterFlick()
+      delegate?.dismissAfterFlick()
     } else {
-      dismissByExpanding()
+      delegate?.dismissAfterTap()
     }
   }
 
@@ -256,11 +259,11 @@ extension AgrumeCell: UIGestureRecognizerDelegate {
   }
   
   private func pushAction() {
-    if self.isImageViewOffscreen() {
-      self.animator.removeAllBehaviors()
-      self.attachmentBehavior = nil
-      self.imageView.removeFromSuperview()
-      self.dismiss()
+    if isImageViewOffscreen() {
+      animator.removeAllBehaviors()
+      attachmentBehavior = nil
+      imageView.removeFromSuperview()
+      dismiss()
     }
   }
 
@@ -283,14 +286,14 @@ extension AgrumeCell: UIGestureRecognizerDelegate {
                                  usingSpringWithDamping: 0.7,
                                  initialSpringVelocity: 0,
                                  options: [.AllowUserInteraction, .BeginFromCurrentState],
-                                 animations: {
-                                  if !self.isDraggingImage {
-                                    self.imageView.transform = CGAffineTransformIdentity
-                                    if !self.scrollView.dragging && !self.scrollView.decelerating {
-                                      self.imageView.center = CGPoint(x: self.scrollView.contentSize.width / 2,
-                                        y: self.scrollView.contentSize.height / 2)
-                                      self.updateScrollViewAndImageViewForCurrentMetrics()
-                                    }
+                                 animations: { [unowned self] in
+                                  guard !self.isDraggingImage else { return }
+                                  
+                                  self.imageView.transform = CGAffineTransformIdentity
+                                  if !self.scrollView.dragging && !self.scrollView.decelerating {
+                                    self.imageView.center = CGPoint(x: self.scrollView.contentSize.width / 2,
+                                                                    y: self.scrollView.contentSize.height / 2)
+                                    self.updateScrollViewAndImageViewForCurrentMetrics()
                                   }
                                 }, completion: nil)
       }
@@ -298,7 +301,7 @@ extension AgrumeCell: UIGestureRecognizerDelegate {
 
   func updateScrollViewAndImageViewForCurrentMetrics() {
     scrollView.frame = contentView.bounds
-    if let image = self.imageView.image {
+    if let image = imageView.image {
       imageView.frame = resizedFrameForSize(image.size)
     }
     scrollView.contentSize = imageView.frame.size

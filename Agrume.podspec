@@ -1,7 +1,7 @@
 Pod::Spec.new do |s|
 
   s.name         = "Agrume"
-  s.version      = "2.5.0"
+  s.version      = "2.5.1"
   s.summary      = "An iOS image viewer written in Swift."
 
   s.description  = <<-DESC

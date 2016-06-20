@@ -140,7 +140,7 @@ public final class Agrume: UIViewController {
     collectionView.dataSource = self
     collectionView.delegate = self
     collectionView.pagingEnabled = true
-    collectionView.backgroundColor = UIColor.clearColor()
+    collectionView.backgroundColor = .clearColor()
     collectionView.delaysContentTouches = false
     collectionView.showsHorizontalScrollIndicator = false
     return collectionView
@@ -370,44 +370,13 @@ extension Agrume: UICollectionViewDataSource {
 		}
     // Only allow panning if horizontal swiping fails. Horizontal swiping is only active for zoomed in images
     collectionView.panGestureRecognizer.requireGestureRecognizerToFail(cell.swipeGesture)
-    cell.dismissAfterFlick = dismissAfterFlick
-    cell.dismissByExpanding = dismissByExpanding
+    cell.delegate = self
     return cell
   }
 
   private func downloadImage(url: NSURL, completion: DownloadCompletion) {
     downloadTask = ImageDownloader.downloadImage(url) { image in
       completion(image: image)
-    }
-  }
-
-  private func dismissAfterFlick() {
-    UIView.animateWithDuration(Agrume.TransitionAnimationDuration,
-                               delay: 0,
-                               options: [.BeginFromCurrentState, .CurveEaseInOut],
-                               animations: {
-                                self.collectionView.alpha = 0
-                                self.blurContainerView.alpha = 0
-                               }, completion: dismissCompletion)
-  }
-
-  private func dismissByExpanding() {
-    view.userInteractionEnabled = false
-
-    UIView.animateWithDuration(Agrume.TransitionAnimationDuration,
-                               delay: 0,
-                               options: [.BeginFromCurrentState, .CurveEaseInOut],
-                               animations: {
-                                self.collectionView.alpha = 0
-                                self.blurContainerView.alpha = 0
-                                let scaling = Agrume.MaxScalingForExpandingOffscreen
-                                self.collectionView.transform = CGAffineTransformMakeScale(scaling, scaling)
-                               }, completion: dismissCompletion)
-  }
-  
-  private func dismissCompletion(finished: Bool) {
-    presentingViewController?.dismissViewControllerAnimated(false) {
-      self.didDismiss?()
     }
   }
 
@@ -435,6 +404,40 @@ extension Agrume: UICollectionViewDelegate {
 		}
   }
 
+}
+
+extension Agrume: AgrumeCellDelegate {
+  
+  private func dismissCompletion(finished: Bool) {
+    presentingViewController?.dismissViewControllerAnimated(false) {
+      self.didDismiss?()
+    }
+  }
+
+  func dismissAfterFlick() {
+    UIView.animateWithDuration(Agrume.TransitionAnimationDuration,
+                               delay: 0,
+                               options: [.BeginFromCurrentState, .CurveEaseInOut],
+                               animations: { [unowned self] in
+                                self.collectionView.alpha = 0
+                                self.blurContainerView.alpha = 0
+      }, completion: dismissCompletion)
+  }
+  
+  func dismissAfterTap() {
+    view.userInteractionEnabled = false
+    
+    UIView.animateWithDuration(Agrume.TransitionAnimationDuration,
+                               delay: 0,
+                               options: [.BeginFromCurrentState, .CurveEaseInOut],
+                               animations: { [unowned self] in
+                                self.collectionView.alpha = 0
+                                self.blurContainerView.alpha = 0
+                                let scaling = Agrume.MaxScalingForExpandingOffscreen
+                                self.collectionView.transform = CGAffineTransformMakeScale(scaling, scaling)
+      }, completion: dismissCompletion)
+  }
+  
 }
 
 extension Agrume {
