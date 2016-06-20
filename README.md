@@ -97,6 +97,14 @@ agrume.showFrom(self)
 
 ```
 
+When showing the Agrume view controller, it'll default to taking a snapshot of the root view and blurring that. You can customize this behaviour by passing in a different view that it will blur and display:
+
+```swift
+let agrume = Agrume(image: image)
+agrume.showFrom(self, backgroundSnapshotVC: self)
+
+```
+
 You can customize the status bar appearance when displaying the zoomed in view. `Agrume` has a `statusBarStyle` property:
 
 ```swift
