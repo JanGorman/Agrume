@@ -245,7 +245,7 @@
             </objects>
             <point key="canvasLocation" x="477" y="107"/>
         </scene>
-        <!--Single Image Modal View Controller-->
+        <!--Demonstrate correct background blur-->
         <scene sceneID="hAb-Jd-kU7">
             <objects>
                 <viewController id="oam-Ti-ubu" customClass="SingleImageModalViewController" customModule="Agrume_Example" customModuleProvider="target" sceneMemberID="viewController">
@@ -274,7 +274,7 @@
                             <constraint firstItem="3k9-ik-WIf" firstAttribute="centerY" secondItem="T8y-kj-8IX" secondAttribute="centerY" id="mvl-qX-cDr"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" id="QSH-xK-lcY">
+                    <navigationItem key="navigationItem" title="Demonstrate correct background blur" id="QSH-xK-lcY">
                         <barButtonItem key="leftBarButtonItem" title="Close" id="fSf-XJ-lYH">
                             <connections>
                                 <action selector="close:" destination="oam-Ti-ubu" id="VZx-hM-cFy"/>

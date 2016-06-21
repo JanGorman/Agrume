@@ -185,7 +185,7 @@ public final class Agrume: UIViewController {
   private var initialOrientation: UIDeviceOrientation!
 
   public func showFrom(viewController: UIViewController, backgroundSnapshotVC: UIViewController? = .None) {
-    backgroundSnapshot = (backgroundSnapshotVC ?? UIApplication.sharedApplication().delegate?.window??.rootViewController)?.view.snapshot()
+    backgroundSnapshot = (backgroundSnapshotVC ?? viewControllerForSnapshot(fromViewController: viewController))?.view.snapshot()
     view.frame = frameForCurrentDeviceOrientation()
     view.userInteractionEnabled = false
     initialOrientation = deviceOrientationFromStatusBarOrientation()
@@ -209,6 +209,14 @@ public final class Agrume: UIViewController {
                                    })
         }
       }
+  }
+
+  private func viewControllerForSnapshot(fromViewController viewController: UIViewController) -> UIViewController? {
+    var presentingVC = viewController.view.window?.rootViewController
+    while presentingVC?.presentedViewController != nil {
+      presentingVC = presentingVC?.presentedViewController
+    }
+    return presentingVC
   }
 
   public func dismiss() {
