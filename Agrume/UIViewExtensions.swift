@@ -12,7 +12,7 @@ extension UIView {
     drawViewHierarchyInRect(bounds, afterScreenUpdates: true)
     let snapshot = UIGraphicsGetImageFromCurrentImageContext()
     UIGraphicsEndImageContext()
-    return snapshot
+    return snapshot!
   }
 
 }
