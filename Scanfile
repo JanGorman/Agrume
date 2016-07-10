@@ -1,0 +1,7 @@
+# For more information about this configuration visit
+# https://github.com/fastlane/scan#scanfile
+
+# In general, you can use the options available
+# scan --help
+
+project 'Agrume.xcodeproj'

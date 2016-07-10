@@ -360,6 +360,8 @@ extension Agrume: UICollectionViewDataSource {
 
       if let download = download {
         download(url: imageURLs[indexPath.row], completion: completion)
+      } else if let download = AgrumeServiceLocator.shared.downloadHandler {
+        download(url: imageURLs[indexPath.row], completion: completion)
       } else {
         downloadImage(imageURLs[indexPath.row], completion: completion)
       }
