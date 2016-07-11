@@ -98,7 +98,7 @@ Instead of having to define a handler on a per instance basis you can instead se
 ```swift
 import Agrume
 
-AgrumeServiceLocator.shared.addDownloadHandler { url, completion in
+AgrumeServiceLocator.shared.setDownloadHandler { url, completion in
   // Download data, cache it and remember to call the completion
 }
 
@@ -130,6 +130,8 @@ let agrume = Agrume(image: image)
 agrume.showFrom(self, backgroundSnapshotVC: self)
 
 ```
+
+### Status Bar Appearance
 
 You can customize the status bar appearance when displaying the zoomed in view. `Agrume` has a `statusBarStyle` property:
 

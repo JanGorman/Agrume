@@ -25,7 +25,7 @@ class AgrumeServiceLocatorTests: XCTestCase {
 
   func testAgrumeUsesDownloadHandlerWhenSet() {
     var callCount = 0
-    AgrumeServiceLocator.shared.addDownloadHandler { _, _ in
+    AgrumeServiceLocator.shared.setDownloadHandler { _, _ in
       callCount += 1
     }
     
@@ -36,7 +36,7 @@ class AgrumeServiceLocatorTests: XCTestCase {
   
   func testAgrumeFallsBackToInternalWhenHandlerUnset() {
     var callCount = 0
-    AgrumeServiceLocator.shared.addDownloadHandler { _, _ in
+    AgrumeServiceLocator.shared.setDownloadHandler { _, _ in
       callCount += 1
     }
     
@@ -48,7 +48,7 @@ class AgrumeServiceLocatorTests: XCTestCase {
   
   func testAgrumePrefersClosureOverServiceLocator() {
     var callCount = 0
-    AgrumeServiceLocator.shared.addDownloadHandler { _, _ in
+    AgrumeServiceLocator.shared.setDownloadHandler { _, _ in
       callCount += 1
     }
 
