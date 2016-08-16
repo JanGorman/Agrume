@@ -189,7 +189,7 @@ extension AgrumeCell: UIGestureRecognizerDelegate {
 
     let inset: UIEdgeInsets
     if minContentWidth > contentView.bounds.width && minContentHeight > contentView.bounds.height {
-      inset = UIEdgeInsets.zero
+      inset = .zero
     } else {
       let verticalDiff = max(boundsHeight - minContentHeight, 0) / 2
       let horizontalDiff = max(boundsWidth - minContentWidth, 0) / 2
@@ -219,7 +219,7 @@ extension AgrumeCell: UIGestureRecognizerDelegate {
     if gesture.state == .began {
       isDraggingImage = imageView.frame.contains(locationInView)
       if isDraggingImage {
-        startImageDragging(locationInView, translationOffset: UIOffset.zero)
+        startImageDragging(locationInView, translationOffset: .zero)
       }
     } else if gesture.state == .changed {
       if isDraggingImage {
@@ -278,7 +278,7 @@ extension AgrumeCell: UIGestureRecognizerDelegate {
     isDraggingImage = false
 
     if !animated {
-      imageView.transform = CGAffineTransform.identity
+      imageView.transform = .identity
       imageView.center = CGPoint(x: scrollView.contentSize.width / 2, y: scrollView.contentSize.height / 2)
     } else {
       UIView.animate(withDuration: 0.7,
@@ -332,7 +332,7 @@ extension AgrumeCell: UIGestureRecognizerDelegate {
     }
 
     frame.size = CGSize(width: targetWidth, height: targetHeight)
-    frame.origin = CGPoint.zero
+    frame.origin = .zero
     return frame
   }
 

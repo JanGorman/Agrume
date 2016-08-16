@@ -14,7 +14,7 @@ public protocol AgrumeDataSource {
   ///
   /// - Parameter index: The index (collection view item) being displayed
   /// - Parameter completion: The completion that returns the image to be shown at the index
-	func imageForIndex(_ index: Int, completion: (UIImage?) -> Void)
+	func image(forIndex index: Int, completion: (UIImage?) -> Void)
 
 }
 
@@ -203,7 +203,7 @@ public final class Agrume: UIViewController {
                                    options: .beginFromCurrentState,
                                    animations: { [weak self] in
                                       self?.collectionView.alpha = 1
-                                      self?.collectionView.transform = CGAffineTransform.identity
+                                      self?.collectionView.transform = .identity
                                    }, completion: { [weak self] finished in
                                       self?.view.isUserInteractionEnabled = finished
                                    })
@@ -223,7 +223,7 @@ public final class Agrume: UIViewController {
     self.dismissAfterFlick()
   }
 
-  public func showImageAtIndex(_ index : Int) {
+  public func showImage(atIndex index : Int) {
     collectionView.scrollToItem(at: IndexPath(row: index, section: 0), at: [],
                                            animated: true)
   }
@@ -369,7 +369,7 @@ extension Agrume: UICollectionViewDataSource {
 			spinner.alpha = 1
 			let index = (indexPath as NSIndexPath).row
 			
-			dataSource.imageForIndex(index) { [weak self] image in
+        dataSource.image(forIndex: index) { [weak self] image in
         DispatchQueue.main.async {
           if collectionView.indexPathsForVisibleItems.contains(indexPath) {
             cell.image = image
@@ -406,7 +406,7 @@ extension Agrume: UICollectionViewDelegate {
 			guard collectionViewCount != dataSourceCount else { return }
 			
 			if (indexPath as NSIndexPath).row >= dataSourceCount { // if the dataSource number of images has been decreased and we got out of bounds
-				showImageAtIndex(dataSourceCount - 1)
+				showImage(atIndex: dataSourceCount - 1)
 				reload()
 			} else if (indexPath as NSIndexPath).row == collectionViewCount - 1 { // if we are at the last element of the collection but we are not out of bounds
 				reload()
