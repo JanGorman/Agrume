@@ -22,7 +22,7 @@ final class SingleImageModalViewController: UIViewController {
   }
 
   @IBAction func close(_ sender: AnyObject) {
-      presentingViewController?.dismiss(animated: true, completion: .none)
+      presentingViewController?.dismiss(animated: true, completion: nil)
   }
 
 }
