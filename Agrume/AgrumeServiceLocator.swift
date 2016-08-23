@@ -17,7 +17,7 @@ public class AgrumeServiceLocator {
   /// by passing in a different handler for said call.
   ///
   /// – Parameter handler: The download handler
-  public func setDownloadHandler(handler: DownloadHandler) {
+  public func setDownloadHandler(_ handler: DownloadHandler) {
     downloadHandler = handler
   }
   

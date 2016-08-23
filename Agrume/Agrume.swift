@@ -353,7 +353,7 @@ extension Agrume: UICollectionViewDataSource {
                                                                      for: indexPath) as! AgrumeCell
 
     if let images = self.images {
-      cell.image = images[(indexPath as NSIndexPath).row]
+      cell.image = images[indexPath.row]
     } else if let imageURLs = self.imageURLs {
       spinner.alpha = 1
       let completion: DownloadCompletion = { [weak self] image in
@@ -362,15 +362,15 @@ extension Agrume: UICollectionViewDataSource {
       }
 
       if let download = download {
-        download(imageURLs[(indexPath as NSIndexPath).row], completion)
+        download(imageURLs[indexPath.row], completion)
       } else if let download = AgrumeServiceLocator.shared.downloadHandler {
-        download(imageURLs[(indexPath as NSIndexPath).row], completion)
+        download(imageURLs[indexPath.row], completion)
       } else {
-        downloadImage(imageURLs[(indexPath as NSIndexPath).row], completion: completion)
+        downloadImage(imageURLs[indexPath.row], completion: completion)
       }
 		} else if let dataSource = self.dataSource {
 			spinner.alpha = 1
-			let index = (indexPath as NSIndexPath).row
+			let index = indexPath.row
 			
         dataSource.image(forIndex: index) { [weak self] image in
         DispatchQueue.main.async {
@@ -399,7 +399,7 @@ extension Agrume: UICollectionViewDelegate {
 
   public func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell,
                              forItemAt indexPath: IndexPath) {
-    didScroll?((indexPath as NSIndexPath).row)
+    didScroll?(indexPath.row)
 		
 		if let dataSource = self.dataSource {
       let collectionViewCount = collectionView.numberOfItems(inSection: 0)
@@ -408,10 +408,10 @@ extension Agrume: UICollectionViewDelegate {
       // if dataSource hasn't changed the number of images then there is no need to reload (we assume that the same number shall result in the same data)
 			guard collectionViewCount != dataSourceCount else { return }
 			
-			if (indexPath as NSIndexPath).row >= dataSourceCount { // if the dataSource number of images has been decreased and we got out of bounds
+			if indexPath.row >= dataSourceCount { // if the dataSource number of images has been decreased and we got out of bounds
 				showImage(atIndex: dataSourceCount - 1)
 				reload()
-			} else if (indexPath as NSIndexPath).row == collectionViewCount - 1 { // if we are at the last element of the collection but we are not out of bounds
+			} else if indexPath.row == collectionViewCount - 1 { // if we are at the last element of the collection but we are not out of bounds
 				reload()
 			}
 		}
