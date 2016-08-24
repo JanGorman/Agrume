@@ -15,7 +15,8 @@ final class ImageDownloader {
         completion(nil)
         return
       }
-      DispatchQueue.global(priority: DispatchQueue.GlobalQueuePriority.high).async {
+
+      DispatchQueue.global(qos: .userInteractive).async {
         if let data = data, let image = UIImage(data: data) {
           DispatchQueue.main.async {
               completion(image)
