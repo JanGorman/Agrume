@@ -14,9 +14,9 @@ protocol AgrumeCellDelegate: class {
 
 final class AgrumeCell: UICollectionViewCell {
 
-  fileprivate static let TargetZoomForDoubleTap: CGFloat = 3
-  fileprivate static let MinFlickDismissalVelocity: CGFloat = 800
-  fileprivate static let HighScrollVelocity: CGFloat = 1600
+  fileprivate static let targetZoomForDoubleTap: CGFloat = 3
+  fileprivate static let minFlickDismissalVelocity: CGFloat = 800
+  fileprivate static let highScrollVelocity: CGFloat = 1600
 
   fileprivate lazy var scrollView: UIScrollView = {
     let scrollView = UIScrollView(frame: self.contentView.bounds)
@@ -136,10 +136,10 @@ extension AgrumeCell: UIGestureRecognizerDelegate {
     let targetZoom: CGRect
     let targetInsets: UIEdgeInsets
     if notZoomed() {
-      let zoomWidth = contentView.bounds.width / AgrumeCell.TargetZoomForDoubleTap
-      let zoomHeight = contentView.bounds.height / AgrumeCell.TargetZoomForDoubleTap
+      let zoomWidth = contentView.bounds.width / AgrumeCell.targetZoomForDoubleTap
+      let zoomHeight = contentView.bounds.height / AgrumeCell.targetZoomForDoubleTap
       targetZoom = CGRect(x: point.x - zoomWidth / 2, y: point.y / zoomWidth / 2, width: zoomWidth, height: zoomHeight)
-      targetInsets = contentInsetForScrollView(atScale: AgrumeCell.TargetZoomForDoubleTap)
+      targetInsets = contentInsetForScrollView(atScale: AgrumeCell.targetZoomForDoubleTap)
     } else {
       let zoomWidth = contentView.bounds.width * scrollView.zoomScale
       let zoomHeight = contentView.bounds.height * scrollView.zoomScale
@@ -187,15 +187,13 @@ extension AgrumeCell: UIGestureRecognizerDelegate {
     minContentWidth *= atScale
     minContentHeight *= atScale
 
-    let inset: UIEdgeInsets
     if minContentWidth > contentView.bounds.width && minContentHeight > contentView.bounds.height {
-      inset = .zero
+      return .zero
     } else {
       let verticalDiff = max(boundsHeight - minContentHeight, 0) / 2
       let horizontalDiff = max(boundsWidth - minContentWidth, 0) / 2
-      inset = UIEdgeInsets(top: verticalDiff, left: horizontalDiff, bottom: verticalDiff, right: horizontalDiff)
+      return UIEdgeInsets(top: verticalDiff, left: horizontalDiff, bottom: verticalDiff, right: horizontalDiff)
     }
-    return inset
   }
 
   @objc fileprivate func singleTap(_ gesture: UITapGestureRecognizer) {
@@ -235,7 +233,7 @@ extension AgrumeCell: UIGestureRecognizerDelegate {
         }
       }
     } else {
-      if vectorDistance > AgrumeCell.MinFlickDismissalVelocity {
+      if vectorDistance > AgrumeCell.minFlickDismissalVelocity {
         if isDraggingImage {
           dismissWithFlick(velocity)
         } else {
@@ -282,20 +280,20 @@ extension AgrumeCell: UIGestureRecognizerDelegate {
       imageView.center = CGPoint(x: scrollView.contentSize.width / 2, y: scrollView.contentSize.height / 2)
     } else {
       UIView.animate(withDuration: 0.7,
-                                 delay: 0,
-                                 usingSpringWithDamping: 0.7,
-                                 initialSpringVelocity: 0,
-                                 options: [.allowUserInteraction, .beginFromCurrentState],
-                                 animations: { [unowned self] in
-                                  guard !self.isDraggingImage else { return }
-                                  
-                                  self.imageView.transform = CGAffineTransform.identity
-                                  if !self.scrollView.isDragging && !self.scrollView.isDecelerating {
-                                    self.imageView.center = CGPoint(x: self.scrollView.contentSize.width / 2,
-                                                                    y: self.scrollView.contentSize.height / 2)
-                                    self.updateScrollViewAndImageViewForCurrentMetrics()
-                                  }
-                                }, completion: nil)
+                     delay: 0,
+                     usingSpringWithDamping: 0.7,
+                     initialSpringVelocity: 0,
+                     options: [.allowUserInteraction, .beginFromCurrentState],
+                     animations: { [unowned self] in
+                      guard !self.isDraggingImage else { return }
+                      
+                      self.imageView.transform = CGAffineTransform.identity
+                      if !self.scrollView.isDragging && !self.scrollView.isDecelerating {
+                        self.imageView.center = CGPoint(x: self.scrollView.contentSize.width / 2,
+                                                        y: self.scrollView.contentSize.height / 2)
+                        self.updateScrollViewAndImageViewForCurrentMetrics()
+                      }
+        }, completion: nil)
       }
   }
 
@@ -398,7 +396,7 @@ extension AgrumeCell: UIScrollViewDelegate {
   }
 
   func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
-    let highVelocity = AgrumeCell.HighScrollVelocity
+    let highVelocity = AgrumeCell.highScrollVelocity
     let velocity = scrollView.panGestureRecognizer.velocity(in: scrollView.panGestureRecognizer.view)
     if notZoomed() && (fabs(velocity.x) > highVelocity || fabs(velocity.y) > highVelocity) {
       dismiss()
