@@ -76,7 +76,7 @@ import Agrume
 import MapleBacon
 
 @IBAction func openURL(_ sender: AnyObject) {
-  let agrume = Agrume(imageURL: URL(string: "https://dl.dropboxusercontent.com/u/512759/MapleBacon.png")!, backgroundBlurStyle: .light)
+  let agrume = Agrume(imageUrl: URL(string: "https://dl.dropboxusercontent.com/u/512759/MapleBacon.png")!, backgroundBlurStyle: .light)
 	agrume.download = { url, completion in
 	  ImageDownloader.downloadImage(url) { image in
 		if let image = image {

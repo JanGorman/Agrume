@@ -16,8 +16,10 @@ final class MultipleURLsCollectionViewController: UICollectionViewController {
   }
 
   private let images = [
-    ImageWithURL(image: UIImage(named: "MapleBacon")!, url: URL(string: "https://dl.dropboxusercontent.com/u/512759/MapleBacon.png")!),
-    ImageWithURL(image: UIImage(named: "EvilBacon")!, url: URL(string: "https://dl.dropboxusercontent.com/u/512759/EvilBacon.png")!)
+    ImageWithURL(image: UIImage(named: "MapleBacon")!,
+                 url: URL(string: "https://dl.dropboxusercontent.com/u/512759/MapleBacon.png")!),
+    ImageWithURL(image: UIImage(named: "EvilBacon")!,
+                 url: URL(string: "https://dl.dropboxusercontent.com/u/512759/EvilBacon.png")!)
   ]
 
   override func viewDidLoad() {
@@ -43,7 +45,7 @@ final class MultipleURLsCollectionViewController: UICollectionViewController {
 
   override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
     let URLs = images.map { $0.url }
-    let agrume = Agrume(imageURLs: URLs, startIndex: indexPath.row, backgroundBlurStyle: .extraLight)
+    let agrume = Agrume(imageUrls: URLs, startIndex: indexPath.row, backgroundBlurStyle: .extraLight)
     agrume.didScroll = {
       [unowned self] index in
       self.collectionView?.scrollToItem(at: IndexPath(row: index, section: 0),

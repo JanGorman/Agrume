@@ -90,8 +90,8 @@ final class AgrumeCell: UICollectionViewCell {
     return swipeGesture
   }()
 
-  fileprivate var flickedToDismiss: Bool = false
-  fileprivate var isDraggingImage: Bool = false
+  fileprivate var flickedToDismiss = false
+  fileprivate var isDraggingImage = false
   fileprivate var imageDragStartingPoint: CGPoint!
   fileprivate var imageDragOffsetFromActualTranslation: UIOffset!
   fileprivate var imageDragOffsetFromImageCenter: UIOffset!
