@@ -8,22 +8,21 @@ import Foundation
 final class ImageDownloader {
 
   class func downloadImage(_ url: URL, completion: @escaping (_ image: UIImage?) -> Void) -> URLSessionDataTask? {
-    let session = URLSession.shared
-    let request = URLRequest(url: url)
-    let dataTask = session.dataTask(with: request) { data, _, error in
+    let dataTask = URLSession.shared.dataTask(with: url) { data, _, error in
       guard error == nil else {
         completion(nil)
         return
       }
 
-      DispatchQueue.global(qos: .userInteractive).async {
-        if let data = data, let image = UIImage(data: data) {
+      DispatchQueue.global(qos: .userInitiated).async {
+        var image: UIImage?
+        defer {
           DispatchQueue.main.async {
-              completion(image)
+            completion(image)
           }
-        } else {
-          completion(nil)
         }
+        guard let data = data else { return }
+        image = UIImage(data: data)
       }
     }
     dataTask.resume()
