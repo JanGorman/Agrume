@@ -428,7 +428,7 @@ extension Agrume: UICollectionViewDataSource {
     return cell
   }
 
-  private func downloadImage(_ url: URL, completion: DownloadCompletion) {
+  private func downloadImage(_ url: URL, completion: @escaping DownloadCompletion) {
     downloadTask = ImageDownloader.downloadImage(url) { image in
       completion(image)
     }
