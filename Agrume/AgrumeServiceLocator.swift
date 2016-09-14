@@ -8,7 +8,7 @@ public class AgrumeServiceLocator {
 
   public static let shared = AgrumeServiceLocator()
   
-  public typealias DownloadHandler = ((url: NSURL, completion: Agrume.DownloadCompletion) -> Void)
+  public typealias DownloadHandler = ((_ url: URL, _ completion: Agrume.DownloadCompletion) -> Void)
 
   var downloadHandler: DownloadHandler?
 
@@ -17,7 +17,7 @@ public class AgrumeServiceLocator {
   /// by passing in a different handler for said call.
   ///
   /// – Parameter handler: The download handler
-  public func setDownloadHandler(handler: DownloadHandler) {
+  public func setDownloadHandler(_ handler: @escaping DownloadHandler) {
     downloadHandler = handler
   }
   

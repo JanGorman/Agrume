@@ -7,22 +7,22 @@ import Foundation
 
 final class ImageDownloader {
 
-  class func downloadImage(url: NSURL, completion: (image: UIImage?) -> Void) -> NSURLSessionDataTask? {
-    let session = NSURLSession.sharedSession()
-    let request = NSURLRequest(URL: url)
-    let dataTask = session.dataTaskWithRequest(request) { data, _, error in
+  class func downloadImage(_ url: URL, completion: @escaping (_ image: UIImage?) -> Void) -> URLSessionDataTask? {
+    let dataTask = URLSession.shared.dataTask(with: url) { data, _, error in
       guard error == nil else {
-        completion(image: nil)
+        completion(nil)
         return
       }
-      dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0)) {
-        if let data = data, image = UIImage(data: data) {
-          dispatch_async(dispatch_get_main_queue()) {
-              completion(image: image)
+
+      DispatchQueue.global(qos: .userInitiated).async {
+        var image: UIImage?
+        defer {
+          DispatchQueue.main.async {
+            completion(image)
           }
-        } else {
-          completion(image: nil)
         }
+        guard let data = data else { return }
+        image = UIImage(data: data)
       }
     }
     dataTask.resume()

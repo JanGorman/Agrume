@@ -13,7 +13,7 @@ class AgrumeServiceLocatorTests: XCTestCase {
   override func setUp() {
     super.setUp()
     
-    agrume = Agrume(imageURL: NSURL(string: "https://dl.dropboxusercontent.com/u/512759/MapleBacon.png")!)
+    agrume = Agrume(imageUrl: URL(string: "https://dl.dropboxusercontent.com/u/512759/MapleBacon.png")!)
   }
   
   override func tearDown() {

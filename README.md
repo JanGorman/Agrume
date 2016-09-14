@@ -12,9 +12,9 @@ An iOS image viewer written in Swift with support for multiple images.
 
 ## Requirements
 
-- Swift 2.2
+- Swift 3.0
 - iOS 8.0+
-- Xcode 7+
+- Xcode 8+
 
 ## Installation
 
@@ -41,7 +41,7 @@ For just a single image it's as easy as
 ```swift
 import Agrume
 
-@IBAction func openImage(sender: AnyObject) {
+@IBAction func openImage(_ sender: AnyObject) {
   if let image = UIImage(named: "…") {
 	let agrume = Agrume(image: image)
 	agrume.showFrom(self)	
@@ -56,11 +56,11 @@ You can also pass in an `NSURL` and Agrume will take care of the download for yo
 If you're displaying a `UICollectionView` and want to add support for zooming, you can also call Agrume with an array of either images or URLs.
 
 ```swift
-let agrume = Agrume(images: images, startIndex: indexPath.row, backgroundBlurStyle: .Light)
+let agrume = Agrume(images: images, startIndex: indexPath.row, backgroundBlurStyle: .light)
 agrume.didScroll = { [unowned self] index in
-  self.collectionView?.scrollToItemAtIndexPath(NSIndexPath(forRow: index, inSection: 0),
-    											atScrollPosition: .allZeros,
-									            animated: false)
+  self.collectionView?.scrollToItem(at: IndexPath(row: index, section: 0),
+                                    at: [],
+                                    animated: false)
 }
 agrume.showFrom(self)
 ```
@@ -75,15 +75,14 @@ If you want to take control of downloading images (e.g. for caching), you can al
 import Agrume
 import MapleBacon
 
-@IBAction func openURL(sender: AnyObject) {
-  let agrume = Agrume(imageURL: NSURL(string: "https://dl.dropboxusercontent.com/u/512759/MapleBacon.png")!, backgroundBlurStyle: .Light)
+@IBAction func openURL(_ sender: AnyObject) {
+  let agrume = Agrume(imageUrl: URL(string: "https://dl.dropboxusercontent.com/u/512759/MapleBacon.png")!, backgroundBlurStyle: .light)
 	agrume.download = { url, completion in
-	  let manager = ImageManager.sharedManager
-	  manager.downloadImageAtURL(url) { imageInstance, error in
-		if error == nil {
-		  completion(image: imageInstance.image)
+	  ImageDownloader.downloadImage(url) { image in
+		if let image = image {
+		  completion(image)
 		} else {
-		  completion(image: nil)
+		  completion(nil)
 		}
 	}
   }
@@ -137,7 +136,7 @@ You can customize the status bar appearance when displaying the zoomed in view. 
 
 ```swift
 let agrume = Agrume(image: image)
-agrume.statusBarStyle = .LightContent
+agrume.statusBarStyle = .lightContent
 agrume.showFrom(self)
 ```
 
