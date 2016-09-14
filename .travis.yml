@@ -7,4 +7,4 @@ script:
   - open -b com.apple.iphonesimulator --args -CurrentDeviceUDID $SIMULATOR_ID
   - set -o pipefail
   - scan
-  - pod lib lint
+  # - pod lib lint
