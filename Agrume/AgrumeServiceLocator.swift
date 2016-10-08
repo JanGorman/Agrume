@@ -8,7 +8,7 @@ public class AgrumeServiceLocator {
 
   public static let shared = AgrumeServiceLocator()
   
-  public typealias DownloadHandler = ((_ url: URL, _ completion: Agrume.DownloadCompletion) -> Void)
+  public typealias DownloadHandler = ((_ url: URL, _ completion: @escaping Agrume.DownloadCompletion) -> Void)
 
   var downloadHandler: DownloadHandler?
 
