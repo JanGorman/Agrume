@@ -18,7 +18,7 @@ public protocol AgrumeDataSource {
 
 }
 
-public final class Agrume: UIViewController {
+public class Agrume: UIViewController {
 
   private static let TransitionAnimationDuration: NSTimeInterval = 0.3
   private static let InitialScalingToExpandFrom: CGFloat = 0.6
