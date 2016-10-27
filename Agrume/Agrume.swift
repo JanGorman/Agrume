@@ -35,7 +35,7 @@ public final class Agrume: UIViewController {
     
   public var didDismiss: (() -> Void)?
   public var didScroll: ((_ index: Int) -> Void)?
-  public var download: ((_ url: URL, _ completion: DownloadCompletion) -> Void)?
+  public var download: ((_ url: URL, _ completion: @escaping DownloadCompletion) -> Void)?
   public var statusBarStyle: UIStatusBarStyle? {
     didSet {
       setNeedsStatusBarAppearanceUpdate()
