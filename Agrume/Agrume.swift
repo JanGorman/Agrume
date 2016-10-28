@@ -28,6 +28,7 @@ public final class Agrume: UIViewController {
   fileprivate var images: [UIImage]!
   fileprivate var imageUrls: [URL]!
   private var startIndex: Int?
+  private let backgroundColor: UIColor
   private let backgroundBlurStyle: UIBlurEffectStyle
   fileprivate let dataSource: AgrumeDataSource?
 
@@ -35,7 +36,7 @@ public final class Agrume: UIViewController {
     
   public var didDismiss: (() -> Void)?
   public var didScroll: ((_ index: Int) -> Void)?
-  public var download: ((_ url: URL, _ completion: @escaping DownloadCompletion) -> Void)?
+  public var download: ((_ url: URL, _ completion: DownloadCompletion) -> Void)?
   public var statusBarStyle: UIStatusBarStyle? {
     didSet {
       setNeedsStatusBarAppearanceUpdate()
@@ -46,16 +47,26 @@ public final class Agrume: UIViewController {
   ///
   /// - Parameter image: The image to present
   /// - Parameter backgroundBlurStyle: The UIBlurEffectStyle to apply to the background when presenting
-  public convenience init(image: UIImage, backgroundBlurStyle: UIBlurEffectStyle? = .dark) {
-      self.init(image: image, imageUrl: nil, backgroundBlurStyle: backgroundBlurStyle)
+  public convenience init(image: UIImage,
+                          backgroundColor: UIColor = .clear,
+                          backgroundBlurStyle: UIBlurEffectStyle = .dark) {
+      self.init(image: image,
+                imageUrl: nil,
+                backgroundColor: backgroundColor,
+                backgroundBlurStyle: backgroundBlurStyle)
   }
 
   /// Initialize with a single image url
   ///
   /// - Parameter imageUrl: The image url to present
   /// - Parameter backgroundBlurStyle: The UIBlurEffectStyle to apply to the background when presenting
-  public convenience init(imageUrl: URL, backgroundBlurStyle: UIBlurEffectStyle? = .dark) {
-      self.init(image: nil, imageUrl: imageUrl, backgroundBlurStyle: backgroundBlurStyle)
+  public convenience init(imageUrl: URL,
+                          backgroundColor: UIColor = .clear,
+                          backgroundBlurStyle: UIBlurEffectStyle = .dark) {
+      self.init(image: nil,
+                imageUrl: imageUrl,
+                backgroundColor: backgroundColor,
+                backgroundBlurStyle: backgroundBlurStyle)
   }
 
   /// Initialize with a data source
@@ -63,9 +74,15 @@ public final class Agrume: UIViewController {
   /// - Parameter dataSource: The `AgrumeDataSource` to use
   /// - Parameter startIndex: The optional start index when showing multiple images
   /// - Parameter backgroundBlurStyle: The UIBlurEffectStyle to apply to the background when presenting
-	public convenience init(dataSource: AgrumeDataSource, startIndex: Int? = nil,
-	                        backgroundBlurStyle: UIBlurEffectStyle? = .dark) {
-		self.init(image: nil, images: nil, dataSource: dataSource, startIndex: startIndex,
+	public convenience init(dataSource: AgrumeDataSource,
+	                        startIndex: Int? = nil,
+                            backgroundColor: UIColor = .clear,
+	                        backgroundBlurStyle: UIBlurEffectStyle = .dark) {
+		self.init(image: nil,
+		          images: nil,
+		          dataSource: dataSource,
+		          startIndex: startIndex,
+                  backgroundColor: backgroundColor,
 		          backgroundBlurStyle: backgroundBlurStyle)
 	}
 	
@@ -74,8 +91,16 @@ public final class Agrume: UIViewController {
   /// - Parameter images: The images to present
   /// - Parameter startIndex: The optional start index when showing multiple images
   /// - Parameter backgroundBlurStyle: The UIBlurEffectStyle to apply to the background when presenting
-  public convenience init(images: [UIImage], startIndex: Int? = nil, backgroundBlurStyle: UIBlurEffectStyle? = .dark) {
-      self.init(image: nil, images: images, startIndex: startIndex, backgroundBlurStyle: backgroundBlurStyle)
+  public convenience init(images: [UIImage],
+                          startIndex: Int? = nil,
+                          backgroundColor: UIColor = .clear,
+                          backgroundBlurStyle: UIBlurEffectStyle = .dark) {
+    
+      self.init(image: nil,
+                images: images,
+                startIndex: startIndex,
+                backgroundColor: backgroundColor,
+                backgroundBlurStyle: backgroundBlurStyle)
   }
 
   /// Initialize with an array of image urls
@@ -83,13 +108,26 @@ public final class Agrume: UIViewController {
   /// - Parameter imageUrls: The image urls to present
   /// - Parameter startIndex: The optional start index when showing multiple images
   /// - Parameter backgroundBlurStyle: The UIBlurEffectStyle to apply to the background when presenting
-  public convenience init(imageUrls: [URL], startIndex: Int? = nil, backgroundBlurStyle: UIBlurEffectStyle? = .dark) {
-      self.init(image: nil, imageUrls: imageUrls, startIndex: startIndex, backgroundBlurStyle: backgroundBlurStyle)
+  public convenience init(imageUrls: [URL],
+                          startIndex: Int? = nil,
+                          backgroundColor: UIColor = .clear,
+                          backgroundBlurStyle: UIBlurEffectStyle = .dark) {
+      self.init(image: nil,
+                imageUrls: imageUrls,
+                startIndex: startIndex,
+                backgroundColor: backgroundColor,
+                backgroundBlurStyle: backgroundBlurStyle)
   }
 
-	private init(image: UIImage? = nil, imageUrl: URL? = nil, images: [UIImage]? = nil,
-	             dataSource: AgrumeDataSource? = nil, imageUrls: [URL]? = nil, startIndex: Int? = nil,
-	             backgroundBlurStyle: UIBlurEffectStyle? = .dark) {
+  private init(image: UIImage? = nil,
+	             imageUrl: URL? = nil,
+	             images: [UIImage]? = nil,
+	             dataSource: AgrumeDataSource? = nil,
+	             imageUrls: [URL]? = nil,
+	             startIndex: Int? = nil,
+	             backgroundColor: UIColor = .clear,
+	             backgroundBlurStyle: UIBlurEffectStyle = .dark) {
+    
     assert(backgroundBlurStyle != nil)
     self.images = images
     if let image = image {
@@ -102,7 +140,8 @@ public final class Agrume: UIViewController {
 
 		self.dataSource = dataSource
     self.startIndex = startIndex
-    self.backgroundBlurStyle = backgroundBlurStyle!
+    self.backgroundColor = backgroundColor
+    self.backgroundBlurStyle = backgroundBlurStyle
     super.init(nibName: nil, bundle: nil)
     
     UIDevice.current.beginGeneratingDeviceOrientationNotifications()
@@ -171,7 +210,7 @@ public final class Agrume: UIViewController {
       collectionView.dataSource = self
       collectionView.delegate = self
       collectionView.isPagingEnabled = true
-      collectionView.backgroundColor = .clear
+      collectionView.backgroundColor = self.backgroundColor
       collectionView.delaysContentTouches = false
       collectionView.showsHorizontalScrollIndicator = false
       _collectionView = collectionView
