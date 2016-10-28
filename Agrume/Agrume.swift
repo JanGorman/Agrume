@@ -36,7 +36,7 @@ public final class Agrume: UIViewController {
     
   public var didDismiss: (() -> Void)?
   public var didScroll: ((_ index: Int) -> Void)?
-  public var download: ((_ url: URL, _ completion: DownloadCompletion) -> Void)?
+  public var download: ((_ url: URL, _ completion: @escaping DownloadCompletion) -> Void)?
   public var statusBarStyle: UIStatusBarStyle? {
     didSet {
       setNeedsStatusBarAppearanceUpdate()
@@ -82,7 +82,7 @@ public final class Agrume: UIViewController {
 		          images: nil,
 		          dataSource: dataSource,
 		          startIndex: startIndex,
-                  backgroundColor: backgroundColor,
+                  	  backgroundColor: backgroundColor,
 		          backgroundBlurStyle: backgroundBlurStyle)
 	}
 	
@@ -120,13 +120,13 @@ public final class Agrume: UIViewController {
   }
 
   private init(image: UIImage? = nil,
-	             imageUrl: URL? = nil,
-	             images: [UIImage]? = nil,
-	             dataSource: AgrumeDataSource? = nil,
-	             imageUrls: [URL]? = nil,
-	             startIndex: Int? = nil,
-	             backgroundColor: UIColor = .clear,
-	             backgroundBlurStyle: UIBlurEffectStyle = .dark) {
+	       imageUrl: URL? = nil,
+	       images: [UIImage]? = nil,
+	       dataSource: AgrumeDataSource? = nil,
+	       imageUrls: [URL]? = nil,
+	       startIndex: Int? = nil,
+	       backgroundColor: UIColor = .clear,
+	       backgroundBlurStyle: UIBlurEffectStyle = .dark) {
     
     assert(backgroundBlurStyle != nil)
     self.images = images
