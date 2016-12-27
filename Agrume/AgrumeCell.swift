@@ -133,28 +133,30 @@ extension AgrumeCell: UIGestureRecognizerDelegate {
 
   @objc fileprivate func doubleTap(_ sender: UITapGestureRecognizer) {
     let point = scrollView.convert(sender.location(in: sender.view), from: sender.view)
-    let targetZoom: CGRect
-    let targetInsets: UIEdgeInsets
+    
     if notZoomed() {
-      let zoomWidth = contentView.bounds.width / AgrumeCell.targetZoomForDoubleTap
-      let zoomHeight = contentView.bounds.height / AgrumeCell.targetZoomForDoubleTap
-      targetZoom = CGRect(x: point.x - zoomWidth / 2, y: point.y / zoomWidth / 2, width: zoomWidth, height: zoomHeight)
-      targetInsets = contentInsetForScrollView(atScale: AgrumeCell.targetZoomForDoubleTap)
+      zoom(to: point, scale: AgrumeCell.targetZoomForDoubleTap)
     } else {
-      let zoomWidth = contentView.bounds.width * scrollView.zoomScale
-      let zoomHeight = contentView.bounds.height * scrollView.zoomScale
-      targetZoom = CGRect(x: point.x - zoomWidth / 2, y: point.y / zoomWidth / 2, width: zoomWidth, height: zoomHeight)
-      targetInsets = contentInsetForScrollView(atScale: 1)
+      zoom(to: .zero, scale: 1)
     }
+  }
+  
+  private func zoom(to point: CGPoint, scale: CGFloat) {
+    let factor = 1 / scrollView.zoomScale
+    let translatedZoom = CGPoint(x: (point.x + scrollView.contentOffset.x) * factor,
+                                 y: (point.y + scrollView.contentOffset.y) * factor)
+
+    let width = scrollView.frame.width / scale
+    let height = scrollView.frame.height / scale
+    let destination = CGRect(x: translatedZoom.x - width  / 2, y: translatedZoom.y - height / 2, width: width, height: height)
 
     contentView.isUserInteractionEnabled = false
-
+    
     CATransaction.begin()
     CATransaction.setCompletionBlock { [unowned self] in
-      self.scrollView.contentInset = targetInsets
       self.contentView.isUserInteractionEnabled = true
     }
-    scrollView.zoom(to: targetZoom, animated: true)
+    scrollView.zoom(to: destination, animated: true)
     CATransaction.commit()
   }
 
