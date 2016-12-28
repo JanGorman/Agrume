@@ -41,7 +41,7 @@ For just a single image it's as easy as
 ```swift
 import Agrume
 
-@IBAction func openImage(_ sender: AnyObject) {
+@IBAction func openImage(_ sender: Any) {
   if let image = UIImage(named: "…") {
 	let agrume = Agrume(image: image)
 	agrume.showFrom(self)	
@@ -49,7 +49,20 @@ import Agrume
 }
 ```
 
-You can also pass in an `NSURL` and Agrume will take care of the download for you.
+You can also pass in a `URL` and Agrume will take care of the download for you.
+
+### Background Color
+
+Agrume defaults to blurring the background view controller but you can also pass in a background color instead and it will show this instead of the blur:
+
+```swift
+@IBAction func openImage(_ sender: Any) {
+	let image = UIImage(named: "…")!
+	let agrume = Agrume(image: Image, backgroundColor: .black)
+	agrume.hideStatusBar = true
+	agrume.showFrom(self)
+}
+```
 
 ### Multiple Images
 
@@ -75,7 +88,7 @@ If you want to take control of downloading images (e.g. for caching), you can al
 import Agrume
 import MapleBacon
 
-@IBAction func openURL(_ sender: AnyObject) {
+@IBAction func openURL(_ sender: Any) {
   let agrume = Agrume(imageUrl: URL(string: "https://dl.dropboxusercontent.com/u/512759/MapleBacon.png")!, backgroundBlurStyle: .light)
 	agrume.download = { url, completion in
 	  ImageDownloader.downloadImage(url) { image in

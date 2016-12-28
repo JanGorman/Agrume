@@ -1,6 +1,5 @@
 //
-//  Agrume.swift
-//  Agrume
+//  Copyright © 2016 Schnaub. All rights reserved.
 //
 
 import UIKit
@@ -28,34 +27,44 @@ public final class Agrume: UIViewController {
   fileprivate var images: [UIImage]!
   fileprivate var imageUrls: [URL]!
   private var startIndex: Int?
-  private let backgroundBlurStyle: UIBlurEffectStyle
+  private let backgroundBlurStyle: UIBlurEffectStyle?
+  private let backgroundColor: UIColor?
   fileprivate let dataSource: AgrumeDataSource?
 
   public typealias DownloadCompletion = (_ image: UIImage?) -> Void
-    
+  
+  /// Optional closure to call whenever Agrume is dismissed.
   public var didDismiss: (() -> Void)?
+  /// Optional closure to call whenever Agrume scrolls to the next image in a collection. Passes the "page" index
   public var didScroll: ((_ index: Int) -> Void)?
+  /// An optional download handler. Passed the URL that is supposed to be loaded. Call the completion with the image
+  /// when the download is done.
   public var download: ((_ url: URL, _ completion: @escaping DownloadCompletion) -> Void)?
+  /// Status bar style when presenting
   public var statusBarStyle: UIStatusBarStyle? {
     didSet {
       setNeedsStatusBarAppearanceUpdate()
     }
   }
+  /// Hide status bar when presenting. Defaults to `false`
+  public var hideStatusBar: Bool = false
 
   /// Initialize with a single image
   ///
   /// - Parameter image: The image to present
   /// - Parameter backgroundBlurStyle: The UIBlurEffectStyle to apply to the background when presenting
-  public convenience init(image: UIImage, backgroundBlurStyle: UIBlurEffectStyle? = .dark) {
-      self.init(image: image, imageUrl: nil, backgroundBlurStyle: backgroundBlurStyle)
+  /// - Parameter backgroundColor: The background color when presenting
+  public convenience init(image: UIImage, backgroundBlurStyle: UIBlurEffectStyle? = nil, backgroundColor: UIColor? = nil) {
+    self.init(image: image, imageUrl: nil, backgroundBlurStyle: backgroundBlurStyle, backgroundColor: backgroundColor)
   }
 
   /// Initialize with a single image url
   ///
   /// - Parameter imageUrl: The image url to present
   /// - Parameter backgroundBlurStyle: The UIBlurEffectStyle to apply to the background when presenting
-  public convenience init(imageUrl: URL, backgroundBlurStyle: UIBlurEffectStyle? = .dark) {
-      self.init(image: nil, imageUrl: imageUrl, backgroundBlurStyle: backgroundBlurStyle)
+  /// - Parameter backgroundColor: The background color when presenting
+  public convenience init(imageUrl: URL, backgroundBlurStyle: UIBlurEffectStyle? = .dark, backgroundColor: UIColor? = nil) {
+    self.init(image: nil, imageUrl: imageUrl, backgroundBlurStyle: backgroundBlurStyle, backgroundColor: backgroundColor)
   }
 
   /// Initialize with a data source
@@ -63,10 +72,11 @@ public final class Agrume: UIViewController {
   /// - Parameter dataSource: The `AgrumeDataSource` to use
   /// - Parameter startIndex: The optional start index when showing multiple images
   /// - Parameter backgroundBlurStyle: The UIBlurEffectStyle to apply to the background when presenting
+  /// - Parameter backgroundColor: The background color when presenting
 	public convenience init(dataSource: AgrumeDataSource, startIndex: Int? = nil,
-	                        backgroundBlurStyle: UIBlurEffectStyle? = .dark) {
+	                        backgroundBlurStyle: UIBlurEffectStyle? = .dark, backgroundColor: UIColor? = nil) {
 		self.init(image: nil, images: nil, dataSource: dataSource, startIndex: startIndex,
-		          backgroundBlurStyle: backgroundBlurStyle)
+		          backgroundBlurStyle: backgroundBlurStyle, backgroundColor: backgroundColor)
 	}
 	
   /// Initialize with an array of images
@@ -74,8 +84,11 @@ public final class Agrume: UIViewController {
   /// - Parameter images: The images to present
   /// - Parameter startIndex: The optional start index when showing multiple images
   /// - Parameter backgroundBlurStyle: The UIBlurEffectStyle to apply to the background when presenting
-  public convenience init(images: [UIImage], startIndex: Int? = nil, backgroundBlurStyle: UIBlurEffectStyle? = .dark) {
-      self.init(image: nil, images: images, startIndex: startIndex, backgroundBlurStyle: backgroundBlurStyle)
+  /// - Parameter backgroundColor: The background color when presenting
+  public convenience init(images: [UIImage], startIndex: Int? = nil, backgroundBlurStyle: UIBlurEffectStyle? = .dark,
+                          backgroundColor: UIColor? = nil) {
+    self.init(image: nil, images: images, startIndex: startIndex, backgroundBlurStyle: backgroundBlurStyle,
+              backgroundColor: backgroundColor)
   }
 
   /// Initialize with an array of image urls
@@ -83,14 +96,28 @@ public final class Agrume: UIViewController {
   /// - Parameter imageUrls: The image urls to present
   /// - Parameter startIndex: The optional start index when showing multiple images
   /// - Parameter backgroundBlurStyle: The UIBlurEffectStyle to apply to the background when presenting
-  public convenience init(imageUrls: [URL], startIndex: Int? = nil, backgroundBlurStyle: UIBlurEffectStyle? = .dark) {
-      self.init(image: nil, imageUrls: imageUrls, startIndex: startIndex, backgroundBlurStyle: backgroundBlurStyle)
+  /// - Parameter backgroundColor: The background color when presenting
+  public convenience init(imageUrls: [URL], startIndex: Int? = nil, backgroundBlurStyle: UIBlurEffectStyle? = .dark,
+                          backgroundColor: UIColor? = nil) {
+    self.init(image: nil, imageUrls: imageUrls, startIndex: startIndex, backgroundBlurStyle: backgroundBlurStyle,
+              backgroundColor: backgroundColor)
   }
 
 	private init(image: UIImage? = nil, imageUrl: URL? = nil, images: [UIImage]? = nil,
 	             dataSource: AgrumeDataSource? = nil, imageUrls: [URL]? = nil, startIndex: Int? = nil,
-	             backgroundBlurStyle: UIBlurEffectStyle? = .dark) {
-    assert(backgroundBlurStyle != nil)
+	             backgroundBlurStyle: UIBlurEffectStyle? = nil, backgroundColor: UIColor? = nil) {
+    switch (backgroundBlurStyle, backgroundColor) {
+    case (let blur, _) where blur != nil:
+      self.backgroundBlurStyle = blur
+      self.backgroundColor = nil
+    case (_, let color) where color != nil:
+      self.backgroundColor = color
+      self.backgroundBlurStyle = nil
+    default:
+      self.backgroundBlurStyle = .dark
+      self.backgroundColor = nil
+    }
+
     self.images = images
     if let image = image {
       self.images = [image]
@@ -102,7 +129,6 @@ public final class Agrume: UIViewController {
 
 		self.dataSource = dataSource
     self.startIndex = startIndex
-    self.backgroundBlurStyle = backgroundBlurStyle!
     super.init(nibName: nil, bundle: nil)
     
     UIDevice.current.beginGeneratingDeviceOrientationNotifications()
@@ -143,6 +169,7 @@ public final class Agrume: UIViewController {
     if _blurContainerView == nil {
       let view = UIView(frame: self.view.frame)
       view.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+      view.backgroundColor = backgroundColor ?? .clear
       _blurContainerView = view
     }
     return _blurContainerView!
@@ -150,7 +177,7 @@ public final class Agrume: UIViewController {
   fileprivate var _blurView: UIVisualEffectView?
   private var blurView: UIVisualEffectView {
     if _blurView == nil {
-      let blurView = UIVisualEffectView(effect: UIBlurEffect(style: self.backgroundBlurStyle))
+      let blurView = UIVisualEffectView(effect: UIBlurEffect(style: self.backgroundBlurStyle!))
       blurView.frame = self.view.frame
       blurView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
       _blurView = blurView
@@ -223,7 +250,9 @@ public final class Agrume: UIViewController {
   }
   
   private func addSubviews() {
-    blurContainerView.addSubview(blurView)
+    if backgroundBlurStyle != nil {
+      blurContainerView.addSubview(blurView)
+    }
     view.addSubview(blurContainerView)
     view.addSubview(collectionView)
     if let index = startIndex {
@@ -275,6 +304,10 @@ public final class Agrume: UIViewController {
 			self.collectionView.reloadData()
 		}
 	}
+  
+  public override var prefersStatusBarHidden: Bool {
+    return hideStatusBar
+  }
 
   // MARK: Rotation
 

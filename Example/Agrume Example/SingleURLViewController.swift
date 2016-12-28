@@ -1,6 +1,5 @@
 //
-//  SingleURLViewController.swift
-//  Agrume Example
+//  Copyright © 2016 Schnaub. All rights reserved.
 //
 
 import UIKit
