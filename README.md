@@ -53,7 +53,7 @@ You can also pass in a `URL` and Agrume will take care of the download for you.
 
 ### Background Color
 
-Agrume defaults to blurring the background view controller but you can also pass in a background color instead and it will show this instead of the blur:
+Agrume defaults to blurring the background view controller but you can also pass in a background color instead and it will use that:
 
 ```swift
 @IBAction func openImage(_ sender: Any) {
