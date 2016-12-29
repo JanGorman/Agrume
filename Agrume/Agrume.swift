@@ -107,10 +107,10 @@ public final class Agrume: UIViewController {
 	             dataSource: AgrumeDataSource? = nil, imageUrls: [URL]? = nil, startIndex: Int? = nil,
 	             backgroundBlurStyle: UIBlurEffectStyle? = nil, backgroundColor: UIColor? = nil) {
     switch (backgroundBlurStyle, backgroundColor) {
-    case (let blur, _) where blur != nil:
+    case (let blur, .none):
       self.backgroundBlurStyle = blur
       self.backgroundColor = nil
-    case (_, let color) where color != nil:
+    case (.none, let color):
       self.backgroundColor = color
       self.backgroundBlurStyle = nil
     default:
