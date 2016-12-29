@@ -1,10 +1,9 @@
 language: objective-c
-osx_image: xcode8
+osx_image: xcode8.2
 before_install:
-  - gem install scan --no-doc
+  - gem install fastlane --no-doc
 script:
   - echo $SIMULATOR_ID
   - open -b com.apple.iphonesimulator --args -CurrentDeviceUDID $SIMULATOR_ID
-  - set -o pipefail
-  - scan
+  - fastlane scan
   # - pod lib lint
