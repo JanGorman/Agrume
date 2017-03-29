@@ -361,44 +361,44 @@ public final class Agrume: UIViewController {
     if initialOrientation == .portrait {
       switch (currentDeviceOrientation()) {
       case .landscapeLeft:
-        transform = CGAffineTransform(rotationAngle: CGFloat(M_PI_2))
+        transform = CGAffineTransform(rotationAngle: .pi / 2)
       case .landscapeRight:
-        transform = CGAffineTransform(rotationAngle: CGFloat(-M_PI_2))
+        transform = CGAffineTransform(rotationAngle: -(.pi / 2))
       case .portraitUpsideDown:
-        transform = CGAffineTransform(rotationAngle: CGFloat(M_PI))
+        transform = CGAffineTransform(rotationAngle: .pi)
       default:
         break
       }
     } else if initialOrientation == .portraitUpsideDown {
       switch (currentDeviceOrientation()) {
       case .landscapeLeft:
-        transform = CGAffineTransform(rotationAngle: CGFloat(-M_PI_2))
+        transform = CGAffineTransform(rotationAngle: -(.pi / 2))
       case .landscapeRight:
-        transform = CGAffineTransform(rotationAngle: CGFloat(M_PI_2))
+        transform = CGAffineTransform(rotationAngle: .pi / 2)
       case .portrait:
-        transform = CGAffineTransform(rotationAngle: CGFloat(M_PI))
+        transform = CGAffineTransform(rotationAngle: .pi)
       default:
         break
       }
     } else if initialOrientation == .landscapeLeft {
       switch (currentDeviceOrientation()) {
       case .landscapeRight:
-        transform = CGAffineTransform(rotationAngle: CGFloat(M_PI))
+        transform = CGAffineTransform(rotationAngle: .pi)
       case .portrait:
-        transform = CGAffineTransform(rotationAngle: CGFloat(-M_PI_2))
+        transform = CGAffineTransform(rotationAngle: -(.pi / 2))
       case .portraitUpsideDown:
-        transform = CGAffineTransform(rotationAngle: CGFloat(M_PI_2))
+        transform = CGAffineTransform(rotationAngle: .pi / 2)
       default:
         break
       }
     } else if initialOrientation == .landscapeRight {
       switch (currentDeviceOrientation()) {
       case .landscapeLeft:
-        transform = CGAffineTransform(rotationAngle: CGFloat(M_PI))
+        transform = CGAffineTransform(rotationAngle: .pi)
       case .portrait:
-        transform = CGAffineTransform(rotationAngle: CGFloat(M_PI_2))
+        transform = CGAffineTransform(rotationAngle: .pi / 2)
       case .portraitUpsideDown:
-        transform = CGAffineTransform(rotationAngle: CGFloat(-M_PI_2))
+        transform = CGAffineTransform(rotationAngle: -(.pi / 2))
       default:
         break
       }

@@ -12,7 +12,7 @@ An iOS image viewer written in Swift with support for multiple images.
 
 ## Requirements
 
-- Swift 3.0
+- Swift 3.1 (for Swift 3.0 support, use tag 3.1.1)
 - iOS 8.0+
 - Xcode 8+
 

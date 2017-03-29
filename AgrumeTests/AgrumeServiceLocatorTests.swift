@@ -7,8 +7,8 @@ import XCTest
 
 class AgrumeServiceLocatorTests: XCTestCase {
 
-  private let mockViewController = UIViewController()
-  private var agrume: Agrume!
+  fileprivate let mockViewController = UIViewController()
+  fileprivate var agrume: Agrume!
   
   override func setUp() {
     super.setUp()
