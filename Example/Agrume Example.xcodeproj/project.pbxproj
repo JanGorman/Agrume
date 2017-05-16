@@ -9,6 +9,9 @@
 /* Begin PBXBuildFile section */
 		94D6B2121E1411B100927735 /* SingeImageBackgroundColorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94D6B2111E1411B100927735 /* SingeImageBackgroundColorViewController.swift */; };
 		E77809E31D17821400CC60F1 /* SingleImageModalViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E77809E21D17821400CC60F1 /* SingleImageModalViewController.swift */; };
+		EAC939DB1ECB25970002A701 /* Media.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = EAC939DA1ECB25970002A701 /* Media.xcassets */; };
+		EAD6706A1ECA09BC0072925A /* Agrume.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F2A520401B130CC000924912 /* Agrume.framework */; };
+		EAD6706B1ECA09BC0072925A /* Agrume.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = F2A520401B130CC000924912 /* Agrume.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		F20F5BD41B134CAF00F9F499 /* Agrume.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F2A520401B130CC000924912 /* Agrume.framework */; };
 		F2A5201B1B130C7E00924912 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2A5201A1B130C7E00924912 /* AppDelegate.swift */; };
 		F2A5201D1B130C7E00924912 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2A5201C1B130C7E00924912 /* ViewController.swift */; };
@@ -24,6 +27,13 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		EAD6706C1ECA09BC0072925A /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = F2A5203A1B130CC000924912 /* Agrume.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = F2A51FED1B10E00700924912;
+			remoteInfo = Agrume;
+		};
 		F2A5202B1B130C7E00924912 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = F2A5200D1B130C7E00924912 /* Project object */;
@@ -54,9 +64,24 @@
 		};
 /* End PBXContainerItemProxy section */
 
+/* Begin PBXCopyFilesBuildPhase section */
+		EAD6706E1ECA09BC0072925A /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				EAD6706B1ECA09BC0072925A /* Agrume.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
 		94D6B2111E1411B100927735 /* SingeImageBackgroundColorViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SingeImageBackgroundColorViewController.swift; sourceTree = "<group>"; };
 		E77809E21D17821400CC60F1 /* SingleImageModalViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SingleImageModalViewController.swift; sourceTree = "<group>"; };
+		EAC939DA1ECB25970002A701 /* Media.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Media.xcassets; sourceTree = "<group>"; };
 		F2A520151B130C7E00924912 /* Agrume Example.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Agrume Example.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		F2A520191B130C7E00924912 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		F2A5201A1B130C7E00924912 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -81,6 +106,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				F20F5BD41B134CAF00F9F499 /* Agrume.framework in Frameworks */,
+				EAD6706A1ECA09BC0072925A /* Agrume.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -97,6 +123,7 @@
 		F2A5200C1B130C7E00924912 = {
 			isa = PBXGroup;
 			children = (
+				EAC939DA1ECB25970002A701 /* Media.xcassets */,
 				F2A5203A1B130CC000924912 /* Agrume.xcodeproj */,
 				F2A520171B130C7E00924912 /* Agrume Example */,
 				F2A5202D1B130C7E00924912 /* Agrume ExampleTests */,
@@ -179,11 +206,13 @@
 				F2A520111B130C7E00924912 /* Sources */,
 				F2A520121B130C7E00924912 /* Frameworks */,
 				F2A520131B130C7E00924912 /* Resources */,
+				EAD6706E1ECA09BC0072925A /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
 			dependencies = (
 				F2A520441B130CC800924912 /* PBXTargetDependency */,
+				EAD6706D1ECA09BC0072925A /* PBXTargetDependency */,
 			);
 			name = "Agrume Example";
 			productName = "Agrume Example";
@@ -221,10 +250,12 @@
 				TargetAttributes = {
 					F2A520141B130C7E00924912 = {
 						CreatedOnToolsVersion = 6.3.2;
+						DevelopmentTeam = UMW8VNS5XT;
 						LastSwiftMigration = 0800;
 					};
 					F2A520291B130C7E00924912 = {
 						CreatedOnToolsVersion = 6.3.2;
+						DevelopmentTeam = UMW8VNS5XT;
 						LastSwiftMigration = 0800;
 						TestTargetID = F2A520141B130C7E00924912;
 					};
@@ -279,6 +310,7 @@
 			files = (
 				F2A520201B130C7E00924912 /* Main.storyboard in Resources */,
 				F2A520251B130C7E00924912 /* LaunchScreen.xib in Resources */,
+				EAC939DB1ECB25970002A701 /* Media.xcassets in Resources */,
 				F2A520221B130C7E00924912 /* Images.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -320,6 +352,11 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
+		EAD6706D1ECA09BC0072925A /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = Agrume;
+			targetProxy = EAD6706C1ECA09BC0072925A /* PBXContainerItemProxy */;
+		};
 		F2A5202C1B130C7E00924912 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = F2A520141B130C7E00924912 /* Agrume Example */;
@@ -442,7 +479,9 @@
 		F2A520351B130C7E00924912 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				DEVELOPMENT_TEAM = UMW8VNS5XT;
 				INFOPLIST_FILE = "Agrume Example/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.schnaub.$(PRODUCT_NAME:rfc1034identifier)";
@@ -454,7 +493,9 @@
 		F2A520361B130C7E00924912 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				DEVELOPMENT_TEAM = UMW8VNS5XT;
 				INFOPLIST_FILE = "Agrume Example/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.schnaub.$(PRODUCT_NAME:rfc1034identifier)";
@@ -467,6 +508,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
+				DEVELOPMENT_TEAM = UMW8VNS5XT;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(SDKROOT)/Developer/Library/Frameworks",
 					"$(inherited)",
@@ -488,6 +530,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
+				DEVELOPMENT_TEAM = UMW8VNS5XT;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(SDKROOT)/Developer/Library/Frameworks",
 					"$(inherited)",

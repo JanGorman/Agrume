@@ -12,6 +12,7 @@ final class SingleImageViewController: UIViewController {
   override func viewDidLoad() {
     super.viewDidLoad()
     agrume = Agrume(image: UIImage(named: "MapleBacon")!)
+		agrume.hideStatusBar = true
   }
 
   @IBAction func openImage(_ sender: AnyObject) {
