@@ -35,6 +35,8 @@ public final class Agrume: UIViewController {
   
   /// Optional closure to call whenever Agrume is dismissed.
   public var didDismiss: (() -> Void)?
+  /// Optional closure to call whenever the optional toolbar item is tapped.
+  public var didTapActivityButton: ((_ image: UIImage) -> Void)?
   /// Optional closure to call whenever Agrume scrolls to the next image in a collection. Passes the "page" index
   public var didScroll: ((_ index: Int) -> Void)?
   /// An optional download handler. Passed the URL that is supposed to be loaded. Call the completion with the image
@@ -48,7 +50,10 @@ public final class Agrume: UIViewController {
   }
   /// Hide status bar when presenting. Defaults to `false`
   public var hideStatusBar: Bool = false
-
+  
+  /// Option to use an action menu. Defaults to `false`
+  public var useActionMenu: Bool = false
+  
   /// Initialize with a single image
   ///
   /// - Parameter image: The image to present
@@ -249,6 +254,10 @@ public final class Agrume: UIViewController {
     showFrom(viewController)
   }
   
+  @objc private func didTapActivity(){
+     self.didTapActivityButton?(self.images[0])
+  }
+  
   private func addSubviews() {
     if backgroundBlurStyle != nil {
       blurContainerView.addSubview(blurView)
@@ -257,6 +266,18 @@ public final class Agrume: UIViewController {
     view.addSubview(collectionView)
     if let index = startIndex {
       collectionView.scrollToItem(at: IndexPath(row: index, section: 0), at: [], animated: false)
+    }
+    if self.useActionMenu == true{
+      let toolbar = UIToolbar(frame: CGRect(x: 0, y: view.frame.size.height - 46, width: view.frame.width, height: 46))
+      toolbar.sizeToFit()
+      
+      if self.backgroundBlurStyle == .dark{
+        toolbar.barStyle = .blackTranslucent
+      }
+      
+      let toolbarAction = UIBarButtonItem(barButtonSystemItem: .action, target: self, action: #selector(didTapActivity))
+      toolbar.setItems([toolbarAction], animated: true)
+      view.addSubview(toolbar)
     }
     view.addSubview(spinner)
   }
