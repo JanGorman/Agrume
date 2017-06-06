@@ -255,7 +255,12 @@ public final class Agrume: UIViewController {
   }
   
   @objc private func didTapActivity(){
-     self.didTapActivityButton?(self.images[0])
+    var visibleRect = CGRect()
+    visibleRect.origin = collectionView.contentOffset
+    visibleRect.size = collectionView.bounds.size
+    let visiblePoint = CGPoint(x: visibleRect.midX, y: visibleRect.midY)
+    let visibleIndexPath: IndexPath = collectionView.indexPathForItem(at: visiblePoint)!
+    self.didTapActivityButton?(self.images[visibleIndexPath.row])
   }
   
   private func addSubviews() {
