@@ -52,7 +52,7 @@ public final class Agrume: UIViewController {
   public var hideStatusBar: Bool = false
   
   /// Option to use an action menu. Defaults to `false`
-  public var useActionMenu: Bool = false
+  public var useToolbar: Bool = false
   
   /// Initialize with a single image
   ///
@@ -272,7 +272,7 @@ public final class Agrume: UIViewController {
     if let index = startIndex {
       collectionView.scrollToItem(at: IndexPath(row: index, section: 0), at: [], animated: false)
     }
-    if self.useActionMenu == true{
+    if self.useToolbar == true{
       let toolbar = UIToolbar(frame: CGRect(x: 0, y: view.frame.size.height - 46, width: view.frame.width, height: 46))
       toolbar.sizeToFit()
       
