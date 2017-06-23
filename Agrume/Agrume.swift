@@ -226,12 +226,12 @@ public final class Agrume: UIViewController {
 		if _closeBtn == nil {
 			let closeBtn = UIButton(type: .system)
 			closeBtn.setImage(UIImage(named: "close_btn"), for: UIControlState.normal)
-			closeBtn.tintColor = backgroundColor == UIColor.black ? UIColor.white : UIColor.black
+			closeBtn.tintColor = backgroundColor == UIColor.black ? UIColor.black : UIColor.white
 			closeBtn.addTarget(self, action: #selector(dismissAfterFlick), for: .touchUpInside)
 			closeBtn.translatesAutoresizingMaskIntoConstraints = false
 			view.addSubview(closeBtn)
 			let horizontalConstraint = NSLayoutConstraint(item: closeBtn, attribute: NSLayoutAttribute.trailing, relatedBy: NSLayoutRelation.equal, toItem: view, attribute: NSLayoutAttribute.trailing, multiplier: 1, constant:0)
-			let verticalConstraint = NSLayoutConstraint(item: closeBtn, attribute: NSLayoutAttribute.topMargin, relatedBy: NSLayoutRelation.equal, toItem: topLayoutGuide, attribute: NSLayoutAttribute.top, multiplier: 1, constant: 0)
+			let verticalConstraint = NSLayoutConstraint(item: closeBtn, attribute: NSLayoutAttribute.top, relatedBy: NSLayoutRelation.equal, toItem: view, attribute: NSLayoutAttribute.top, multiplier: 1, constant: 20)
 			let widthConstraint = NSLayoutConstraint(item: closeBtn, attribute: NSLayoutAttribute.width, relatedBy: NSLayoutRelation.equal, toItem: view, attribute: NSLayoutAttribute.width, multiplier: 0.15, constant:0)
 			let heightConstraint = NSLayoutConstraint(item: closeBtn, attribute: NSLayoutAttribute.height, relatedBy: NSLayoutRelation.equal, toItem: view, attribute: NSLayoutAttribute.width, multiplier: 0.15, constant:0)
 			view.addConstraints([horizontalConstraint, verticalConstraint, widthConstraint, heightConstraint])
