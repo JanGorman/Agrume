@@ -48,7 +48,9 @@ public final class Agrume: UIViewController {
   }
   /// Hide status bar when presenting. Defaults to `false`
   public var hideStatusBar: Bool = false
-
+	/// Disable tap dismissal
+	public var shouldDismissWithTap = true
+	
   /// Initialize with a single image
   ///
   /// - Parameter image: The image to present
@@ -126,7 +128,7 @@ public final class Agrume: UIViewController {
     if let imageURL = imageUrl {
       self.imageUrls = [imageURL]
     }
-
+		
 		self.dataSource = dataSource
     self.startIndex = startIndex
     super.init(nibName: nil, bundle: nil)
@@ -161,6 +163,7 @@ public final class Agrume: UIViewController {
   private func currentDeviceOrientation() -> UIDeviceOrientation {
     return UIDevice.current.orientation
   }
+
 
   private var backgroundSnapshot: UIImage!
   private var backgroundImageView: UIImageView!
@@ -217,6 +220,26 @@ public final class Agrume: UIViewController {
     }
     return _spinner!
   }
+	
+	fileprivate var _closeBtn: UIButton?
+	fileprivate var closeBtn: UIButton {
+		if _closeBtn == nil {
+			let closeBtn = UIButton(type: .system)
+			closeBtn.setImage(UIImage(named: "close_btn"), for: UIControlState.normal)
+			closeBtn.tintColor = backgroundColor == UIColor.black ? UIColor.black : UIColor.white
+			closeBtn.addTarget(self, action: #selector(dismissAfterFlick), for: .touchUpInside)
+			closeBtn.translatesAutoresizingMaskIntoConstraints = false
+			view.addSubview(closeBtn)
+			let horizontalConstraint = NSLayoutConstraint(item: closeBtn, attribute: NSLayoutAttribute.trailing, relatedBy: NSLayoutRelation.equal, toItem: view, attribute: NSLayoutAttribute.trailing, multiplier: 1, constant:0)
+			let verticalConstraint = NSLayoutConstraint(item: closeBtn, attribute: NSLayoutAttribute.top, relatedBy: NSLayoutRelation.equal, toItem: view, attribute: NSLayoutAttribute.top, multiplier: 1, constant: 20)
+			let widthConstraint = NSLayoutConstraint(item: closeBtn, attribute: NSLayoutAttribute.width, relatedBy: NSLayoutRelation.equal, toItem: view, attribute: NSLayoutAttribute.width, multiplier: 0.15, constant:0)
+			let heightConstraint = NSLayoutConstraint(item: closeBtn, attribute: NSLayoutAttribute.height, relatedBy: NSLayoutRelation.equal, toItem: view, attribute: NSLayoutAttribute.width, multiplier: 0.15, constant:0)
+			view.addConstraints([horizontalConstraint, verticalConstraint, widthConstraint, heightConstraint])
+			_closeBtn = closeBtn
+		}
+		return _closeBtn!
+	}
+	
   fileprivate var downloadTask: URLSessionDataTask?
 
   override public func viewDidLoad() {
@@ -254,11 +277,15 @@ public final class Agrume: UIViewController {
       blurContainerView.addSubview(blurView)
     }
     view.addSubview(blurContainerView)
-    view.addSubview(collectionView)
+		view.addSubview(collectionView)
     if let index = startIndex {
       collectionView.scrollToItem(at: IndexPath(row: index, section: 0), at: [], animated: false)
     }
     view.addSubview(spinner)
+		
+		if(!self.shouldDismissWithTap) {
+		_ = self.closeBtn
+		}
   }
   
   private func showFrom(_ viewController: UIViewController) {
@@ -291,7 +318,7 @@ public final class Agrume: UIViewController {
     return presentingVC
   }
 
-  public func dismiss() {
+  @objc public func dismiss() {
     self.dismissAfterFlick()
   }
 
@@ -308,10 +335,10 @@ public final class Agrume: UIViewController {
   public override var prefersStatusBarHidden: Bool {
     return hideStatusBar
   }
-
+	
   // MARK: Rotation
 
-  @objc private func orientationDidChange() {
+   @objc private func orientationDidChange() {
     let orientation = currentDeviceOrientation()
     guard let lastOrientation = lastUsedOrientation else { return }
     let landscapeToLandscape = UIDeviceOrientationIsLandscape(orientation) && UIDeviceOrientationIsLandscape(lastOrientation)
@@ -518,6 +545,8 @@ extension Agrume: AgrumeCellDelegate {
   }
   
   private func cleanup() {
+		_closeBtn?.removeFromSuperview()
+		_closeBtn = nil
     _blurContainerView?.removeFromSuperview()
     _blurContainerView = nil
     _blurView = nil
@@ -527,29 +556,32 @@ extension Agrume: AgrumeCellDelegate {
     _spinner = nil
   }
 
-  func dismissAfterFlick() {
+	@objc func dismissAfterFlick() {
     UIView.animate(withDuration: Agrume.transitionAnimationDuration,
                    delay: 0,
                    options: .beginFromCurrentState,
                    animations: { [unowned self] in
                     self.collectionView.alpha = 0
+										self.closeBtn.alpha = 0
                     self.blurContainerView.alpha = 0
       }, completion: dismissCompletion)
   }
   
   func dismissAfterTap() {
+		if(shouldDismissWithTap) {
     view.isUserInteractionEnabled = false
-    
     UIView.animate(withDuration: Agrume.transitionAnimationDuration,
                    delay: 0,
                    options: .beginFromCurrentState,
                    animations: { [unowned self] in
                     self.collectionView.alpha = 0
+										self.closeBtn.alpha = 0
                     self.blurContainerView.alpha = 0
                     let scaling = Agrume.maxScalingForExpandingOffscreen
                     self.collectionView.transform = CGAffineTransform(scaleX: scaling, y: scaling)
-      }, completion: dismissCompletion)
-  }
+				}, completion: dismissCompletion)
+		}
+	}
 }
 
 extension Agrume {

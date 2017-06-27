@@ -13,6 +13,8 @@ final class SingleImageBackgroundColorViewController: UIViewController {
     super.viewDidLoad()
     agrume = Agrume(image: UIImage(named: "MapleBacon")!, backgroundColor: .black)
     agrume.hideStatusBar = true
+		agrume.shouldDismissWithTap = false
+
   }
 
   @IBAction private func openImage(_ sender: Any) {
