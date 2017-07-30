@@ -8,6 +8,7 @@ protocol AgrumeCellDelegate: class {
   
   func dismissAfterFlick()
   func dismissAfterTap()
+  func isSingleImageMode() -> Bool
   
 }
 
@@ -114,6 +115,9 @@ extension AgrumeCell: UIGestureRecognizerDelegate {
   override func gestureRecognizerShouldBegin(_ gestureRecognizer: UIGestureRecognizer) -> Bool {
     if let pan = gestureRecognizer as? UIPanGestureRecognizer, notZoomed() {
       let velocity = pan.velocity(in: scrollView)
+      if let delegate = delegate, delegate.isSingleImageMode() {
+        return true
+      }
       return abs(velocity.y) > abs(velocity.x)
     } else if let _ = gestureRecognizer as? UISwipeGestureRecognizer, notZoomed() {
       return false
@@ -347,17 +351,17 @@ extension AgrumeCell: UIGestureRecognizerDelegate {
     animator.addBehavior(attachmentBehavior!)
 
     let modifier = UIDynamicItemBehavior(items: [imageView])
-    modifier.angularResistance = angularResistance(view: imageView)
-    modifier.density = density(view: imageView)
+    modifier.angularResistance = angularResistance(in: imageView)
+    modifier.density = density(in: imageView)
     animator.addBehavior(modifier)
   }
 
-  fileprivate func angularResistance(view: UIView) -> CGFloat {
+  fileprivate func angularResistance(in view: UIView) -> CGFloat {
     let defaultResistance: CGFloat = 4
     return appropriateValue(defaultValue: defaultResistance) * factor(forView: view)
   }
 
-  fileprivate func density(view: UIView) -> CGFloat {
+  fileprivate func density(in view: UIView) -> CGFloat {
     let defaultDensity: CGFloat = 0.5
     return appropriateValue(defaultValue: defaultDensity) * factor(forView: view)
   }
