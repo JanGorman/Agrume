@@ -16,9 +16,9 @@ final class MultipleURLsCollectionViewController: UICollectionViewController {
   
   private let images = [
     ImageWithURL(image: UIImage(named: "MapleBacon")!,
-                 url: URL(string: "https://dl.dropboxusercontent.com/u/512759/MapleBacon.png")!),
+                 url: URL(string: "https://www.dropbox.com/s/mlquw9k6ogvspox/MapleBacon.png?raw=1")!),
     ImageWithURL(image: UIImage(named: "EvilBacon")!,
-                 url: URL(string: "https://dl.dropboxusercontent.com/u/512759/EvilBacon.png")!)
+                 url: URL(string: "https://www.dropbox.com/s/fwjbsuonhv1wrqu/EvilBacon.png?raw=1")!)
   ]
   
   override func viewDidLoad() {

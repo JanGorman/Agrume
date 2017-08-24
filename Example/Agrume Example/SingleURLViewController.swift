@@ -8,7 +8,7 @@ import Agrume
 final class SingleURLViewController: UIViewController {
 
   @IBAction func openURL(_ sender: AnyObject) {
-    let agrume = Agrume(imageUrl: URL(string: "https://dl.dropboxusercontent.com/u/512759/MapleBacon.png")!,
+    let agrume = Agrume(imageUrl: URL(string: "https://www.dropbox.com/s/mlquw9k6ogvspox/MapleBacon.png?raw=1")!,
                         backgroundBlurStyle: .light)
     agrume.showFrom(self)
   }

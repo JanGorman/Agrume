@@ -49,6 +49,7 @@ public final class Agrume: UIViewController {
     }
   }
   /// Hide status bar when presenting. Defaults to `false`
+
   public var hideStatusBar: Bool = false
   
   /// Option to use an action menu. Defaults to `false`
@@ -576,6 +577,14 @@ extension Agrume: AgrumeCellDelegate {
                     self.collectionView.transform = CGAffineTransform(scaleX: scaling, y: scaling)
       }, completion: dismissCompletion)
   }
+  
+  func isSingleImageMode() -> Bool {
+    if let images = images, !images.isEmpty {
+      return images.count == 1
+    }
+    return imageUrls.count == 1
+  }
+  
 }
 
 extension Agrume {

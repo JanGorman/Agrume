@@ -7,7 +7,7 @@
 
 An iOS image viewer written in Swift with support for multiple images.
 
-![bloggif_56c29473a93fb](https://cloud.githubusercontent.com/assets/6511079/13066215/95c8186a-d418-11e5-81df-19f0c831d099.gif)
+![Agrume](https://www.dropbox.com/s/bdt6sphcyloa38u/Agrume.gif?raw=1)
 
 
 ## Requirements
@@ -82,22 +82,18 @@ This shows a way of keeping the zoomed library and the one in the background syn
 
 ### Custom Download Handler
 
-If you want to take control of downloading images (e.g. for caching), you can also set a download closure that calls back to Agrume to set the image. I can recommend [MapleBacon](https://github.com/zalando/MapleBacon).
+If you want to take control of downloading images (e.g. for caching), you can also set a download closure that calls back to Agrume to set the image. For example, let's use [Kingfisher](https://github.com/onevcat/Kingfisher).
 
 ```swift
 import Agrume
-import MapleBacon
+import Kingfisher
 
 @IBAction func openURL(_ sender: Any) {
   let agrume = Agrume(imageUrl: URL(string: "https://dl.dropboxusercontent.com/u/512759/MapleBacon.png")!, backgroundBlurStyle: .light)
 	agrume.download = { url, completion in
-	  ImageDownloader.downloadImage(url) { image in
-		if let image = image {
-		  completion(image)
-		} else {
-		  completion(nil)
-		}
-	}
+    ImageDownloader.default.downloadImage(with: url, options: [], progressBlock: nil) { image, _, _, _ in
+      completion(image)
+    }
   }
   agrume.showFrom(self)
 }
