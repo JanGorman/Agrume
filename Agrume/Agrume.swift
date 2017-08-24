@@ -36,7 +36,7 @@ public final class Agrume: UIViewController {
   /// Optional closure to call whenever Agrume is dismissed.
   public var didDismiss: (() -> Void)?
   /// Optional closure to call whenever the optional toolbar item is tapped.
-  public var didTapActivityButton: ((_ image: UIImage) -> Void)?
+  public var didTapActivityButton: ((_ image: UIImage, _ metadata: [String:Any]?) -> Void)?
   /// Optional closure to call whenever Agrume scrolls to the next image in a collection. Passes the "page" index
   public var didScroll: ((_ index: Int) -> Void)?
   /// An optional download handler. Passed the URL that is supposed to be loaded. Call the completion with the image
@@ -54,6 +54,9 @@ public final class Agrume: UIViewController {
   
   /// Option to use an action menu. Defaults to `false`
   public var useToolbar: Bool = false
+  
+  /// Array of dictionaries containing metadata for the images. Defaults to `nil`
+  public var metadata: [Int:[String:Any]]? = nil
   
   /// Initialize with a single image
   ///
@@ -261,7 +264,12 @@ public final class Agrume: UIViewController {
     visibleRect.size = collectionView.bounds.size
     let visiblePoint = CGPoint(x: visibleRect.midX, y: visibleRect.midY)
     let visibleIndexPath: IndexPath = collectionView.indexPathForItem(at: visiblePoint)!
-    self.didTapActivityButton?(self.images[visibleIndexPath.row])
+    
+    var currentMetadata: [String:Any]? = nil
+    if self.metadata != nil && self.metadata![visibleIndexPath.row] != nil{
+      currentMetadata = self.metadata![visibleIndexPath.row]
+    }
+    self.didTapActivityButton?(self.images[visibleIndexPath.row], currentMetadata)
   }
   
   private func addSubviews() {
