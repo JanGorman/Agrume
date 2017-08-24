@@ -282,7 +282,7 @@ public final class Agrume: UIViewController {
       collectionView.scrollToItem(at: IndexPath(row: index, section: 0), at: [], animated: false)
     }
     if self.useToolbar == true{
-      let toolbar = UIToolbar(frame: CGRect(x: 0, y: view.frame.size.height - 50, width: view.frame.width, height: 46))
+      let toolbar = UIToolbar(frame: CGRect(x: 0, y: view.frame.size.height - 40, width: view.frame.width, height: 46))
       toolbar.sizeToFit()
       
       if self.backgroundBlurStyle == .dark{
