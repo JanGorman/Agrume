@@ -13,14 +13,12 @@ final class SingleImageModalViewController: UIViewController {
     navigationController?.navigationBar.barTintColor = .red
   }
   
-  @IBAction func openImage(_ sender: AnyObject) {
-    let agrume = Agrume(image: UIImage(named: "MapleBacon")!)
+  @IBAction func openImage(_ sender: Any) {
+    let agrume = Agrume(image: #imageLiteral(resourceName: "MapleBacon"))
     agrume.showFrom(self)
-    // Optionally pass in a custom background snapshot VC but the library should pick the correct one for you
-    //  agrume.showFrom(self, backgroundSnapshotVC: navigationController)
   }
   
-  @IBAction func close(_ sender: AnyObject) {
+  @IBAction func close(_ sender: Any) {
     presentingViewController?.dismiss(animated: true, completion: nil)
   }
 

@@ -11,7 +11,7 @@ final class SingleImageBackgroundColorViewController: UIViewController {
   
   override func viewDidLoad() {
     super.viewDidLoad()
-    agrume = Agrume(image: UIImage(named: "MapleBacon")!, backgroundColor: .black)
+    agrume = Agrume(image: #imageLiteral(resourceName: "MapleBacon"), backgroundColor: .black)
     agrume.hideStatusBar = true
   }
 

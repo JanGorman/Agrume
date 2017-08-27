@@ -11,10 +11,10 @@ final class SingleImageViewController: UIViewController {
   
   override func viewDidLoad() {
     super.viewDidLoad()
-    agrume = Agrume(image: UIImage(named: "MapleBacon")!)
+    agrume = Agrume(image: #imageLiteral(resourceName: "MapleBacon"))
   }
 
-  @IBAction func openImage(_ sender: AnyObject) {
+  @IBAction func openImage(_ sender: Any) {
     agrume.showFrom(self)
   }
 
