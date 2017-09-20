@@ -1,9 +1,8 @@
 language: objective-c
 osx_image: xcode9
 before_install:
-  - gem install fastlane --no-doc
+ -  SIMULATOR_ID=$(xcrun instruments -s | grep -o "iPhone 6 \(.*\) \[.*\]" | grep -o "\[.*\]" | sed "s/^\[\(.*\)\]$/\1/")
 script:
   - echo $SIMULATOR_ID
   - open -b com.apple.iphonesimulator --args -CurrentDeviceUDID $SIMULATOR_ID
   - fastlane scan
-  # - pod lib lint
