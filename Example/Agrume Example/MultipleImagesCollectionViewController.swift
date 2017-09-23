@@ -10,8 +10,8 @@ final class MultipleImagesCollectionViewController: UICollectionViewController {
   private let identifier = "Cell"
 
   private let images = [
-    UIImage(named: "MapleBacon")!,
-    UIImage(named: "EvilBacon")!
+    #imageLiteral(resourceName: "MapleBacon"),
+    #imageLiteral(resourceName: "EvilBacon")
   ]
 
   override func viewDidLoad() {
