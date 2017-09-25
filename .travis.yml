@@ -5,6 +5,6 @@ before_install:
 script:
   - echo $SIMULATOR_ID
   - open -b com.apple.iphonesimulator --args -CurrentDeviceUDID $SIMULATOR_ID
-  - fastlane scan
+  - fastlane scan --device "iPhone 6" --project "Agrume.xcodeproj"
   - bundle exec danger
   
