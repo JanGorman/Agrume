@@ -6,3 +6,5 @@ script:
   - echo $SIMULATOR_ID
   - open -b com.apple.iphonesimulator --args -CurrentDeviceUDID $SIMULATOR_ID
   - fastlane scan
+  - bundle exec danger
+  
