@@ -82,16 +82,16 @@ This shows a way of keeping the zoomed library and the one in the background syn
 
 ### Custom Download Handler
 
-If you want to take control of downloading images (e.g. for caching), you can also set a download closure that calls back to Agrume to set the image. For example, let's use [Kingfisher](https://github.com/onevcat/Kingfisher).
+If you want to take control of downloading images (e.g. for caching), you can also set a download closure that calls back to Agrume to set the image. For example, let's use [MapleBacon](https://github.com/JanGorman/MapleBacon).
 
 ```swift
 import Agrume
-import Kingfisher
+import MapleBacon
 
 @IBAction func openURL(_ sender: Any) {
   let agrume = Agrume(imageUrl: URL(string: "https://dl.dropboxusercontent.com/u/512759/MapleBacon.png")!, backgroundBlurStyle: .light)
-	agrume.download = { url, completion in
-    ImageDownloader.default.downloadImage(with: url, options: [], progressBlock: nil) { image, _, _, _ in
+  agrume.download = { url, completion in
+    Downloader.default.download(url) { image in
       completion(image)
     }
   }
