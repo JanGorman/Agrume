@@ -1,7 +1,7 @@
 language: objective-c
 osx_image: xcode9
 before_script:
-  - brew update && brew install swiftlint
+  - brew update && brew upgrade swiftlint
 script:
   - bundle exec fastlane scan --project "Agrume.xcodeproj"
   - bundle exec danger
