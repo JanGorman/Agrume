@@ -1,0 +1,51 @@
+identifier_name:
+  min_length:
+    error: 3
+  max_length:
+    warning: 50
+    error: 60
+  excluded:
+    - id
+
+type_name:
+  min_length:
+    error: 3
+  max_length:
+    error: 50
+  excluded:
+    - id
+    
+type_body_length:
+  - 600
+  
+file_length:
+  warning: 700
+
+line_length: 140
+
+trailing_whitespace:
+  ignores_empty_lines: true
+
+cyclomatic_complexity:
+  warning: 15
+
+
+opt_in_rules:
+  - attributes
+  - closure_end_indentation
+  - closure_spacing
+  - explicit_init
+  - fatal_error_message
+  - first_where
+  - object_literal
+  - operator_usage_whitespace
+  - operator_whitespace
+  - overridden_super_call
+  - prohibited_super_call
+  - redundant_nil_coalescing
+  - vertical_parameter_alignment_on_call
+  
+disabled_rules:
+  - force_cast
+  - colon
+  - unused_optional_binding

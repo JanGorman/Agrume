@@ -6,6 +6,6 @@ import UIKit
 
 final class DemoCell: UICollectionViewCell {
 
-  @IBOutlet weak var imageView: UIImageView!
+  @IBOutlet var imageView: UIImageView!
 
 }
