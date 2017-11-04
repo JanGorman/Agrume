@@ -257,7 +257,7 @@ public final class Agrume: UIViewController {
     view.addSubview(blurContainerView)
     view.addSubview(collectionView)
     if let index = startIndex {
-      collectionView.scrollToItem(at: IndexPath(row: index, section: 0), at: [], animated: false)
+      collectionView.scrollToItem(at: IndexPath(item: index, section: 0), at: [], animated: false)
     }
     view.addSubview(spinner)
   }
@@ -297,7 +297,7 @@ public final class Agrume: UIViewController {
   }
 
   public func showImage(atIndex index : Int) {
-    collectionView.scrollToItem(at: IndexPath(row: index, section: 0), at: [], animated: true)
+    collectionView.scrollToItem(at: IndexPath(item: index, section: 0), at: [], animated: true)
   }
 
 	public func reload() {
@@ -351,10 +351,10 @@ public final class Agrume: UIViewController {
       
       let layout = self.collectionView.collectionViewLayout as? UICollectionViewFlowLayout
       layout?.itemSize = self.view.frame.size
-      }, completion: { _ in
-        for visibleCell in self.collectionView.visibleCells as! [AgrumeCell] {
-          visibleCell.updateScrollViewAndImageViewForCurrentMetrics()
-        }
+    }, completion: { _ in
+      for visibleCell in self.collectionView.visibleCells as! [AgrumeCell] {
+        visibleCell.updateScrollViewAndImageViewForCurrentMetrics()
+      }
     })
   }
   
@@ -494,8 +494,9 @@ extension Agrume: UICollectionViewDelegate {
       let collectionViewCount = collectionView.numberOfItems(inSection: 0)
 			let dataSourceCount = dataSource.numberOfImages
 			
-			guard !hasDataSourceCountChanged(dataSourceCount: dataSourceCount, collectionViewCount: collectionViewCount)
-        else { return }
+			if isDataSourceCountUnchanged(dataSourceCount: dataSourceCount, collectionViewCount: collectionViewCount) {
+        return
+      }
 			
 			if isIndexPathOutOfBounds(indexPath, count: dataSourceCount) {
 				showImage(atIndex: dataSourceCount - 1)
@@ -512,7 +513,7 @@ extension Agrume: UICollectionViewDelegate {
     }
   }
   
-  private func hasDataSourceCountChanged(dataSourceCount: Int, collectionViewCount: Int) -> Bool {
+  private func isDataSourceCountUnchanged(dataSourceCount: Int, collectionViewCount: Int) -> Bool {
     return collectionViewCount == dataSourceCount
   }
   
@@ -561,7 +562,7 @@ extension Agrume: AgrumeCellDelegate {
     UIView.animate(withDuration: Agrume.transitionAnimationDuration,
                    delay: 0,
                    options: .beginFromCurrentState,
-                   animations: { [unowned self] in
+                   animations: {
                     self.collectionView.alpha = 0
                     self.blurContainerView.alpha = 0
                     let scaling = Agrume.maxScalingForExpandingOffscreen
