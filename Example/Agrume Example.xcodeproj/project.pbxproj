@@ -15,7 +15,6 @@
 		F2A520201B130C7E00924912 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F2A5201E1B130C7E00924912 /* Main.storyboard */; };
 		F2A520221B130C7E00924912 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F2A520211B130C7E00924912 /* Images.xcassets */; };
 		F2A520251B130C7E00924912 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = F2A520231B130C7E00924912 /* LaunchScreen.xib */; };
-		F2A520311B130C7E00924912 /* Agrume_ExampleTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2A520301B130C7E00924912 /* Agrume_ExampleTests.swift */; };
 		F2D9598E1B1A133800073772 /* SingleImageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2D9598D1B1A133800073772 /* SingleImageViewController.swift */; };
 		F2D959911B1A140200073772 /* SingleURLViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2D959901B1A140200073772 /* SingleURLViewController.swift */; };
 		F2D959931B1A153F00073772 /* MultipleImagesCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2D959921B1A153F00073772 /* MultipleImagesCollectionViewController.swift */; };
@@ -66,7 +65,6 @@
 		F2A520241B130C7E00924912 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
 		F2A5202A1B130C7E00924912 /* Agrume ExampleTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Agrume ExampleTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		F2A5202F1B130C7E00924912 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		F2A520301B130C7E00924912 /* Agrume_ExampleTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Agrume_ExampleTests.swift; sourceTree = "<group>"; };
 		F2A5203A1B130CC000924912 /* Agrume.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Agrume.xcodeproj; path = ../Agrume.xcodeproj; sourceTree = "<group>"; };
 		F2D9598D1B1A133800073772 /* SingleImageViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SingleImageViewController.swift; sourceTree = "<group>"; };
 		F2D959901B1A140200073772 /* SingleURLViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SingleURLViewController.swift; sourceTree = "<group>"; };
@@ -146,7 +144,6 @@
 		F2A5202D1B130C7E00924912 /* Agrume ExampleTests */ = {
 			isa = PBXGroup;
 			children = (
-				F2A520301B130C7E00924912 /* Agrume_ExampleTests.swift */,
 				F2A5202E1B130C7E00924912 /* Supporting Files */,
 			);
 			path = "Agrume ExampleTests";
@@ -313,7 +310,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				F2A520311B130C7E00924912 /* Agrume_ExampleTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
