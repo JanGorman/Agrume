@@ -13,7 +13,7 @@ public protocol AgrumeDataSource {
   ///
   /// - Parameter index: The index (collection view item) being displayed
   /// - Parameter completion: The completion that returns the image to be shown at the index
-	func image(forIndex index: Int, completion: (UIImage?) -> Void)
+	func image(forIndex index: Int, completion: @escaping (UIImage?) -> Void)
 
 }
 
@@ -451,10 +451,9 @@ extension Agrume: UICollectionViewDataSource {
 			
       dataSource.image(forIndex: index) { [weak self] image in
         DispatchQueue.main.async {
-          if collectionView.indexPathsForVisibleItems.contains(indexPath) {
-            cell.image = image
-            self?.spinner.alpha = 0
-          }
+          guard collectionView.indexPathsForVisibleItems.contains(indexPath) else { return }
+          cell.image = image
+          self?.spinner.alpha = 0
         }
       }
 		}
