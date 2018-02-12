@@ -451,7 +451,6 @@ extension Agrume: UICollectionViewDataSource {
 			
       dataSource.image(forIndex: index) { [weak self] image in
         DispatchQueue.main.async {
-          guard collectionView.indexPathsForVisibleItems.contains(indexPath) else { return }
           cell.image = image
           self?.spinner.alpha = 0
         }
