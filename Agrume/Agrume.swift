@@ -573,6 +573,9 @@ extension Agrume: AgrumeCellDelegate {
     if let images = images, !images.isEmpty {
       return images.count == 1
     }
+    if let dataSource = dataSource {
+      return dataSource.numberOfImages == 1
+    }
     return imageUrls.count == 1
   }
   
