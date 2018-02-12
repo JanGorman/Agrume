@@ -499,10 +499,8 @@ extension Agrume: UICollectionViewDelegate {
 			
 			if isIndexPathOutOfBounds(indexPath, count: dataSourceCount) {
 				showImage(atIndex: dataSourceCount - 1)
-				reload()
-			} else if isLastElement(atIndexPath: indexPath, count: collectionViewCount - 1) {
-				reload()
 			}
+      reload()
 		}
   }
   
