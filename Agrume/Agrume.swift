@@ -451,7 +451,6 @@ extension Agrume: UICollectionViewDataSource {
 			
       dataSource.image(forIndex: index) { [weak self] image in
         DispatchQueue.main.async {
-          guard collectionView.indexPathsForVisibleItems.contains(indexPath) else { return }
           cell.image = image
           self?.spinner.alpha = 0
         }
@@ -499,10 +498,8 @@ extension Agrume: UICollectionViewDelegate {
 			
 			if isIndexPathOutOfBounds(indexPath, count: dataSourceCount) {
 				showImage(atIndex: dataSourceCount - 1)
-				reload()
-			} else if isLastElement(atIndexPath: indexPath, count: collectionViewCount - 1) {
-				reload()
 			}
+      reload()
 		}
   }
   
@@ -572,6 +569,9 @@ extension Agrume: AgrumeCellDelegate {
   func isSingleImageMode() -> Bool {
     if let images = images, !images.isEmpty {
       return images.count == 1
+    }
+    if let dataSource = dataSource {
+      return dataSource.numberOfImages == 1
     }
     return imageUrls.count == 1
   }
