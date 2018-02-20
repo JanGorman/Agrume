@@ -536,6 +536,9 @@ extension Agrume: AgrumeCellDelegate {
     _blurContainerView?.removeFromSuperview()
     _blurContainerView = nil
     _blurView = nil
+    _collectionView?.visibleCells.forEach { cell in
+      (cell as? AgrumeCell)?.cleanup()
+    }
     _collectionView?.removeFromSuperview()
     _collectionView = nil
     _spinner?.removeFromSuperview()

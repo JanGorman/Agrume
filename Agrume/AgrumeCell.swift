@@ -105,6 +105,10 @@ final class AgrumeCell: UICollectionViewCell {
     contentView.addGestureRecognizer(swipeGesture)
   }
 
+  func cleanup() {
+    animator = nil
+  }
+
 }
 
 extension AgrumeCell: UIGestureRecognizerDelegate {
