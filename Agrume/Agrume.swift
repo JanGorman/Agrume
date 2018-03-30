@@ -52,7 +52,6 @@ public final class Agrume: UIViewController {
   /// When zoomed, whether a single tap could restore original zoom
   public var tapToUnzoom = false
 
-
   /// Initialize with a single image
   ///
   /// - Parameter image: The image to present
