@@ -18,8 +18,7 @@ final class AgrumeCell: UICollectionViewCell {
   private static let minFlickDismissalVelocity: CGFloat = 800
   private static let highScrollVelocity: CGFloat = 1600
 
-  /// When zoomed, whether a single tap could restore original zoom
-  internal var tapToUnzoom = false
+  public var tapBehavior: Agrume.TapBehavior = .dismissOnlyIfUnzoomed
 
   private lazy var scrollView: UIScrollView = {
     let scrollView = UIScrollView(frame: self.contentView.bounds)
@@ -210,10 +209,19 @@ extension AgrumeCell: UIGestureRecognizerDelegate {
 
   @objc
   private func singleTap(_ gesture: UITapGestureRecognizer) {
-    if notZoomed() {
+    switch tapBehavior {
+    case .dismissOnlyIfUnzoomed:
+      if notZoomed() {
         dismiss()
-    } else if tapToUnzoom {
+      }
+    case .dismissAlways:
+      dismiss()
+    case .unzoomIfZoomed:
+      if notZoomed() {
+        dismiss()
+      } else {
         zoom(to: .zero, scale: 1)
+      }
     }
   }
 
