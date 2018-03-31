@@ -49,8 +49,12 @@ public final class Agrume: UIViewController {
   /// Hide status bar when presenting. Defaults to `false`
   public var hideStatusBar = false
 
-  /// When zoomed, whether a single tap could restore original zoom
-  public var tapToUnzoom = false
+  public enum TapBehavior {
+    case dismissOnlyIfUnzoomed
+    case dismissAlways
+    case unzoomIfZoomed
+  }
+  public var tapBehavior: TapBehavior = .dismissOnlyIfUnzoomed
 
   /// Initialize with a single image
   ///
@@ -446,7 +450,7 @@ extension Agrume: UICollectionViewDataSource {
                              cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
     let cell = collectionView.dequeueReusableCell(withReuseIdentifier: Agrume.reuseIdentifier,
                                                   for: indexPath) as! AgrumeCell
-    cell.tapToUnzoom = tapToUnzoom
+    cell.tapBehavior = tapBehavior
     if let images = images {
       cell.image = images[indexPath.row]
 		} else if let dataSource = dataSource {
@@ -465,7 +469,6 @@ extension Agrume: UICollectionViewDataSource {
     cell.delegate = self
     return cell
   }
-
 }
 
 extension Agrume: UICollectionViewDelegate {
