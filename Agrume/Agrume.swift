@@ -89,6 +89,9 @@ public final class Agrume: UIViewController {
     super.init(nibName: nil, bundle: nil)
     
     self.dataSource = dataSource ?? self
+    
+    modalPresentationStyle = .custom
+    modalPresentationCapturesStatusBarAppearance = true
   }
 
   deinit {
@@ -97,10 +100,6 @@ public final class Agrume: UIViewController {
 
   required public init?(coder aDecoder: NSCoder) {
     fatalError("Not implemented")
-  }
-
-  private func currentDeviceOrientation() -> UIDeviceOrientation {
-    return UIDevice.current.orientation
   }
 
   private var backgroundSnapshot: UIImage!
@@ -125,9 +124,9 @@ public final class Agrume: UIViewController {
       return _blurView!
     }
     let blurView = UIVisualEffectView(effect: UIBlurEffect(style: style))
-    blurView.frame = view.frame
     blurView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
-    _blurView = blurView
+    blurView.frame = view.frame
+        _blurView = blurView
     return _blurView!
   }
   private var _collectionView: UICollectionView?
@@ -140,6 +139,7 @@ public final class Agrume: UIViewController {
       layout.itemSize = view.frame.size
       
       let collectionView = UICollectionView(frame: view.frame, collectionViewLayout: layout)
+      collectionView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
       collectionView.register(AgrumeCell.self, forCellWithReuseIdentifier: String(describing: AgrumeCell.self))
       collectionView.dataSource = self
       collectionView.delegate = self
@@ -177,6 +177,7 @@ public final class Agrume: UIViewController {
     backgroundImageView = UIImageView(frame: view.frame)
     backgroundImageView.image = backgroundSnapshot
     view.addSubview(backgroundImageView)
+    addSubviews()
   }
 
   public func showFrom(_ viewController: UIViewController, backgroundSnapshotVC: UIViewController? = nil) {
@@ -205,7 +206,7 @@ public final class Agrume: UIViewController {
       self.collectionView.frame = self.view.frame
       let scaling: CGFloat = .initialScalingToExpandFrom
       self.collectionView.transform = CGAffineTransform(scaleX: scaling, y: scaling)
-      
+
       viewController.present(self, animated: false) {
         UIView.animate(withDuration: .transitionAnimationDuration,
                        delay: 0,
@@ -245,7 +246,38 @@ public final class Agrume: UIViewController {
   public override var prefersStatusBarHidden: Bool {
     return hideStatusBar
   }
+  
+  public override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
+    coordinator.animate(alongsideTransition: nil) { _ in
+      guard let layout = self.collectionView.collectionViewLayout as? UICollectionViewFlowLayout else { return }
+      layout.itemSize = size
+      layout.invalidateLayout()
+      
+      self.collectionView.visibleCells.forEach { cell in
+        (cell as! AgrumeCell).recenterImage(size: size)
+      }
+    }
+    super.viewWillTransition(to: size, with: coordinator)
+  }
 
+}
+
+extension Agrume: AgrumeDataSource {
+  
+  public var numberOfImages: Int {
+    return images.count
+  }
+  
+  public func image(forIndex index: Int, completion: @escaping (UIImage?) -> Void) {
+    if let handler = AgrumeServiceLocator.shared.downloadHandler, let url = images[index].url {
+      handler(url, completion)
+    } else if let url = images[index].url {
+      downloadTask = ImageDownloader.downloadImage(url, completion: completion)
+    } else {
+      completion(images[index].image)
+    }
+  }
+  
 }
 
 extension Agrume: UICollectionViewDataSource {
@@ -270,24 +302,6 @@ extension Agrume: UICollectionViewDataSource {
     return cell
   }
 
-}
-
-extension Agrume: AgrumeDataSource {
-  
-  public var numberOfImages: Int {
-    return images.count
-  }
-  
-  public func image(forIndex index: Int, completion: @escaping (UIImage?) -> Void) {
-    if let handler = AgrumeServiceLocator.shared.downloadHandler, let url = images[index].url {
-      handler(url, completion)
-    } else if let url = images[index].url {
-      downloadTask = ImageDownloader.downloadImage(url, completion: completion)
-    } else {
-      completion(images[index].image)
-    }
-  }
-  
 }
 
 extension Agrume: UICollectionViewDelegate {
