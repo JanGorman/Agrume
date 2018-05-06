@@ -39,7 +39,7 @@ final class MultipleImagesCollectionViewController: UICollectionViewController {
     agrume.didScroll = { [unowned self] index in
       self.collectionView?.scrollToItem(at: IndexPath(item: index, section: 0), at: [], animated: false)
     }
-    agrume.showFrom(self)
+    agrume.show(from: self)
   }
 
 }

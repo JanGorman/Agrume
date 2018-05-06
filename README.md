@@ -46,8 +46,7 @@ import Agrume
   guard let image = UIImage(named: "…") else { return }
 
   let agrume = Agrume(image: image)
-  // Present Agrume like any regular UIViewController
-  present(agrume, animated: true)
+  agrume.show(from: self)
 }
 
 ```
@@ -78,7 +77,7 @@ agrume.didScroll = { [unowned self] index in
                                     at: [],
                                     animated: false)
 }
-agrume.showFrom(self)
+agrume.show(from: self)
 
 ```
 
@@ -100,7 +99,7 @@ import MapleBacon
       completion(image)
     }
   }
-  agrume.showFrom(self)
+  agrume.show(from: self)
 }
 ```
 
@@ -117,7 +116,7 @@ AgrumeServiceLocator.shared.setDownloadHandler { url, completion in
 }
 
 // Some other place
-agrume.showFrom(self)
+agrume.show(from: self)
 
 ```
 
@@ -132,7 +131,7 @@ import Agrume
 let dataSource: AgrumeDataSource = MyDataSourceImplementation()
 let agrume = Agrume(dataSource: dataSource)
 
-agrume.showFrom(self)
+agrume.show(from: self)
 
 ```
 
@@ -143,7 +142,7 @@ When showing the Agrume view controller, it'll default to taking a snapshot of t
 ```swift
 
 let agrume = Agrume(image: image)
-agrume.showFrom(self, backgroundSnapshotVC: self)
+agrume.show(from: self, backgroundSnapshotVC: self)
 
 ```
 
@@ -155,7 +154,7 @@ You can customize the status bar appearance when displaying the zoomed in view. 
 
 let agrume = Agrume(image: image)
 agrume.statusBarStyle = .lightContent
-agrume.showFrom(self)
+agrume.show(from: self)
 
 ```
 

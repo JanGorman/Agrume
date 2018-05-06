@@ -15,7 +15,7 @@ final class SingleImageModalViewController: UIViewController {
   
   @IBAction private func openImage(_ sender: Any) {
     let agrume = Agrume(image: #imageLiteral(resourceName: "MapleBacon"), background: .blurred(.regular))
-    agrume.showFrom(self)
+    agrume.show(from: self)
   }
   
   @IBAction private func close(_ sender: Any) {

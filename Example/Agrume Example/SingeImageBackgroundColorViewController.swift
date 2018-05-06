@@ -14,7 +14,7 @@ final class SingleImageBackgroundColorViewController: UIViewController {
   }()
 
   @IBAction private func openImage(_ sender: Any) {
-    agrume.showFrom(self)
+    agrume.show(from: self)
   }
   
 }

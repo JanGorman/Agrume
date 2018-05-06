@@ -171,11 +171,14 @@ public final class Agrume: UIViewController {
 
   private var downloadTask: URLSessionDataTask?
 
-  public func showFrom(_ viewController: UIViewController, backgroundSnapshotVC: UIViewController? = nil) {
+  /// Present Agrume
+  /// - Parameter viewController: The UIViewController to present from
+  /// - Parameter backgroundSnapshotVC: Optional UIViewController that will be used as basis for a blurred background
+  public func show(from viewController: UIViewController, backgroundSnapshotVC: UIViewController? = nil) {
     backgroundSnapshot = (backgroundSnapshotVC ?? viewControllerForSnapshot(fromViewController: viewController))?.view.snapshot()
     view.isUserInteractionEnabled = false
     addSubviews()
-    showFrom(viewController)
+    show(from: viewController)
   }
   
   override public func viewDidLoad() {
@@ -200,7 +203,7 @@ public final class Agrume: UIViewController {
     view.addSubview(spinner)
   }
   
-  private func showFrom(_ viewController: UIViewController) {
+  private func show(from viewController: UIViewController) {
     DispatchQueue.main.async {
       self.blurContainerView.alpha = 1
       self.collectionView.alpha = 0
