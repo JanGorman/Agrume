@@ -9,12 +9,10 @@ public final class Agrume: UIViewController {
   private static let transitionAnimationDuration: TimeInterval = 0.3
   private static let initialScalingToExpandFrom: CGFloat = 0.6
   private static let maxScalingForExpandingOffscreen: CGFloat = 1.25
-  private static let reuseIdentifier = "reuseIdentifier"
 
   private var images: [AgrumeImage]!
   private let startIndex: Int
-  private let backgroundBlurStyle: UIBlurEffectStyle?
-  private let backgroundColor: UIColor?
+  private let background: Background
   
   private weak var dataSource: AgrumeDataSource?
 
@@ -26,7 +24,7 @@ public final class Agrume: UIViewController {
   public var didScroll: ((_ index: Int) -> Void)?
   /// An optional download handler. Passed the URL that is supposed to be loaded. Call the completion with the image
   /// when the download is done.
-  public var addownload: ((_ url: URL, _ completion: @escaping DownloadCompletion) -> Void)?
+  public var download: ((_ url: URL, _ completion: @escaping DownloadCompletion) -> Void)?
   /// Status bar style when presenting
   public var statusBarStyle: UIStatusBarStyle? {
     didSet {
@@ -39,70 +37,48 @@ public final class Agrume: UIViewController {
   /// Initialize with a single image
   ///
   /// - Parameter image: The image to present
-  /// - Parameter backgroundBlurStyle: The UIBlurEffectStyle to apply to the background when presenting
-  /// - Parameter backgroundColor: The background color when presenting
-  public convenience init(image: UIImage, backgroundBlurStyle: UIBlurEffectStyle? = nil, backgroundColor: UIColor? = nil) {
-    self.init(images: [image], backgroundBlurStyle: backgroundBlurStyle, backgroundColor: backgroundColor)
+  /// - Parameter background: The background configuration
+  public convenience init(image: UIImage, background: Background = .colored(.black)) {
+    self.init(images: [image], background: background)
   }
 
   /// Initialize with a single image url
   ///
-  /// - Parameter imageUrl: The image url to present
-  /// - Parameter backgroundBlurStyle: The UIBlurEffectStyle to apply to the background when presenting
-  /// - Parameter backgroundColor: The background color when presenting
-  public convenience init(imageUrl: URL, backgroundBlurStyle: UIBlurEffectStyle? = .dark, backgroundColor: UIColor? = nil) {
-    self.init(urls: [imageUrl], backgroundBlurStyle: backgroundBlurStyle, backgroundColor: backgroundColor)
+  /// - Parameter url: The image url to present
+  /// - Parameter background: The background configuration
+  public convenience init(url: URL, background: Background = .colored(.black)) {
+    self.init(urls: [url], background: background)
   }
 
   /// Initialize with a data source
   ///
   /// - Parameter dataSource: The `AgrumeDataSource` to use
   /// - Parameter startIndex: The optional start index when showing multiple images
-  /// - Parameter backgroundBlurStyle: The UIBlurEffectStyle to apply to the background when presenting
-  /// - Parameter backgroundColor: The background color when presenting
-	public convenience init(dataSource: AgrumeDataSource, startIndex: Int? = nil,
-	                        backgroundBlurStyle: UIBlurEffectStyle? = .dark, backgroundColor: UIColor? = nil) {
-		self.init(dataSource: dataSource, startIndex: startIndex,
-		          backgroundBlurStyle: backgroundBlurStyle, backgroundColor: backgroundColor)
+  /// - Parameter background: The background configuration
+	public convenience init(dataSource: AgrumeDataSource, startIndex: Int? = nil, background: Background = .colored(.black)) {
+		self.init(dataSource: dataSource, startIndex: startIndex, background: background)
 	}
 	
   /// Initialize with an array of images
   ///
   /// - Parameter images: The images to present
   /// - Parameter startIndex: The optional start index when showing multiple images
-  /// - Parameter backgroundBlurStyle: The UIBlurEffectStyle to apply to the background when presenting
-  /// - Parameter backgroundColor: The background color when presenting
-  public convenience init(images: [UIImage], startIndex: Int = 0, backgroundBlurStyle: UIBlurEffectStyle? = .dark,
-                          backgroundColor: UIColor? = nil) {
-    self.init(images: images, urls: nil, startIndex: startIndex, backgroundBlurStyle: backgroundBlurStyle, backgroundColor: backgroundColor)
+  /// - Parameter background: The background configuration
+  public convenience init(images: [UIImage], startIndex: Int = 0, background: Background = .colored(.black)) {
+    self.init(images: images, urls: nil, startIndex: startIndex, background: background)
   }
 
   /// Initialize with an array of image urls
   ///
-  /// - Parameter imageUrls: The image urls to present
+  /// - Parameter urls: The image urls to present
   /// - Parameter startIndex: The optional start index when showing multiple images
-  /// - Parameter backgroundBlurStyle: The UIBlurEffectStyle to apply to the background when presenting
-  /// - Parameter backgroundColor: The background color when presenting
-  public convenience init(urls: [URL], startIndex: Int = 0, backgroundBlurStyle: UIBlurEffectStyle? = .dark,
-                          backgroundColor: UIColor? = nil) {
-    self.init(images: nil, urls: urls, startIndex: startIndex, backgroundBlurStyle: backgroundBlurStyle,
-              backgroundColor: backgroundColor)
+  /// - Parameter background: The background configuration
+  public convenience init(urls: [URL], startIndex: Int = 0, background: Background = .colored(.black)) {
+    self.init(images: nil, urls: urls, startIndex: startIndex, background: background)
   }
 
 	private init(images: [UIImage]? = nil, urls: [URL]? = nil, dataSource: AgrumeDataSource? = nil, startIndex: Int = 0,
-	             backgroundBlurStyle: UIBlurEffectStyle? = nil, backgroundColor: UIColor? = nil) {
-    switch (backgroundBlurStyle, backgroundColor) {
-    case (let blur, .none):
-      self.backgroundBlurStyle = blur
-      self.backgroundColor = nil
-    case (.none, let color):
-      self.backgroundColor = color
-      self.backgroundBlurStyle = nil
-    default:
-      self.backgroundBlurStyle = .dark
-      self.backgroundColor = nil
-    }
-
+	             background: Background) {
     switch (images, urls) {
     case (let images?, nil):
       self.images = images.map { AgrumeImage(image: $0) }
@@ -110,19 +86,10 @@ public final class Agrume: UIViewController {
       self.images = urls.map { AgrumeImage(url: $0) }
     default:
       assert(dataSource != nil, "No images or URLs passed. You must provide an AgrumeDataSource in that case.")
-      break
     }
-    
-//    self.images = images
-//    if let image = image {
-//      self.images = [image]
-//    }
-//    self.imageUrls = imageUrls
-//    if let imageURL = imageUrl {
-//      self.imageUrls = [imageURL]
-//    }
 		
     self.startIndex = startIndex
+    self.background = background
     super.init(nibName: nil, bundle: nil)
     
     self.dataSource = dataSource ?? self
@@ -159,19 +126,24 @@ public final class Agrume: UIViewController {
     if _blurContainerView == nil {
       let view = UIView(frame: self.view.frame)
       view.autoresizingMask = [.flexibleWidth, .flexibleHeight]
-      view.backgroundColor = backgroundColor ?? .clear
+      if case .colored(let color) = background {
+        view.backgroundColor = color
+      } else {
+        view.backgroundColor = .clear
+      }
       _blurContainerView = view
     }
     return _blurContainerView!
   }
   private var _blurView: UIVisualEffectView?
   private var blurView: UIVisualEffectView {
-    if _blurView == nil {
-      let blurView = UIVisualEffectView(effect: UIBlurEffect(style: self.backgroundBlurStyle!))
-      blurView.frame = self.view.frame
-      blurView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
-      _blurView = blurView
+    guard case .blurred(let style) = background, _blurView == nil else {
+      return _blurView!
     }
+    let blurView = UIVisualEffectView(effect: UIBlurEffect(style: style))
+    blurView.frame = view.frame
+    blurView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+    _blurView = blurView
     return _blurView!
   }
   private var _collectionView: UICollectionView?
@@ -183,8 +155,8 @@ public final class Agrume: UIViewController {
       layout.scrollDirection = .horizontal
       layout.itemSize = self.view.frame.size
       
-      let collectionView = UICollectionView(frame: self.view.frame, collectionViewLayout: layout)
-      collectionView.register(AgrumeCell.self, forCellWithReuseIdentifier: Agrume.reuseIdentifier)
+      let collectionView = UICollectionView(frame: view.frame, collectionViewLayout: layout)
+      collectionView.register(AgrumeCell.self, forCellWithReuseIdentifier: String(describing: AgrumeCell.self))
       collectionView.dataSource = self
       collectionView.delegate = self
       collectionView.isPagingEnabled = true
@@ -198,8 +170,14 @@ public final class Agrume: UIViewController {
   private var _spinner: UIActivityIndicatorView?
   private var spinner: UIActivityIndicatorView {
     if _spinner == nil {
-      let activityIndicatorStyle: UIActivityIndicatorViewStyle = self.backgroundBlurStyle == .dark ? .whiteLarge : .gray
-      let spinner = UIActivityIndicatorView(activityIndicatorStyle: activityIndicatorStyle)
+      let indicatorStyle: UIActivityIndicatorViewStyle
+      switch background {
+      case .blurred(let style):
+        indicatorStyle = style == .dark ? .whiteLarge : .gray
+      case .colored(let color):
+        indicatorStyle = color.isLight ? .gray : .whiteLarge
+      }
+      let spinner = UIActivityIndicatorView(activityIndicatorStyle: indicatorStyle)
       spinner.center = self.view.center
       spinner.startAnimating()
       spinner.alpha = 0
@@ -241,7 +219,7 @@ public final class Agrume: UIViewController {
   }
   
   private func addSubviews() {
-    if backgroundBlurStyle != nil {
+    if case .blurred(_) = background {
       blurContainerView.addSubview(blurView)
     }
     view.addSubview(blurContainerView)
@@ -411,8 +389,8 @@ extension Agrume: UICollectionViewDataSource {
   }
 
   public func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-    let cell = collectionView.dequeueReusableCell(withReuseIdentifier: Agrume.reuseIdentifier,
-                                                  for: indexPath) as! AgrumeCell
+    let cell: AgrumeCell = collectionView.dequeue(indexPath: indexPath)
+
     spinner.alpha = 1
     dataSource?.image(forIndex: indexPath.item) { [weak self] image in
       DispatchQueue.main.async {

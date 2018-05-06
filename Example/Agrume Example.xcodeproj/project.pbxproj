@@ -117,18 +117,18 @@
 			isa = PBXGroup;
 			children = (
 				F2A5201A1B130C7E00924912 /* AppDelegate.swift */,
-				F2A5201C1B130C7E00924912 /* ViewController.swift */,
-				F2A5201E1B130C7E00924912 /* Main.storyboard */,
+				F2D959941B1A15ED00073772 /* DemoCell.swift */,
 				F2A520211B130C7E00924912 /* Images.xcassets */,
 				F2A520231B130C7E00924912 /* LaunchScreen.xib */,
-				F2A520181B130C7E00924912 /* Supporting Files */,
-				F2D9598D1B1A133800073772 /* SingleImageViewController.swift */,
+				F2A5201E1B130C7E00924912 /* Main.storyboard */,
+				F2D959921B1A153F00073772 /* MultipleImagesCollectionViewController.swift */,
+				F2D959961B1A199F00073772 /* MultipleURLsCollectionViewController.swift */,
 				94D6B2111E1411B100927735 /* SingeImageBackgroundColorViewController.swift */,
 				E77809E21D17821400CC60F1 /* SingleImageModalViewController.swift */,
+				F2D9598D1B1A133800073772 /* SingleImageViewController.swift */,
 				F2D959901B1A140200073772 /* SingleURLViewController.swift */,
-				F2D959921B1A153F00073772 /* MultipleImagesCollectionViewController.swift */,
-				F2D959941B1A15ED00073772 /* DemoCell.swift */,
-				F2D959961B1A199F00073772 /* MultipleURLsCollectionViewController.swift */,
+				F2A520181B130C7E00924912 /* Supporting Files */,
+				F2A5201C1B130C7E00924912 /* ViewController.swift */,
 			);
 			path = "Agrume Example";
 			sourceTree = "<group>";
