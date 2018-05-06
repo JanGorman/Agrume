@@ -18,6 +18,7 @@
 		F2A5200B1B10E29B00924912 /* Agrume.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2A5200A1B10E29B00924912 /* Agrume.swift */; };
 		F2D9598C1B1A108800073772 /* AgrumeCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2D9598B1B1A108800073772 /* AgrumeCell.swift */; };
 		F2DC79D61B170C4B00818A8C /* ImageDownloader.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2DC79D51B170C4B00818A8C /* ImageDownloader.swift */; };
+		F2EE29AE209F31B800F281A2 /* Foundation+Agrume.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2EE29AD209F31B800F281A2 /* Foundation+Agrume.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -45,6 +46,7 @@
 		F2A5200A1B10E29B00924912 /* Agrume.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Agrume.swift; sourceTree = "<group>"; };
 		F2D9598B1B1A108800073772 /* AgrumeCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AgrumeCell.swift; sourceTree = "<group>"; };
 		F2DC79D51B170C4B00818A8C /* ImageDownloader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageDownloader.swift; sourceTree = "<group>"; };
+		F2EE29AD209F31B800F281A2 /* Foundation+Agrume.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Foundation+Agrume.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -99,6 +101,7 @@
 				F2A51FF11B10E00700924912 /* Supporting Files */,
 				F2609E27209F2BC600E0E93D /* Background.swift */,
 				F2609E29209F2E0200E0E93D /* UIKit+Agrume.swift */,
+				F2EE29AD209F31B800F281A2 /* Foundation+Agrume.swift */,
 			);
 			path = Agrume;
 			sourceTree = "<group>";
@@ -261,6 +264,7 @@
 				F2609E26209F06F800E0E93D /* AgrumeImage.swift in Sources */,
 				F2609E2A209F2E0200E0E93D /* UIKit+Agrume.swift in Sources */,
 				F2609E28209F2BC600E0E93D /* Background.swift in Sources */,
+				F2EE29AE209F31B800F281A2 /* Foundation+Agrume.swift in Sources */,
 				F2DC79D61B170C4B00818A8C /* ImageDownloader.swift in Sources */,
 				F2609E23209F047200E0E93D /* AgrumeDataSource.swift in Sources */,
 				F2A5200B1B10E29B00924912 /* Agrume.swift in Sources */,

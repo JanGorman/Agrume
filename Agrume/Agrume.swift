@@ -6,10 +6,6 @@ import UIKit
 
 public final class Agrume: UIViewController {
 
-  private static let transitionAnimationDuration: TimeInterval = 0.3
-  private static let initialScalingToExpandFrom: CGFloat = 0.6
-  private static let maxScalingForExpandingOffscreen: CGFloat = 1.25
-
   private var images: [AgrumeImage]!
   private let startIndex: Int
   private let background: Background
@@ -103,18 +99,6 @@ public final class Agrume: UIViewController {
     fatalError("Not implemented")
   }
 
-  private func frameForCurrentDeviceOrientation() -> CGRect {
-    let bounds = view.bounds
-    if UIDeviceOrientationIsLandscape(currentDeviceOrientation()) {
-      if bounds.width / bounds.height > bounds.height / bounds.width {
-        return bounds
-      } else {
-        return CGRect(origin: bounds.origin, size: CGSize(width: bounds.height, height: bounds.width))
-      }
-    }
-    return bounds
-  }
-
   private func currentDeviceOrientation() -> UIDeviceOrientation {
     return UIDevice.current.orientation
   }
@@ -153,7 +137,7 @@ public final class Agrume: UIViewController {
       layout.minimumInteritemSpacing = 0
       layout.minimumLineSpacing = 0
       layout.scrollDirection = .horizontal
-      layout.itemSize = self.view.frame.size
+      layout.itemSize = view.frame.size
       
       let collectionView = UICollectionView(frame: view.frame, collectionViewLayout: layout)
       collectionView.register(AgrumeCell.self, forCellWithReuseIdentifier: String(describing: AgrumeCell.self))
@@ -178,7 +162,7 @@ public final class Agrume: UIViewController {
         indicatorStyle = color.isLight ? .gray : .whiteLarge
       }
       let spinner = UIActivityIndicatorView(activityIndicatorStyle: indicatorStyle)
-      spinner.center = self.view.center
+      spinner.center = view.center
       spinner.startAnimating()
       spinner.alpha = 0
       _spinner = spinner
@@ -195,26 +179,10 @@ public final class Agrume: UIViewController {
     view.addSubview(backgroundImageView)
   }
 
-  private var lastUsedOrientation: UIDeviceOrientation?
-
-  public override func viewWillAppear(_ animated: Bool) {
-    super.viewWillAppear(animated)
-    lastUsedOrientation = currentDeviceOrientation()
-  }
-
-  private func deviceOrientationFromStatusBarOrientation() -> UIDeviceOrientation {
-    return UIDeviceOrientation(rawValue: UIApplication.shared.statusBarOrientation.rawValue)!
-  }
-
-  private var initialOrientation: UIDeviceOrientation!
-
   public func showFrom(_ viewController: UIViewController, backgroundSnapshotVC: UIViewController? = nil) {
     backgroundSnapshot = (backgroundSnapshotVC ?? viewControllerForSnapshot(fromViewController: viewController))?.view.snapshot()
-    view.frame = frameForCurrentDeviceOrientation()
     view.isUserInteractionEnabled = false
     addSubviews()
-    initialOrientation = deviceOrientationFromStatusBarOrientation()
-    updateLayoutsForCurrentOrientation()
     showFrom(viewController)
   }
   
@@ -235,18 +203,18 @@ public final class Agrume: UIViewController {
       self.blurContainerView.alpha = 1
       self.collectionView.alpha = 0
       self.collectionView.frame = self.view.frame
-      let scaling = Agrume.initialScalingToExpandFrom
+      let scaling: CGFloat = .initialScalingToExpandFrom
       self.collectionView.transform = CGAffineTransform(scaleX: scaling, y: scaling)
       
       viewController.present(self, animated: false) {
-        UIView.animate(withDuration: Agrume.transitionAnimationDuration,
+        UIView.animate(withDuration: .transitionAnimationDuration,
                        delay: 0,
                        options: .beginFromCurrentState,
-                       animations: { [weak self] in
-                        self?.collectionView.alpha = 1
-                        self?.collectionView.transform = .identity
-          }, completion: { [weak self] _ in
-            self?.view.isUserInteractionEnabled = true
+                       animations: {
+                        self.collectionView.alpha = 1
+                        self.collectionView.transform = .identity
+          }, completion: { _ in
+            self.view.isUserInteractionEnabled = true
           })
       }
     }
@@ -261,7 +229,7 @@ public final class Agrume: UIViewController {
   }
 
   public func dismiss() {
-    self.dismissAfterFlick()
+    dismissAfterFlick()
   }
 
   public func showImage(atIndex index : Int) {
@@ -276,108 +244,6 @@ public final class Agrume: UIViewController {
   
   public override var prefersStatusBarHidden: Bool {
     return hideStatusBar
-  }
-
-  // MARK: Rotation
-
-  public override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
-    coordinator.animate(alongsideTransition: { [weak self] _ in
-      self?.updateLayoutsForCurrentOrientation()
-    }, completion: { [weak self] _ in
-      self?.lastUsedOrientation = self?.deviceOrientationFromStatusBarOrientation()
-    })
-  }
-
-  private func updateLayoutsForCurrentOrientation() {
-    let transform = newTransform()
-
-    backgroundImageView.center = view.center
-    backgroundImageView.transform = transform.concatenating(CGAffineTransform(scaleX: 1, y: 1))
-
-    spinner.center = view.center
-
-    collectionView.performBatchUpdates({ [unowned self] in
-      self.collectionView.collectionViewLayout.invalidateLayout()
-      self.collectionView.frame = self.view.frame
-      let width = self.collectionView.frame.width
-      let page = Int((self.collectionView.contentOffset.x + (0.5 * width)) / width)
-      let updatedOffset = CGFloat(page) * self.collectionView.frame.width
-      self.collectionView.contentOffset = CGPoint(x: updatedOffset, y: self.collectionView.contentOffset.y)
-      
-      let layout = self.collectionView.collectionViewLayout as? UICollectionViewFlowLayout
-      layout?.itemSize = self.view.frame.size
-    }, completion: { _ in
-      for visibleCell in self.collectionView.visibleCells as! [AgrumeCell] {
-        visibleCell.updateScrollViewAndImageViewForCurrentMetrics()
-      }
-    })
-  }
-  
-  private func newTransform() -> CGAffineTransform {
-    switch initialOrientation {
-    case .portrait:
-      return transformPortrait()
-    case .portraitUpsideDown:
-      return transformPortraitUpsideDown()
-    case .landscapeLeft:
-      return transformLandscapeLeft()
-    case .landscapeRight:
-      return transformLandscapeRight()
-    default:
-      return .identity
-    }
-  }
-
-  private func transformPortrait() -> CGAffineTransform {
-    switch currentDeviceOrientation() {
-    case .landscapeLeft:
-      return CGAffineTransform(rotationAngle: .pi / 2)
-    case .landscapeRight:
-      return CGAffineTransform(rotationAngle: -(.pi / 2))
-    case .portraitUpsideDown:
-      return CGAffineTransform(rotationAngle: .pi)
-    default:
-      return .identity
-    }
-  }
-
-  private func transformPortraitUpsideDown() -> CGAffineTransform {
-    switch currentDeviceOrientation() {
-    case .landscapeLeft:
-      return CGAffineTransform(rotationAngle: -(.pi / 2))
-    case .landscapeRight:
-      return CGAffineTransform(rotationAngle: .pi / 2)
-    case .portrait:
-      return CGAffineTransform(rotationAngle: .pi)
-    default:
-      return .identity
-    }
-  }
-
-  private func transformLandscapeLeft() -> CGAffineTransform {
-    switch currentDeviceOrientation() {
-    case .landscapeRight:
-      return CGAffineTransform(rotationAngle: .pi)
-    case .portrait:
-      return CGAffineTransform(rotationAngle: -(.pi / 2))
-    case .portraitUpsideDown:
-      return CGAffineTransform(rotationAngle: .pi / 2)
-    default:
-      return .identity
-    }
-  }
-
-  private func transformLandscapeRight() -> CGAffineTransform {
-    switch currentDeviceOrientation() {
-    case .landscapeLeft:
-      return CGAffineTransform(rotationAngle: .pi)
-    case .portrait:
-      return CGAffineTransform(rotationAngle: .pi / 2)
-    case .portraitUpsideDown:
-      return CGAffineTransform(rotationAngle: -(.pi / 2))
-    default:
-      return .identity
-    }
   }
 
 }
@@ -473,10 +339,10 @@ extension Agrume: AgrumeCellDelegate {
   }
 
   func dismissAfterFlick() {
-    UIView.animate(withDuration: Agrume.transitionAnimationDuration,
+    UIView.animate(withDuration: .transitionAnimationDuration,
                    delay: 0,
                    options: .beginFromCurrentState,
-                   animations: { [unowned self] in
+                   animations: {
                     self.collectionView.alpha = 0
                     self.blurContainerView.alpha = 0
       }, completion: dismissCompletion)
@@ -485,13 +351,13 @@ extension Agrume: AgrumeCellDelegate {
   func dismissAfterTap() {
     view.isUserInteractionEnabled = false
     
-    UIView.animate(withDuration: Agrume.transitionAnimationDuration,
+    UIView.animate(withDuration: .transitionAnimationDuration,
                    delay: 0,
                    options: .beginFromCurrentState,
                    animations: {
                     self.collectionView.alpha = 0
                     self.blurContainerView.alpha = 0
-                    let scaling = Agrume.maxScalingForExpandingOffscreen
+                    let scaling: CGFloat = .maxScalingForExpandingOffscreen
                     self.collectionView.transform = CGAffineTransform(scaleX: scaling, y: scaling)
       }, completion: dismissCompletion)
   }

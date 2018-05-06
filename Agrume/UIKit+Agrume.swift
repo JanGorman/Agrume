@@ -4,6 +4,13 @@
 
 import UIKit
 
+extension CGFloat {
+  
+  static let initialScalingToExpandFrom: CGFloat = 0.6
+  static let maxScalingForExpandingOffscreen: CGFloat = 1.25
+  
+}
+
 extension UIView {
   
   final func snapshot() -> UIImage {
