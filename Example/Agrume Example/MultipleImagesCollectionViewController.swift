@@ -16,9 +16,8 @@ final class MultipleImagesCollectionViewController: UICollectionViewController {
 
   override func viewDidLoad() {
     super.viewDidLoad()
-
     let layout = collectionView?.collectionViewLayout as! UICollectionViewFlowLayout
-    layout.itemSize = CGSize(width: view.bounds.width, height: view.bounds.height)
+    layout.itemSize = CGSize(width: view.frame.width, height: view.frame.height)
   }
 
   // MARK: UICollectionViewDataSource

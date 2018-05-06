@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		94318E541D32612D0096215A /* AgrumeServiceLocator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94318E531D32612D0096215A /* AgrumeServiceLocator.swift */; };
-		94318E561D3261640096215A /* AgrumeServiceLocatorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94318E551D3261640096215A /* AgrumeServiceLocatorTests.swift */; };
 		F2609E23209F047200E0E93D /* AgrumeDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2609E22209F047200E0E93D /* AgrumeDataSource.swift */; };
 		F2609E26209F06F800E0E93D /* AgrumeImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2609E25209F06F800E0E93D /* AgrumeImage.swift */; };
 		F2609E28209F2BC600E0E93D /* Background.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2609E27209F2BC600E0E93D /* Background.swift */; };
@@ -33,7 +32,6 @@
 
 /* Begin PBXFileReference section */
 		94318E531D32612D0096215A /* AgrumeServiceLocator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AgrumeServiceLocator.swift; sourceTree = "<group>"; };
-		94318E551D3261640096215A /* AgrumeServiceLocatorTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AgrumeServiceLocatorTests.swift; sourceTree = "<group>"; };
 		F2609E22209F047200E0E93D /* AgrumeDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AgrumeDataSource.swift; sourceTree = "<group>"; };
 		F2609E25209F06F800E0E93D /* AgrumeImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AgrumeImage.swift; sourceTree = "<group>"; };
 		F2609E27209F2BC600E0E93D /* Background.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Background.swift; sourceTree = "<group>"; };
@@ -117,7 +115,6 @@
 		F2A51FFD1B10E00700924912 /* AgrumeTests */ = {
 			isa = PBXGroup;
 			children = (
-				94318E551D3261640096215A /* AgrumeServiceLocatorTests.swift */,
 				F2A51FFE1B10E00700924912 /* Supporting Files */,
 			);
 			path = AgrumeTests;
@@ -276,7 +273,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				94318E561D3261640096215A /* AgrumeServiceLocatorTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -51,7 +51,7 @@ public final class Agrume: UIViewController {
   /// - Parameter dataSource: The `AgrumeDataSource` to use
   /// - Parameter startIndex: The optional start index when showing multiple images
   /// - Parameter background: The background configuration
-	public convenience init(dataSource: AgrumeDataSource, startIndex: Int? = nil, background: Background = .colored(.black)) {
+	public convenience init(dataSource: AgrumeDataSource, startIndex: Int = 0, background: Background = .colored(.black)) {
 		self.init(dataSource: dataSource, startIndex: startIndex, background: background)
 	}
 	
@@ -73,7 +73,7 @@ public final class Agrume: UIViewController {
     self.init(images: nil, urls: urls, startIndex: startIndex, background: background)
   }
 
-	private init(images: [UIImage]? = nil, urls: [URL]? = nil, dataSource: AgrumeDataSource? = nil, startIndex: Int = 0,
+	private init(images: [UIImage]? = nil, urls: [URL]? = nil, dataSource: AgrumeDataSource? = nil, startIndex: Int,
 	             background: Background) {
     switch (images, urls) {
     case (let images?, nil):
@@ -142,7 +142,6 @@ public final class Agrume: UIViewController {
       collectionView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
       collectionView.register(AgrumeCell.self, forCellWithReuseIdentifier: String(describing: AgrumeCell.self))
       collectionView.dataSource = self
-      collectionView.delegate = self
       collectionView.isPagingEnabled = true
       collectionView.backgroundColor = .clear
       collectionView.delaysContentTouches = false
@@ -169,16 +168,8 @@ public final class Agrume: UIViewController {
     }
     return _spinner!
   }
-  private var downloadTask: URLSessionDataTask?
 
-  override public func viewDidLoad() {
-    super.viewDidLoad()
-    view.autoresizingMask = [.flexibleHeight, .flexibleWidth]
-    backgroundImageView = UIImageView(frame: view.frame)
-    backgroundImageView.image = backgroundSnapshot
-    view.addSubview(backgroundImageView)
-    addSubviews()
-  }
+  private var downloadTask: URLSessionDataTask?
 
   public func showFrom(_ viewController: UIViewController, backgroundSnapshotVC: UIViewController? = nil) {
     backgroundSnapshot = (backgroundSnapshotVC ?? viewControllerForSnapshot(fromViewController: viewController))?.view.snapshot()
@@ -187,7 +178,17 @@ public final class Agrume: UIViewController {
     showFrom(viewController)
   }
   
+  override public func viewDidLoad() {
+    super.viewDidLoad()
+    addSubviews()
+  }
+  
   private func addSubviews() {
+    view.autoresizingMask = [.flexibleHeight, .flexibleWidth]
+    backgroundImageView = UIImageView(frame: view.frame)
+    backgroundImageView.image = backgroundSnapshot
+    view.addSubview(backgroundImageView)
+    
     if case .blurred(_) = background {
       blurContainerView.addSubview(blurView)
     }
@@ -300,32 +301,6 @@ extension Agrume: UICollectionViewDataSource {
     collectionView.panGestureRecognizer.require(toFail: cell.swipeGesture)
     cell.delegate = self
     return cell
-  }
-
-}
-
-extension Agrume: UICollectionViewDelegate {
-
-  public func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
-    didScroll?(indexPath.item)
-
-    spinner.alpha = 1
-    dataSource?.image(forIndex: indexPath.item) { [weak self] image in
-      (cell as! AgrumeCell).image = image
-      self?.spinner.alpha = 0
-    }
-  }
-  
-  private func isDataSourceCountUnchanged(dataSourceCount: Int, collectionViewCount: Int) -> Bool {
-    return collectionViewCount == dataSourceCount
-  }
-  
-  private func isIndexPathOutOfBounds(_ indexPath: IndexPath, count: Int) -> Bool {
-    return indexPath.item >= count
-  }
-  
-  private func isLastElement(atIndexPath indexPath: IndexPath, count: Int) -> Bool {
-    return indexPath.item == count
   }
 
 }
