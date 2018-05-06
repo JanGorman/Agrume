@@ -4,7 +4,7 @@
 
 import UIKit
 
-protocol AgrumeCellDelegate: class {
+protocol AgrumeCellDelegate: AnyObject {
   
   func dismissAfterFlick()
   func dismissAfterTap()
