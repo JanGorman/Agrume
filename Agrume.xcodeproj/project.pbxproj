@@ -8,13 +8,16 @@
 
 /* Begin PBXBuildFile section */
 		94318E541D32612D0096215A /* AgrumeServiceLocator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94318E531D32612D0096215A /* AgrumeServiceLocator.swift */; };
-		94318E561D3261640096215A /* AgrumeServiceLocatorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94318E551D3261640096215A /* AgrumeServiceLocatorTests.swift */; };
+		F2609E23209F047200E0E93D /* AgrumeDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2609E22209F047200E0E93D /* AgrumeDataSource.swift */; };
+		F2609E26209F06F800E0E93D /* AgrumeImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2609E25209F06F800E0E93D /* AgrumeImage.swift */; };
+		F2609E28209F2BC600E0E93D /* Background.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2609E27209F2BC600E0E93D /* Background.swift */; };
+		F2609E2A209F2E0200E0E93D /* UIKit+Agrume.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2609E29209F2E0200E0E93D /* UIKit+Agrume.swift */; };
 		F2A51FF41B10E00700924912 /* Agrume.h in Headers */ = {isa = PBXBuildFile; fileRef = F2A51FF31B10E00700924912 /* Agrume.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		F2A51FFA1B10E00700924912 /* Agrume.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F2A51FEE1B10E00700924912 /* Agrume.framework */; };
 		F2A5200B1B10E29B00924912 /* Agrume.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2A5200A1B10E29B00924912 /* Agrume.swift */; };
 		F2D9598C1B1A108800073772 /* AgrumeCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2D9598B1B1A108800073772 /* AgrumeCell.swift */; };
-		F2DC79D41B17012300818A8C /* UIViewExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2DC79D31B17012300818A8C /* UIViewExtensions.swift */; };
 		F2DC79D61B170C4B00818A8C /* ImageDownloader.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2DC79D51B170C4B00818A8C /* ImageDownloader.swift */; };
+		F2EE29AE209F31B800F281A2 /* Foundation+Agrume.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2EE29AD209F31B800F281A2 /* Foundation+Agrume.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -29,7 +32,10 @@
 
 /* Begin PBXFileReference section */
 		94318E531D32612D0096215A /* AgrumeServiceLocator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AgrumeServiceLocator.swift; sourceTree = "<group>"; };
-		94318E551D3261640096215A /* AgrumeServiceLocatorTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AgrumeServiceLocatorTests.swift; sourceTree = "<group>"; };
+		F2609E22209F047200E0E93D /* AgrumeDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AgrumeDataSource.swift; sourceTree = "<group>"; };
+		F2609E25209F06F800E0E93D /* AgrumeImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AgrumeImage.swift; sourceTree = "<group>"; };
+		F2609E27209F2BC600E0E93D /* Background.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Background.swift; sourceTree = "<group>"; };
+		F2609E29209F2E0200E0E93D /* UIKit+Agrume.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIKit+Agrume.swift"; sourceTree = "<group>"; };
 		F2A51FEE1B10E00700924912 /* Agrume.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Agrume.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		F2A51FF21B10E00700924912 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		F2A51FF31B10E00700924912 /* Agrume.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Agrume.h; sourceTree = "<group>"; };
@@ -37,8 +43,8 @@
 		F2A51FFF1B10E00700924912 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		F2A5200A1B10E29B00924912 /* Agrume.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Agrume.swift; sourceTree = "<group>"; };
 		F2D9598B1B1A108800073772 /* AgrumeCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AgrumeCell.swift; sourceTree = "<group>"; };
-		F2DC79D31B17012300818A8C /* UIViewExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIViewExtensions.swift; sourceTree = "<group>"; };
 		F2DC79D51B170C4B00818A8C /* ImageDownloader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageDownloader.swift; sourceTree = "<group>"; };
+		F2EE29AD209F31B800F281A2 /* Foundation+Agrume.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Foundation+Agrume.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -84,12 +90,16 @@
 			isa = PBXGroup;
 			children = (
 				F2A51FF31B10E00700924912 /* Agrume.h */,
-				F2A51FF11B10E00700924912 /* Supporting Files */,
 				F2A5200A1B10E29B00924912 /* Agrume.swift */,
-				94318E531D32612D0096215A /* AgrumeServiceLocator.swift */,
-				F2DC79D31B17012300818A8C /* UIViewExtensions.swift */,
-				F2DC79D51B170C4B00818A8C /* ImageDownloader.swift */,
 				F2D9598B1B1A108800073772 /* AgrumeCell.swift */,
+				F2609E22209F047200E0E93D /* AgrumeDataSource.swift */,
+				F2609E25209F06F800E0E93D /* AgrumeImage.swift */,
+				94318E531D32612D0096215A /* AgrumeServiceLocator.swift */,
+				F2DC79D51B170C4B00818A8C /* ImageDownloader.swift */,
+				F2A51FF11B10E00700924912 /* Supporting Files */,
+				F2609E27209F2BC600E0E93D /* Background.swift */,
+				F2609E29209F2E0200E0E93D /* UIKit+Agrume.swift */,
+				F2EE29AD209F31B800F281A2 /* Foundation+Agrume.swift */,
 			);
 			path = Agrume;
 			sourceTree = "<group>";
@@ -105,7 +115,6 @@
 		F2A51FFD1B10E00700924912 /* AgrumeTests */ = {
 			isa = PBXGroup;
 			children = (
-				94318E551D3261640096215A /* AgrumeServiceLocatorTests.swift */,
 				F2A51FFE1B10E00700924912 /* Supporting Files */,
 			);
 			path = AgrumeTests;
@@ -178,7 +187,7 @@
 			attributes = {
 				LastSwiftMigration = 0700;
 				LastSwiftUpdateCheck = 0730;
-				LastUpgradeCheck = 0900;
+				LastUpgradeCheck = 0930;
 				ORGANIZATIONNAME = Schnaub;
 				TargetAttributes = {
 					F2A51FED1B10E00700924912 = {
@@ -249,8 +258,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				F2D9598C1B1A108800073772 /* AgrumeCell.swift in Sources */,
-				F2DC79D41B17012300818A8C /* UIViewExtensions.swift in Sources */,
+				F2609E26209F06F800E0E93D /* AgrumeImage.swift in Sources */,
+				F2609E2A209F2E0200E0E93D /* UIKit+Agrume.swift in Sources */,
+				F2609E28209F2BC600E0E93D /* Background.swift in Sources */,
+				F2EE29AE209F31B800F281A2 /* Foundation+Agrume.swift in Sources */,
 				F2DC79D61B170C4B00818A8C /* ImageDownloader.swift in Sources */,
+				F2609E23209F047200E0E93D /* AgrumeDataSource.swift in Sources */,
 				F2A5200B1B10E29B00924912 /* Agrume.swift in Sources */,
 				94318E541D32612D0096215A /* AgrumeServiceLocator.swift in Sources */,
 			);
@@ -260,7 +273,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				94318E561D3261640096215A /* AgrumeServiceLocatorTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -287,12 +299,14 @@
 				CLANG_WARN_BOOL_CONVERSION = YES;
 				CLANG_WARN_COMMA = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
@@ -321,7 +335,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
@@ -344,12 +358,14 @@
 				CLANG_WARN_BOOL_CONVERSION = YES;
 				CLANG_WARN_COMMA = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
@@ -371,7 +387,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
 				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
