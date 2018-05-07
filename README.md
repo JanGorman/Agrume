@@ -1,14 +1,13 @@
+# Agrume
+
 [![Build Status](https://travis-ci.org/JanGorman/Agrume.svg?branch=master)](https://travis-ci.org/JanGorman/Agrume) [![Carthage compatible](https://img.shields.io/badge/Carthage-compatible-4BC51D.svg?style=flat)](https://github.com/Carthage/Carthage)
 [![Version](https://img.shields.io/cocoapods/v/Agrume.svg?style=flat)](http://cocoapods.org/pods/Agrume)
 [![License](https://img.shields.io/cocoapods/l/Agrume.svg?style=flat)](http://cocoapods.org/pods/Agrume)
 [![Platform](https://img.shields.io/cocoapods/p/Agrume.svg?style=flat)](http://cocoapods.org/pods/Agrume)
 
-# Agrume
-
 An iOS image viewer written in Swift with support for multiple images.
 
 ![Agrume](https://www.dropbox.com/s/bdt6sphcyloa38u/Agrume.gif?raw=1)
-
 
 ## Requirements
 
@@ -43,9 +42,7 @@ For just a single image it's as easy as
 import Agrume
 
 @IBAction func openImage(_ sender: Any) {
-  guard let image = UIImage(named: "…") else { return }
-
-  let agrume = Agrume(image: image)
+  let agrume = Agrume(image: UIImage(named: "…")!)
   agrume.show(from: self)
 }
 
@@ -73,9 +70,7 @@ If you're displaying a `UICollectionView` and want to add support for zooming, y
 
 let agrume = Agrume(images: images, startIndex: indexPath.item, backgroundBlurStyle: .light)
 agrume.didScroll = { [unowned self] index in
-  self.collectionView?.scrollToItem(at: IndexPath(item: index, section: 0),
-                                    at: [],
-                                    animated: false)
+  self.collectionView.scrollToItem(at: IndexPath(item: index, section: 0), at: [], animated: false)
 }
 agrume.show(from: self)
 
@@ -93,7 +88,7 @@ import Agrume
 import MapleBacon
 
 @IBAction func openURL(_ sender: Any) {
-  let agrume = Agrume(imageUrl: URL(string: "https://dl.dropboxusercontent.com/u/512759/MapleBacon.png")!)
+  let agrume = Agrume(url: URL(string: "https://dl.dropboxusercontent.com/u/512759/MapleBacon.png")!)
   agrume.download = { url, completion in
     Downloader.default.download(url) { image in
       completion(image)
@@ -112,7 +107,7 @@ Instead of having to define a handler on a per instance basis you can instead se
 import Agrume
 
 AgrumeServiceLocator.shared.setDownloadHandler { url, completion in
-  // Download data, cache it and call the completion
+  // Download data, cache it and call the completion with the resulting UIImage
 }
 
 // Some other place
