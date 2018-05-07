@@ -68,7 +68,7 @@ If you're displaying a `UICollectionView` and want to add support for zooming, y
 
 ```swift
 
-let agrume = Agrume(images: images, startIndex: indexPath.item, backgroundBlurStyle: .light)
+let agrume = Agrume(images: images, startIndex: indexPath.item, background: .blurred(.light))
 agrume.didScroll = { [unowned self] index in
   self.collectionView.scrollToItem(at: IndexPath(item: index, section: 0), at: [], animated: false)
 }
