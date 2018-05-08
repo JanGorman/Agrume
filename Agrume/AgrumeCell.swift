@@ -14,6 +14,8 @@ protocol AgrumeCellDelegate: AnyObject {
 
 final class AgrumeCell: UICollectionViewCell {
 
+  public var tapBehavior: Agrume.TapBehavior = .dismissIfZoomedOut
+
   private lazy var scrollView: UIScrollView = {
     let scrollView = UIScrollView(frame: contentView.bounds)
     scrollView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
@@ -123,8 +125,6 @@ extension AgrumeCell: UIGestureRecognizerDelegate {
       return abs(velocity.y) > abs(velocity.x)
     } else if let _ = gestureRecognizer as? UISwipeGestureRecognizer, notZoomed() {
       return false
-    } else if let tap = gestureRecognizer as? UITapGestureRecognizer, tap == singleTapGesture && !notZoomed() {
-      return false
     }
     return true
   }
@@ -206,7 +206,20 @@ extension AgrumeCell: UIGestureRecognizerDelegate {
 
   @objc
   private func singleTap() {
-    dismiss()
+    switch tapBehavior {
+    case .dismissIfZoomedOut:
+      if notZoomed() {
+        dismiss()
+      }
+    case .dismissAlways:
+      dismiss()
+    case .zoomOut:
+      if notZoomed() {
+        dismiss()
+      } else {
+        zoom(to: .zero, scale: 1)
+      }
+    }
   }
 
   private func dismiss() {
@@ -415,5 +428,4 @@ extension AgrumeCell: UIScrollViewDelegate {
       dismiss()
     }
   }
-
 }

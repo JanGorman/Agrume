@@ -30,6 +30,13 @@ public final class Agrume: UIViewController {
   /// Hide status bar when presenting. Defaults to `false`
   public var hideStatusBar = false
 
+  public enum TapBehavior {
+    case dismissIfZoomedOut
+    case dismissAlways
+    case zoomOut
+  }
+  public var tapBehavior: TapBehavior = .dismissIfZoomedOut
+
   /// Initialize with a single image
   ///
   /// - Parameter image: The image to present
@@ -263,7 +270,6 @@ public final class Agrume: UIViewController {
     }
     super.viewWillTransition(to: size, with: coordinator)
   }
-
 }
 
 extension Agrume: AgrumeDataSource {
@@ -292,6 +298,8 @@ extension Agrume: UICollectionViewDataSource {
 
   public func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
     let cell: AgrumeCell = collectionView.dequeue(indexPath: indexPath)
+    
+    cell.tapBehavior = tapBehavior
 
     spinner.alpha = 1
     dataSource?.image(forIndex: indexPath.item) { [weak self] image in
@@ -305,7 +313,6 @@ extension Agrume: UICollectionViewDataSource {
     cell.delegate = self
     return cell
   }
-
 }
 
 extension Agrume: AgrumeCellDelegate {
@@ -357,7 +364,6 @@ extension Agrume: AgrumeCellDelegate {
   func isSingleImageMode() -> Bool {
     return dataSource?.numberOfImages == 1
   }
-  
 }
 
 extension Agrume {
@@ -366,6 +372,5 @@ extension Agrume {
 
   public override var preferredStatusBarStyle:  UIStatusBarStyle {
     return statusBarStyle ?? super.preferredStatusBarStyle
-  }
-  
+  }  
 }
