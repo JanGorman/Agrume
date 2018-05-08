@@ -31,11 +31,11 @@ public final class Agrume: UIViewController {
   public var hideStatusBar = false
 
   public enum TapBehavior {
-    case dismissOnlyIfUnzoomed
+    case dismissIfZoomedOut
     case dismissAlways
-    case unzoomIfZoomed
+    case zoomOut
   }
-  public var tapBehavior: TapBehavior = .dismissOnlyIfUnzoomed
+  public var tapBehavior: TapBehavior = .dismissIfZoomedOut
 
   /// Initialize with a single image
   ///
@@ -270,7 +270,6 @@ public final class Agrume: UIViewController {
     }
     super.viewWillTransition(to: size, with: coordinator)
   }
-
 }
 
 extension Agrume: AgrumeDataSource {
@@ -365,7 +364,6 @@ extension Agrume: AgrumeCellDelegate {
   func isSingleImageMode() -> Bool {
     return dataSource?.numberOfImages == 1
   }
-  
 }
 
 extension Agrume {
@@ -374,6 +372,5 @@ extension Agrume {
 
   public override var preferredStatusBarStyle:  UIStatusBarStyle {
     return statusBarStyle ?? super.preferredStatusBarStyle
-  }
-  
+  }  
 }
