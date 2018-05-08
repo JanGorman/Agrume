@@ -1,30 +1,29 @@
+# Agrume
+
 [![Build Status](https://travis-ci.org/JanGorman/Agrume.svg?branch=master)](https://travis-ci.org/JanGorman/Agrume) [![Carthage compatible](https://img.shields.io/badge/Carthage-compatible-4BC51D.svg?style=flat)](https://github.com/Carthage/Carthage)
 [![Version](https://img.shields.io/cocoapods/v/Agrume.svg?style=flat)](http://cocoapods.org/pods/Agrume)
 [![License](https://img.shields.io/cocoapods/l/Agrume.svg?style=flat)](http://cocoapods.org/pods/Agrume)
 [![Platform](https://img.shields.io/cocoapods/p/Agrume.svg?style=flat)](http://cocoapods.org/pods/Agrume)
 
-# Agrume
-
 An iOS image viewer written in Swift with support for multiple images.
 
 ![Agrume](https://www.dropbox.com/s/bdt6sphcyloa38u/Agrume.gif?raw=1)
 
-
 ## Requirements
 
-- Swift 4 (for Swift 3 support, use version 3.x)
-- iOS 8.0+
+- Swift 4.1 (for Swift 3 support, use version 3.x)
+- iOS 9.0+
 - Xcode 9+
 
 ## Installation
 
-The easiest way is through [CocoaPods](http://cocoapods.org). Simply add the dependency to your `Podfile` and then `pod install`:
+The easiest way is via [CocoaPods](http://cocoapods.org). Add the dependency to your `Podfile` and then run `pod install`:
 
 ```ruby
 pod 'Agrume', :git => 'https://github.com/JanGorman/Agrume.git'
 ```
 
-Or [Carthage](https://github.com/Carthage/Carthage). Add the dependency to your `Cartfile` and then `carthage update`:
+Or [Carthage](https://github.com/Carthage/Carthage). Add the dependency to your `Cartfile` and then run `carthage update`:
 
 ```ogdl
 github "JanGorman/Agrume"
@@ -32,36 +31,35 @@ github "JanGorman/Agrume"
 
 ## How
 
-There are multiple ways you can use the image viewer (and the included Example project shows them all).
+There are multiple ways you can use the image viewer (and the included sample project shows them all).
 
 For just a single image it's as easy as
 
 ### Basic
 
 ```swift
+
 import Agrume
 
 @IBAction func openImage(_ sender: Any) {
-  if let image = UIImage(named: "…") {
-	let agrume = Agrume(image: image)
-	agrume.showFrom(self)	
-  }
+  let agrume = Agrume(image: UIImage(named: "…")!)
+  agrume.show(from: self)
 }
+
 ```
 
 You can also pass in a `URL` and Agrume will take care of the download for you.
 
-### Background Color
+### Background Configuration
 
-Agrume defaults to blurring the background view controller but you can also pass in a background color instead and it will use that:
+Agrume has different background configurations. You can have it blur the view it's covering or supply a background color:
 
 ```swift
-@IBAction func openImage(_ sender: Any) {
-	let image = UIImage(named: "…")!
-	let agrume = Agrume(image: Image, backgroundColor: .black)
-	agrume.hideStatusBar = true
-	agrume.showFrom(self)
-}
+
+let agrume = Agrume(image: UIImage(named: "…")!, background: .blurred(.regular))
+// or
+let agrume = Agrume(image: UIImage(named: "…")!, background: .colored(.green))
+
 ```
 
 ### Multiple Images
@@ -69,13 +67,17 @@ Agrume defaults to blurring the background view controller but you can also pass
 If you're displaying a `UICollectionView` and want to add support for zooming, you can also call Agrume with an array of either images or URLs.
 
 ```swift
-let agrume = Agrume(images: images, startIndex: indexPath.row, backgroundBlurStyle: .light)
+
+// In case of an array of [UIImage]:
+let agrume = Agrume(images: images, startIndex: indexPath.item, background: .blurred(.light))
+// Or an array of [URL]:
+// let agrume = Agrume(urls: urls, startIndex: indexPath.item, background: .blurred(.light))
+
 agrume.didScroll = { [unowned self] index in
-  self.collectionView?.scrollToItem(at: IndexPath(row: index, section: 0),
-                                    at: [],
-                                    animated: false)
+  self.collectionView.scrollToItem(at: IndexPath(item: index, section: 0), at: [], animated: false)
 }
-agrume.showFrom(self)
+agrume.show(from: self)
+
 ```
 
 This shows a way of keeping the zoomed library and the one in the background synced.
@@ -85,17 +87,18 @@ This shows a way of keeping the zoomed library and the one in the background syn
 If you want to take control of downloading images (e.g. for caching), you can also set a download closure that calls back to Agrume to set the image. For example, let's use [MapleBacon](https://github.com/JanGorman/MapleBacon).
 
 ```swift
+
 import Agrume
 import MapleBacon
 
 @IBAction func openURL(_ sender: Any) {
-  let agrume = Agrume(imageUrl: URL(string: "https://dl.dropboxusercontent.com/u/512759/MapleBacon.png")!, backgroundBlurStyle: .light)
+  let agrume = Agrume(url: URL(string: "https://dl.dropboxusercontent.com/u/512759/MapleBacon.png")!)
   agrume.download = { url, completion in
     Downloader.default.download(url) { image in
       completion(image)
     }
   }
-  agrume.showFrom(self)
+  agrume.show(from: self)
 }
 ```
 
@@ -104,14 +107,15 @@ import MapleBacon
 Instead of having to define a handler on a per instance basis you can instead set a handler on the `AgrumeServiceLocator`. Agrume will use this handler for all downloads unless overriden on an instance as described above:
 
 ```swift
+
 import Agrume
 
 AgrumeServiceLocator.shared.setDownloadHandler { url, completion in
-  // Download data, cache it and remember to call the completion
+  // Download data, cache it and call the completion with the resulting UIImage
 }
 
 // Some other place
-agrume.showFrom(self)
+agrume.show(from: self)
 
 ```
 
@@ -120,12 +124,13 @@ agrume.showFrom(self)
 For more dynamic library needs you can implement the `AgrumeDataSource` protocol that supplies images to Agrume. Agrume will query the data source for the number of images and if that number changes, reload it's scrolling image view.
 
 ```swift
+
 import Agrume
 
 let dataSource: AgrumeDataSource = MyDataSourceImplementation()
 let agrume = Agrume(dataSource: dataSource)
 
-agrume.showFrom(self)
+agrume.show(from: self)
 
 ```
 
@@ -134,8 +139,9 @@ agrume.showFrom(self)
 When showing the Agrume view controller, it'll default to taking a snapshot of the root view and blurring that. You can customize this behaviour by passing in a different view that it will blur and display:
 
 ```swift
+
 let agrume = Agrume(image: image)
-agrume.showFrom(self, backgroundSnapshotVC: self)
+agrume.show(from: self, backgroundSnapshotVC: self)
 
 ```
 
@@ -144,9 +150,11 @@ agrume.showFrom(self, backgroundSnapshotVC: self)
 You can customize the status bar appearance when displaying the zoomed in view. `Agrume` has a `statusBarStyle` property:
 
 ```swift
+
 let agrume = Agrume(image: image)
 agrume.statusBarStyle = .lightContent
-agrume.showFrom(self)
+agrume.show(from: self)
+
 ```
 
 ## Licence

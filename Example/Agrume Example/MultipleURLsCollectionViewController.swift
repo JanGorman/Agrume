@@ -34,7 +34,7 @@ final class MultipleURLsCollectionViewController: UICollectionViewController {
   
   override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
     let cell = collectionView.dequeueReusableCell(withReuseIdentifier: identifier, for: indexPath) as! DemoCell
-    cell.imageView.image = images[indexPath.row].image
+    cell.imageView.image = images[indexPath.item].image
     return cell
   }
   
@@ -42,11 +42,11 @@ final class MultipleURLsCollectionViewController: UICollectionViewController {
   
   override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
     let urls = images.map { $0.url }
-    let agrume = Agrume(imageUrls: urls, startIndex: indexPath.row, backgroundBlurStyle: .extraLight)
+    let agrume = Agrume(urls: urls, startIndex: indexPath.item, background: .blurred(.extraLight))
     agrume.didScroll = { [unowned self] index in
-      self.collectionView?.scrollToItem(at: IndexPath(row: index, section: 0), at: [], animated: false)
+      self.collectionView?.scrollToItem(at: IndexPath(item: index, section: 0), at: [], animated: false)
     }
-    agrume.showFrom(self)
+    agrume.show(from: self)
   }
   
 }

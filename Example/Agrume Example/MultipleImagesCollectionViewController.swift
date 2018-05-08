@@ -16,9 +16,8 @@ final class MultipleImagesCollectionViewController: UICollectionViewController {
 
   override func viewDidLoad() {
     super.viewDidLoad()
-
     let layout = collectionView?.collectionViewLayout as! UICollectionViewFlowLayout
-    layout.itemSize = CGSize(width: view.bounds.width, height: view.bounds.height)
+    layout.itemSize = CGSize(width: view.frame.width, height: view.frame.height)
   }
 
   // MARK: UICollectionViewDataSource
@@ -29,18 +28,18 @@ final class MultipleImagesCollectionViewController: UICollectionViewController {
 
   override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
     let cell = collectionView.dequeueReusableCell(withReuseIdentifier: identifier, for: indexPath) as! DemoCell
-    cell.imageView.image = images[indexPath.row]
+    cell.imageView.image = images[indexPath.item]
     return cell
   }
 
   // MARK: UICollectionViewDelegate
 
   override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-    let agrume = Agrume(images: images, startIndex: indexPath.row, backgroundBlurStyle: .light)
+    let agrume = Agrume(images: images, startIndex: indexPath.item, background: .blurred(.regular))
     agrume.didScroll = { [unowned self] index in
-      self.collectionView?.scrollToItem(at: IndexPath(row: index, section: 0), at: [], animated: false)
+      self.collectionView?.scrollToItem(at: IndexPath(item: index, section: 0), at: [], animated: false)
     }
-    agrume.showFrom(self)
+    agrume.show(from: self)
   }
 
 }

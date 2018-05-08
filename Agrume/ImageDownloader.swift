@@ -7,7 +7,12 @@ import UIKit
 final class ImageDownloader {
 
   static func downloadImage(_ url: URL, completion: @escaping (_ image: UIImage?) -> Void) -> URLSessionDataTask? {
-    let dataTask = URLSession.shared.dataTask(with: url) { data, _, error in
+    var configuration = URLSessionConfiguration.default
+    if #available(iOS 11.0, *) {
+      configuration.waitsForConnectivity = true
+    }
+    let session = URLSession(configuration: configuration)
+    let task = session.dataTask(with: url) { data, _, error in
       var image: UIImage?
       defer {
         DispatchQueue.main.async {
@@ -17,8 +22,8 @@ final class ImageDownloader {
       guard let data = data, error == nil else { return }
       image = UIImage(data: data)
     }
-    dataTask.resume()
-    return dataTask
+    task.resume()
+    return task
   }
 
 }
