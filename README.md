@@ -20,7 +20,7 @@ An iOS image viewer written in Swift with support for multiple images.
 The easiest way is via [CocoaPods](http://cocoapods.org). Add the dependency to your `Podfile` and then run `pod install`:
 
 ```ruby
-pod 'Agrume', :git => 'https://github.com/JanGorman/Agrume.git'
+pod "Agrume"
 ```
 
 Or [Carthage](https://github.com/Carthage/Carthage). Add the dependency to your `Cartfile` and then run `carthage update`:
