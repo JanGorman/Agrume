@@ -80,6 +80,8 @@ agrume.show(from: self)
 
 ```
 
+This shows a way of keeping the zoomed library and the one in the background synced.
+
 ### Animated gifs
 
 Agrume bundles [SwiftyGif](https://github.com/kirualex/SwiftyGif) to display animated gifs. You use SwiftyGif's custom `UIImage` initializer:
@@ -97,7 +99,7 @@ let agrume = Agrume(images: images)
 
 ```
 
-This shows a way of keeping the zoomed library and the one in the background synced.
+Remote animated gifs (i.e. using the url or urls initializer) are supported. Agrume does the image type detection and displays them properly.
 
 ### Custom Download Handler
 

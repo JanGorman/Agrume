@@ -30,11 +30,13 @@ public final class Agrume: UIViewController {
   /// Hide status bar when presenting. Defaults to `false`
   public var hideStatusBar = false
 
+  /// Tap behaviour, i.e. what happens when you tap outside of the image area
   public enum TapBehavior {
     case dismissIfZoomedOut
     case dismissAlways
     case zoomOut
   }
+  /// Default tap behaviour is to dismiss the view if zoomed out
   public var tapBehavior: TapBehavior = .dismissIfZoomedOut
 
   /// Initialize with a single image
