@@ -15,6 +15,8 @@
 		F2A520201B130C7E00924912 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F2A5201E1B130C7E00924912 /* Main.storyboard */; };
 		F2A520221B130C7E00924912 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F2A520211B130C7E00924912 /* Images.xcassets */; };
 		F2A520251B130C7E00924912 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = F2A520231B130C7E00924912 /* LaunchScreen.xib */; };
+		F2D7BA1F20A47FB500D5EE66 /* AnimatedGifViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2D7BA1E20A47FB500D5EE66 /* AnimatedGifViewController.swift */; };
+		F2D7BA2220A4812C00D5EE66 /* animated.gif in Resources */ = {isa = PBXBuildFile; fileRef = F2D7BA2120A4812C00D5EE66 /* animated.gif */; };
 		F2D9598E1B1A133800073772 /* SingleImageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2D9598D1B1A133800073772 /* SingleImageViewController.swift */; };
 		F2D959911B1A140200073772 /* SingleURLViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2D959901B1A140200073772 /* SingleURLViewController.swift */; };
 		F2D959931B1A153F00073772 /* MultipleImagesCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2D959921B1A153F00073772 /* MultipleImagesCollectionViewController.swift */; };
@@ -66,6 +68,8 @@
 		F2A5202A1B130C7E00924912 /* Agrume ExampleTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Agrume ExampleTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		F2A5202F1B130C7E00924912 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		F2A5203A1B130CC000924912 /* Agrume.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Agrume.xcodeproj; path = ../Agrume.xcodeproj; sourceTree = "<group>"; };
+		F2D7BA1E20A47FB500D5EE66 /* AnimatedGifViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnimatedGifViewController.swift; sourceTree = "<group>"; };
+		F2D7BA2120A4812C00D5EE66 /* animated.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = animated.gif; sourceTree = "<group>"; };
 		F2D9598D1B1A133800073772 /* SingleImageViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SingleImageViewController.swift; sourceTree = "<group>"; };
 		F2D959901B1A140200073772 /* SingleURLViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SingleURLViewController.swift; sourceTree = "<group>"; };
 		F2D959921B1A153F00073772 /* MultipleImagesCollectionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MultipleImagesCollectionViewController.swift; sourceTree = "<group>"; };
@@ -116,6 +120,8 @@
 		F2A520171B130C7E00924912 /* Agrume Example */ = {
 			isa = PBXGroup;
 			children = (
+				F2D7BA2120A4812C00D5EE66 /* animated.gif */,
+				F2D7BA1E20A47FB500D5EE66 /* AnimatedGifViewController.swift */,
 				F2A5201A1B130C7E00924912 /* AppDelegate.swift */,
 				F2D959941B1A15ED00073772 /* DemoCell.swift */,
 				F2A520211B130C7E00924912 /* Images.xcassets */,
@@ -276,6 +282,7 @@
 			files = (
 				F2A520201B130C7E00924912 /* Main.storyboard in Resources */,
 				F2A520251B130C7E00924912 /* LaunchScreen.xib in Resources */,
+				F2D7BA2220A4812C00D5EE66 /* animated.gif in Resources */,
 				F2A520221B130C7E00924912 /* Images.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -296,6 +303,7 @@
 			files = (
 				E77809E31D17821400CC60F1 /* SingleImageModalViewController.swift in Sources */,
 				F2D959911B1A140200073772 /* SingleURLViewController.swift in Sources */,
+				F2D7BA1F20A47FB500D5EE66 /* AnimatedGifViewController.swift in Sources */,
 				94D6B2121E1411B100927735 /* SingeImageBackgroundColorViewController.swift in Sources */,
 				F2A5201D1B130C7E00924912 /* ViewController.swift in Sources */,
 				F2D959951B1A15ED00073772 /* DemoCell.swift in Sources */,

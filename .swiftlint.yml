@@ -29,7 +29,6 @@ trailing_whitespace:
 cyclomatic_complexity:
   warning: 15
 
-
 opt_in_rules:
   - attributes
   - closure_end_indentation
@@ -49,3 +48,6 @@ disabled_rules:
   - force_cast
   - colon
   - unused_optional_binding
+  
+excluded:
+  - Frameworks/SwiftyGif

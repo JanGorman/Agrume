@@ -3,6 +3,7 @@
 //
 
 import UIKit
+import SwiftyGif
 
 protocol AgrumeCellDelegate: AnyObject {
   
@@ -39,7 +40,11 @@ final class AgrumeCell: UICollectionViewCell {
 
   var image: UIImage? {
     didSet {
-      imageView.image = image
+      if image?.imageData != nil, let image = image {
+        imageView.setGifImage(image)
+      } else {
+        imageView.image = image
+      }
       updateScrollViewAndImageViewForCurrentMetrics()
     }
   }
