@@ -177,6 +177,10 @@ public final class Agrume: UIViewController {
   }
 
   private var downloadTask: URLSessionDataTask?
+  
+  public override var preferredStatusBarStyle:  UIStatusBarStyle {
+    return statusBarStyle ?? super.preferredStatusBarStyle
+  }
 
   /// Present Agrume
   /// - Parameter viewController: The UIViewController to present from
@@ -364,13 +368,4 @@ extension Agrume: AgrumeCellDelegate {
   func isSingleImageMode() -> Bool {
     return dataSource?.numberOfImages == 1
   }
-}
-
-extension Agrume {
-  
-  // MARK: Status Bar
-
-  public override var preferredStatusBarStyle:  UIStatusBarStyle {
-    return statusBarStyle ?? super.preferredStatusBarStyle
-  }  
 }

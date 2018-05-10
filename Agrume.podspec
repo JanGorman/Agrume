@@ -1,7 +1,7 @@
 Pod::Spec.new do |s|
 
   s.name          = "Agrume"
-  s.version       = "5.0.1"
+  s.version       = "5.0.2"
   s.summary       = "An iOS image viewer written in Swift."
   s.swift_version = "4.1"
 
@@ -20,6 +20,8 @@ Pod::Spec.new do |s|
 
   s.source        = { :git => "https://github.com/JanGorman/Agrume.git", :tag => s.version}
 
-  s.source_files    = "Classes", "Agrume/*.swift"
+  s.source_files  = "Classes", "Agrume/*.swift"
+  
+  s.dependency "SwiftyGif"
 
 end
