@@ -92,6 +92,11 @@ let image = UIImage(gifName: "animated.gif")
 let agrume = Agrume(image: image)
 agrume.display(from: self)
 
+// Or gif using data:
+
+let image = UIImage(gifData: data)
+let agrume = Agrume(image: image)
+
 // Or multiple images:
 
 let images = [UIImage(gifName: "animated.gif"), UIImage(named: "foo.png")] // You can pass both animated and regular images at the same time
@@ -99,7 +104,7 @@ let agrume = Agrume(images: images)
 
 ```
 
-Remote animated gifs (i.e. using the url or urls initializer) are supported. Agrume does the image type detection and displays them properly.
+Remote animated gifs (i.e. using the url or urls initializer) are supported. Agrume does the image type detection and displays them properly. If using Agrume from a custom `UIImageView` you may need to rebuild the `UIImage` using the original data to preserve animation vs. using the `UIImage` instance from the image view.
 
 ### Custom Download Handler
 
