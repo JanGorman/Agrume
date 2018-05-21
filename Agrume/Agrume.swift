@@ -61,7 +61,7 @@ public final class Agrume: UIViewController {
   /// - Parameter startIndex: The optional start index when showing multiple images
   /// - Parameter background: The background configuration
 	public convenience init(dataSource: AgrumeDataSource, startIndex: Int = 0, background: Background = .colored(.black)) {
-		self.init(dataSource: dataSource, startIndex: startIndex, background: background)
+    self.init(images: nil, dataSource: dataSource, startIndex: startIndex, background: background)
 	}
 	
   /// Initialize with an array of images
