@@ -162,7 +162,7 @@ public final class Agrume: UIViewController {
   private var _spinner: UIActivityIndicatorView?
   private var spinner: UIActivityIndicatorView {
     if _spinner == nil {
-      let indicatorStyle: UIActivityIndicatorViewStyle
+      let indicatorStyle: UIActivityIndicatorView.Style
       switch background {
       case .blurred(let style):
         indicatorStyle = style == .dark ? .whiteLarge : .gray

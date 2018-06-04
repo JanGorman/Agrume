@@ -9,5 +9,5 @@ public enum Background {
   /// Overlay with a color
   case colored(UIColor)
   /// Overlay with a UIBlurEffectStyle
-  case blurred(UIBlurEffectStyle)
+  case blurred(UIBlurEffect.Style)
 }
