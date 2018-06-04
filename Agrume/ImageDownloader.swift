@@ -30,7 +30,7 @@ final class ImageDownloader {
   }
   
   private static func newConfiguration() -> URLSessionConfiguration {
-    var configuration = URLSessionConfiguration.default
+    let configuration = URLSessionConfiguration.default
     if #available(iOS 11.0, *) {
       configuration.waitsForConnectivity = true
     }
