@@ -27,15 +27,15 @@ final class AgrumeOverlayView: UIView {
     return item
   }()
   
-  override init(frame: CGRect) {
-    super.init(frame: frame)
+  init(closeButton: UIBarButtonItem?) {
+    super.init(frame: .zero)
     addSubview(navigationBar)
     
     NSLayoutConstraint.activate([
       navigationBar.topAnchor.constraint(equalTo: portableSafeTopInset),
       navigationBar.widthAnchor.constraint(equalTo: widthAnchor),
       navigationBar.centerXAnchor.constraint(equalTo: centerXAnchor)
-    ])
+      ])
   }
   
   required init?(coder aDecoder: NSCoder) {
