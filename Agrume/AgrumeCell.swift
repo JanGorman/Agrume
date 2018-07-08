@@ -15,7 +15,8 @@ protocol AgrumeCellDelegate: AnyObject {
 
 final class AgrumeCell: UICollectionViewCell {
 
-  public var tapBehavior: Agrume.TapBehavior = .dismissIfZoomedOut
+  var tapBehavior: Agrume.TapBehavior = .dismissIfZoomedOut
+  var hasPhysics = true
 
   private lazy var scrollView: UIScrollView = {
     let scrollView = UIScrollView(frame: contentView.bounds)
@@ -36,7 +37,7 @@ final class AgrumeCell: UICollectionViewCell {
     imageView.layer.allowsEdgeAntialiasing = true
     return imageView
   }()
-  private var animator: UIDynamicAnimator!
+  private var animator: UIDynamicAnimator?
 
   var image: UIImage? {
     didSet {
@@ -57,7 +58,9 @@ final class AgrumeCell: UICollectionViewCell {
     contentView.addSubview(scrollView)
     scrollView.addSubview(imageView)
     setupGestureRecognizers()
-    animator = UIDynamicAnimator(referenceView: scrollView)
+    if hasPhysics {
+      animator = UIDynamicAnimator(referenceView: scrollView)
+    }
   }
 
   required init?(coder aDecoder: NSCoder) {
@@ -237,6 +240,9 @@ extension AgrumeCell: UIGestureRecognizerDelegate {
 
   @objc
   private func dismissPan(_ gesture: UIPanGestureRecognizer) {
+    if !hasPhysics {
+      return
+    }
     let translation = gesture.translation(in: gesture.view!)
     let locationInView = gesture.location(in: gesture.view)
     let velocity = gesture.velocity(in: gesture.view)
@@ -280,13 +286,15 @@ extension AgrumeCell: UIGestureRecognizerDelegate {
     push.pushDirection = CGVector(dx: velocity.x * 0.1, dy: velocity.y * 0.1)
     push.setTargetOffsetFromCenter(imageDragOffsetFromImageCenter, for: imageView)
     push.action = pushAction
-    animator.removeBehavior(attachmentBehavior!)
-    animator.addBehavior(push)
+    if let attachmentBehavior = attachmentBehavior {
+      animator?.removeBehavior(attachmentBehavior)
+    }
+    animator?.addBehavior(push)
   }
   
   private func pushAction() {
     if isImageViewOffscreen() {
-      animator.removeAllBehaviors()
+      animator?.removeAllBehaviors()
       attachmentBehavior = nil
       imageView.removeFromSuperview()
       dismiss()
@@ -295,11 +303,11 @@ extension AgrumeCell: UIGestureRecognizerDelegate {
 
   private func isImageViewOffscreen() -> Bool {
     let visibleRect = scrollView.convert(contentView.bounds, from: contentView)
-    return animator.items(in: visibleRect).count == 0
+    return animator?.items(in: visibleRect).count == 0
   }
 
   private func cancelCurrentImageDrag(_ animated: Bool) {
-    animator.removeAllBehaviors()
+    animator?.removeAllBehaviors()
     attachmentBehavior = nil
     isDraggingImage = false
 
@@ -373,13 +381,16 @@ extension AgrumeCell: UIGestureRecognizerDelegate {
     let imageCenter = imageView.center
     let offset = UIOffset(horizontal: locationInView.x - imageCenter.x, vertical: locationInView.y - imageCenter.y)
     imageDragOffsetFromImageCenter = offset
-    attachmentBehavior = UIAttachmentBehavior(item: imageView, offsetFromCenter: offset, attachedToAnchor: anchor!)
-    animator.addBehavior(attachmentBehavior!)
 
-    let modifier = UIDynamicItemBehavior(items: [imageView])
-    modifier.angularResistance = angularResistance(in: imageView)
-    modifier.density = density(in: imageView)
-    animator.addBehavior(modifier)
+    if hasPhysics {
+      attachmentBehavior = UIAttachmentBehavior(item: imageView, offsetFromCenter: offset, attachedToAnchor: anchor!)
+      animator!.addBehavior(attachmentBehavior!)
+      
+      let modifier = UIDynamicItemBehavior(items: [imageView])
+      modifier.angularResistance = angularResistance(in: imageView)
+      modifier.density = density(in: imageView)
+      animator!.addBehavior(modifier)
+    }
   }
 
   private func angularResistance(in view: UIView) -> CGFloat {

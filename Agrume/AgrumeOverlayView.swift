@@ -4,7 +4,13 @@
 
 import UIKit
 
+protocol AgrumeOverlayViewDelegate: AnyObject {
+  func agrumeOverlayViewWantsToClose(_ view: AgrumeOverlayView)
+}
+
 final class AgrumeOverlayView: UIView {
+  
+  weak var delegate: AgrumeOverlayViewDelegate?
 
   private lazy var navigationBar: UINavigationBar = {
     let navigationBar = UINavigationBar()
@@ -51,7 +57,7 @@ final class AgrumeOverlayView: UIView {
   
   @objc
   private func close() {
-    print("CLOSE")
+    delegate?.agrumeOverlayViewWantsToClose(self)
   }
   
 }

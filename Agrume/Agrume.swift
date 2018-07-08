@@ -11,6 +11,7 @@ public final class Agrume: UIViewController {
   private let background: Background
   private let dismissal: Dismissal
   
+  private var overlayView: UIView?
   private weak var dataSource: AgrumeDataSource?
 
   public typealias DownloadCompletion = (_ image: UIImage?) -> Void
@@ -231,13 +232,6 @@ public final class Agrume: UIViewController {
       collectionView.scrollToItem(at: IndexPath(item: startIndex, section: 0), at: [], animated: false)
     }
     view.addSubview(spinner)
-    
-    if case .withButton(let button) = dismissal {
-      let overlayView = AgrumeOverlayView(closeButton: button)
-      overlayView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
-      overlayView.frame = view.bounds
-      view.addSubview(overlayView)
-    }
   }
   
   private func show(from viewController: UIViewController) {
@@ -255,10 +249,22 @@ public final class Agrume: UIViewController {
                        animations: {
                         self.collectionView.alpha = 1
                         self.collectionView.transform = .identity
+                        self.addOverlayView()
           }, completion: { _ in
             self.view.isUserInteractionEnabled = true
           })
       }
+    }
+  }
+  
+  private func addOverlayView() {
+    if case .withButton(let button) = dismissal {
+      let overlayView = AgrumeOverlayView(closeButton: button)
+      overlayView.delegate = self
+      overlayView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+      overlayView.frame = view.bounds
+      view.addSubview(overlayView)
+      self.overlayView = overlayView
     }
   }
 
@@ -330,6 +336,11 @@ extension Agrume: UICollectionViewDataSource {
     let cell: AgrumeCell = collectionView.dequeue(indexPath: indexPath)
     
     cell.tapBehavior = tapBehavior
+    if case .withPhysics = dismissal {
+      cell.hasPhysics = true
+    } else {
+      cell.hasPhysics = false
+    }
 
     spinner.alpha = 1
     dataSource?.image(forIndex: indexPath.item) { [weak self] image in
@@ -374,6 +385,7 @@ extension Agrume: AgrumeCellDelegate {
                    animations: {
                     self.collectionView.alpha = 0
                     self.blurContainerView.alpha = 0
+                    self.overlayView?.alpha = 0
       }, completion: dismissCompletion)
   }
   
@@ -386,6 +398,7 @@ extension Agrume: AgrumeCellDelegate {
                    animations: {
                     self.collectionView.alpha = 0
                     self.blurContainerView.alpha = 0
+                    self.overlayView?.alpha = 0
                     let scaling: CGFloat = .maxScalingForExpandingOffscreen
                     self.collectionView.transform = CGAffineTransform(scaleX: scaling, y: scaling)
       }, completion: dismissCompletion)
@@ -394,4 +407,12 @@ extension Agrume: AgrumeCellDelegate {
   func isSingleImageMode() -> Bool {
     return dataSource?.numberOfImages == 1
   }
+}
+
+extension Agrume: AgrumeOverlayViewDelegate {
+
+  func agrumeOverlayViewWantsToClose(_ view: AgrumeOverlayView) {
+    dismiss()
+  }
+
 }
