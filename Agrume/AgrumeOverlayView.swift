@@ -22,20 +22,21 @@ final class AgrumeOverlayView: UIView {
     return navigationBar
   }()
   
-  private lazy var navigationItem: UINavigationItem = {
-    let navigationItem = UINavigationItem(title: "")
-    navigationItem.leftBarButtonItem = leftBarButtonItem
-    return navigationItem
-  }()
-  
-  private lazy var leftBarButtonItem: UIBarButtonItem = {
-    let item = UIBarButtonItem(title: "Close", style: .plain, target: self, action: #selector(close))
-    return item
-  }()
+  private lazy var navigationItem = UINavigationItem(title: "")
+  private lazy var defaultCloseButton = UIBarButtonItem(title: "Close", style: .plain, target: self, action: #selector(close))
   
   init(closeButton: UIBarButtonItem?) {
     super.init(frame: .zero)
+
     addSubview(navigationBar)
+
+    if let closeButton = closeButton {
+      closeButton.target = self
+      closeButton.action = #selector(close)
+      navigationItem.leftBarButtonItem = closeButton
+    } else {
+      navigationItem.leftBarButtonItem = defaultCloseButton
+    }
     
     NSLayoutConstraint.activate([
       navigationBar.topAnchor.constraint(equalTo: portableSafeTopInset),

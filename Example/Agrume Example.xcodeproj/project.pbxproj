@@ -14,6 +14,7 @@
 		F2539BCC20F23F1800062C80 /* SwiftyGif.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F2539B9D20F22D9000062C80 /* SwiftyGif.framework */; };
 		F2539BCD20F23F1800062C80 /* SwiftyGif.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = F2539B9D20F22D9000062C80 /* SwiftyGif.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		F2539BD020F23F2F00062C80 /* Agrume.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = F2A520401B130CC000924912 /* Agrume.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		F2539BD420F2418900062C80 /* CustomCloseButtonViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2539BD320F2418900062C80 /* CustomCloseButtonViewController.swift */; };
 		F2A5201B1B130C7E00924912 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2A5201A1B130C7E00924912 /* AppDelegate.swift */; };
 		F2A5201D1B130C7E00924912 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2A5201C1B130C7E00924912 /* ViewController.swift */; };
 		F2A520201B130C7E00924912 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F2A5201E1B130C7E00924912 /* Main.storyboard */; };
@@ -86,6 +87,7 @@
 		E77809E21D17821400CC60F1 /* SingleImageModalViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SingleImageModalViewController.swift; sourceTree = "<group>"; };
 		F2539B9D20F22D9000062C80 /* SwiftyGif.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = SwiftyGif.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		F2539BCA20F23ABB00062C80 /* CloseButtonViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CloseButtonViewController.swift; sourceTree = "<group>"; };
+		F2539BD320F2418900062C80 /* CustomCloseButtonViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomCloseButtonViewController.swift; sourceTree = "<group>"; };
 		F2A520151B130C7E00924912 /* Agrume Example.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Agrume Example.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		F2A520191B130C7E00924912 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		F2A5201A1B130C7E00924912 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -162,6 +164,7 @@
 				F2D7BA1E20A47FB500D5EE66 /* AnimatedGifViewController.swift */,
 				F2A5201A1B130C7E00924912 /* AppDelegate.swift */,
 				F2539BCA20F23ABB00062C80 /* CloseButtonViewController.swift */,
+				F2539BD320F2418900062C80 /* CustomCloseButtonViewController.swift */,
 				F2D959941B1A15ED00073772 /* DemoCell.swift */,
 				F2A520211B130C7E00924912 /* Images.xcassets */,
 				F2A520231B130C7E00924912 /* LaunchScreen.xib */,
@@ -351,6 +354,7 @@
 				F2A5201D1B130C7E00924912 /* ViewController.swift in Sources */,
 				F2D959951B1A15ED00073772 /* DemoCell.swift in Sources */,
 				F2D9598E1B1A133800073772 /* SingleImageViewController.swift in Sources */,
+				F2539BD420F2418900062C80 /* CustomCloseButtonViewController.swift in Sources */,
 				F2A5201B1B130C7E00924912 /* AppDelegate.swift in Sources */,
 				F2D959971B1A199F00073772 /* MultipleURLsCollectionViewController.swift in Sources */,
 				F2D959931B1A153F00073772 /* MultipleImagesCollectionViewController.swift in Sources */,
