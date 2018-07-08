@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		94318E541D32612D0096215A /* AgrumeServiceLocator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94318E531D32612D0096215A /* AgrumeServiceLocator.swift */; };
+		F2539BA120F22E7700062C80 /* AgrumeOverlayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2539BA020F22E7700062C80 /* AgrumeOverlayView.swift */; };
 		F2609E23209F047200E0E93D /* AgrumeDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2609E22209F047200E0E93D /* AgrumeDataSource.swift */; };
 		F2609E26209F06F800E0E93D /* AgrumeImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2609E25209F06F800E0E93D /* AgrumeImage.swift */; };
 		F2609E28209F2BC600E0E93D /* Background.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2609E27209F2BC600E0E93D /* Background.swift */; };
@@ -21,6 +22,13 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		F2539B9820F22D5100062C80 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = F2D7BA1020A47C6600D5EE66 /* SwiftyGif.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 3B18BAF31E289899009C125A;
+			remoteInfo = SwiftyGif;
+		};
 		F2A51FFB1B10E00700924912 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = F2A51FE51B10E00700924912 /* Project object */;
@@ -49,17 +57,11 @@
 			remoteGlobalIDString = 3B18BAF41E289899009C125A;
 			remoteInfo = SwiftyGif;
 		};
-		F2D7BA1C20A47D1700D5EE66 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = F2D7BA1020A47C6600D5EE66 /* SwiftyGif.xcodeproj */;
-			proxyType = 1;
-			remoteGlobalIDString = 3B18BAF31E289899009C125A;
-			remoteInfo = SwiftyGif;
-		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
 		94318E531D32612D0096215A /* AgrumeServiceLocator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AgrumeServiceLocator.swift; sourceTree = "<group>"; };
+		F2539BA020F22E7700062C80 /* AgrumeOverlayView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AgrumeOverlayView.swift; sourceTree = "<group>"; };
 		F2609E22209F047200E0E93D /* AgrumeDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AgrumeDataSource.swift; sourceTree = "<group>"; };
 		F2609E25209F06F800E0E93D /* AgrumeImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AgrumeImage.swift; sourceTree = "<group>"; };
 		F2609E27209F2BC600E0E93D /* Background.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Background.swift; sourceTree = "<group>"; };
@@ -95,6 +97,13 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		F2539B9A20F22D6F00062C80 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		F2A51FE41B10E00700924912 = {
 			isa = PBXGroup;
 			children = (
@@ -102,6 +111,7 @@
 				F2A51FF01B10E00700924912 /* Agrume */,
 				F2A51FFD1B10E00700924912 /* AgrumeTests */,
 				F2A51FEF1B10E00700924912 /* Products */,
+				F2539B9A20F22D6F00062C80 /* Frameworks */,
 			);
 			indentWidth = 2;
 			sourceTree = "<group>";
@@ -124,12 +134,13 @@
 				F2D9598B1B1A108800073772 /* AgrumeCell.swift */,
 				F2609E22209F047200E0E93D /* AgrumeDataSource.swift */,
 				F2609E25209F06F800E0E93D /* AgrumeImage.swift */,
+				F2539BA020F22E7700062C80 /* AgrumeOverlayView.swift */,
 				94318E531D32612D0096215A /* AgrumeServiceLocator.swift */,
+				F2609E27209F2BC600E0E93D /* Background.swift */,
+				F2EE29AD209F31B800F281A2 /* Foundation+Agrume.swift */,
 				F2DC79D51B170C4B00818A8C /* ImageDownloader.swift */,
 				F2A51FF11B10E00700924912 /* Supporting Files */,
-				F2609E27209F2BC600E0E93D /* Background.swift */,
 				F2609E29209F2E0200E0E93D /* UIKit+Agrume.swift */,
-				F2EE29AD209F31B800F281A2 /* Foundation+Agrume.swift */,
 			);
 			path = Agrume;
 			sourceTree = "<group>";
@@ -195,7 +206,7 @@
 			buildRules = (
 			);
 			dependencies = (
-				F2D7BA1D20A47D1700D5EE66 /* PBXTargetDependency */,
+				F2539B9920F22D5100062C80 /* PBXTargetDependency */,
 			);
 			name = Agrume;
 			productName = Agrume;
@@ -334,6 +345,7 @@
 				F2609E28209F2BC600E0E93D /* Background.swift in Sources */,
 				F2EE29AE209F31B800F281A2 /* Foundation+Agrume.swift in Sources */,
 				F2DC79D61B170C4B00818A8C /* ImageDownloader.swift in Sources */,
+				F2539BA120F22E7700062C80 /* AgrumeOverlayView.swift in Sources */,
 				F2609E23209F047200E0E93D /* AgrumeDataSource.swift in Sources */,
 				F2A5200B1B10E29B00924912 /* Agrume.swift in Sources */,
 				94318E541D32612D0096215A /* AgrumeServiceLocator.swift in Sources */,
@@ -350,15 +362,15 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
+		F2539B9920F22D5100062C80 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = SwiftyGif;
+			targetProxy = F2539B9820F22D5100062C80 /* PBXContainerItemProxy */;
+		};
 		F2A51FFC1B10E00700924912 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = F2A51FED1B10E00700924912 /* Agrume */;
 			targetProxy = F2A51FFB1B10E00700924912 /* PBXContainerItemProxy */;
-		};
-		F2D7BA1D20A47D1700D5EE66 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = SwiftyGif;
-			targetProxy = F2D7BA1C20A47D1700D5EE66 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 

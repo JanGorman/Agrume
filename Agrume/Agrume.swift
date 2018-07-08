@@ -214,6 +214,11 @@ public final class Agrume: UIViewController {
       collectionView.scrollToItem(at: IndexPath(item: startIndex, section: 0), at: [], animated: false)
     }
     view.addSubview(spinner)
+    
+    let overlayView = AgrumeOverlayView(frame: .zero)
+    overlayView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+    overlayView.frame = view.bounds
+    view.addSubview(overlayView)
   }
   
   private func show(from viewController: UIViewController) {
