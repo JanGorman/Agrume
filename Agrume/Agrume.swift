@@ -178,14 +178,14 @@ public final class Agrume: UIViewController {
   private var _spinner: UIActivityIndicatorView?
   private var spinner: UIActivityIndicatorView {
     if _spinner == nil {
-      let indicatorStyle: UIActivityIndicatorViewStyle
+      let indicatorStyle: UIActivityIndicatorView.Style
       switch background {
       case .blurred(let style):
         indicatorStyle = style == .dark ? .whiteLarge : .gray
       case .colored(let color):
         indicatorStyle = color.isLight ? .gray : .whiteLarge
       }
-      let spinner = UIActivityIndicatorView(activityIndicatorStyle: indicatorStyle)
+      let spinner = UIActivityIndicatorView(style: indicatorStyle)
       spinner.center = view.center
       spinner.startAnimating()
       spinner.alpha = 0

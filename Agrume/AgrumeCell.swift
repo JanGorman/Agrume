@@ -440,7 +440,7 @@ extension AgrumeCell: UIScrollViewDelegate {
   func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
     let highVelocity: CGFloat = .highScrollVelocity
     let velocity = scrollView.panGestureRecognizer.velocity(in: scrollView.panGestureRecognizer.view)
-    if notZoomed() && (fabs(velocity.x) > highVelocity || fabs(velocity.y) > highVelocity) {
+    if notZoomed() && (abs(velocity.x) > highVelocity || abs(velocity.y) > highVelocity) {
       dismiss()
     }
   }
