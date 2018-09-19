@@ -47,6 +47,17 @@ extension UIView {
     return superView.convert(centerPoint, to: containerView)
   }
   
+  func usesAutoLayout(_ useAutoLayout: Bool) {
+    translatesAutoresizingMaskIntoConstraints = !useAutoLayout
+  }
+  
+  var portableSafeTopInset: NSLayoutYAxisAnchor {
+    if #available(iOS 11.0, *) {
+      return safeAreaLayoutGuide.topAnchor
+    }
+    return topAnchor
+  }
+
 }
 
 extension UIColor {

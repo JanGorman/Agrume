@@ -9,7 +9,9 @@ public final class Agrume: UIViewController {
   private var images: [AgrumeImage]!
   private let startIndex: Int
   private let background: Background
+  private let dismissal: Dismissal
   
+  private var overlayView: UIView?
   private weak var dataSource: AgrumeDataSource?
 
   public typealias DownloadCompletion = (_ image: UIImage?) -> Void
@@ -41,49 +43,62 @@ public final class Agrume: UIViewController {
 
   /// Initialize with a single image
   ///
-  /// - Parameter image: The image to present
-  /// - Parameter background: The background configuration
-  public convenience init(image: UIImage, background: Background = .colored(.black)) {
-    self.init(images: [image], background: background)
+  /// - Parameters:
+  ///   - image: The image to present
+  ///   - background: The background configuration
+  ///   - dismissal: The dismiss configuration
+  public convenience init(image: UIImage, background: Background = .colored(.black), dismissal: Dismissal = .withPhysics) {
+    self.init(images: [image], background: background, dismissal: dismissal)
   }
 
   /// Initialize with a single image url
   ///
-  /// - Parameter url: The image url to present
-  /// - Parameter background: The background configuration
-  public convenience init(url: URL, background: Background = .colored(.black)) {
-    self.init(urls: [url], background: background)
+  /// - Parameters:
+  ///   - url: The image url to present
+  ///   - background: The background configuration
+  ///   - dismissal: The dismiss configuration
+  public convenience init(url: URL, background: Background = .colored(.black), dismissal: Dismissal = .withPhysics) {
+    self.init(urls: [url], background: background, dismissal: dismissal)
   }
 
   /// Initialize with a data source
   ///
-  /// - Parameter dataSource: The `AgrumeDataSource` to use
-  /// - Parameter startIndex: The optional start index when showing multiple images
-  /// - Parameter background: The background configuration
-	public convenience init(dataSource: AgrumeDataSource, startIndex: Int = 0, background: Background = .colored(.black)) {
-    self.init(images: nil, dataSource: dataSource, startIndex: startIndex, background: background)
+  /// - Parameters:
+  ///   - dataSource: The `AgrumeDataSource` to use
+  ///   - startIndex: The optional start index when showing multiple images
+  ///   - background: The background configuration
+  ///   - dismissal: The dismiss configuration
+	public convenience init(dataSource: AgrumeDataSource, startIndex: Int = 0, background: Background = .colored(.black),
+                          dismissal: Dismissal = .withPhysics) {
+    self.init(images: nil, dataSource: dataSource, startIndex: startIndex, background: background, dismissal: dismissal)
 	}
-	
+
   /// Initialize with an array of images
   ///
-  /// - Parameter images: The images to present
-  /// - Parameter startIndex: The optional start index when showing multiple images
-  /// - Parameter background: The background configuration
-  public convenience init(images: [UIImage], startIndex: Int = 0, background: Background = .colored(.black)) {
-    self.init(images: images, urls: nil, startIndex: startIndex, background: background)
+  /// - Parameters:
+  ///   - images: The images to present
+  ///   - startIndex: The optional start index when showing multiple images
+  ///   - background: The background configuration
+  ///   - dismissal: The dismiss configuration
+  public convenience init(images: [UIImage], startIndex: Int = 0, background: Background = .colored(.black),
+                          dismissal: Dismissal = .withPhysics) {
+    self.init(images: images, urls: nil, startIndex: startIndex, background: background, dismissal: dismissal)
   }
 
   /// Initialize with an array of image urls
   ///
-  /// - Parameter urls: The image urls to present
-  /// - Parameter startIndex: The optional start index when showing multiple images
-  /// - Parameter background: The background configuration
-  public convenience init(urls: [URL], startIndex: Int = 0, background: Background = .colored(.black)) {
-    self.init(images: nil, urls: urls, startIndex: startIndex, background: background)
+  /// - Parameters:
+  ///   - urls: The image urls to present
+  ///   - startIndex: The optional start index when showing multiple images
+  ///   - background: The background configuration
+  ///   - dismissal: The dismiss configuration
+  public convenience init(urls: [URL], startIndex: Int = 0, background: Background = .colored(.black),
+                          dismissal: Dismissal = .withPhysics) {
+    self.init(images: nil, urls: urls, startIndex: startIndex, background: background, dismissal: dismissal)
   }
 
 	private init(images: [UIImage]? = nil, urls: [URL]? = nil, dataSource: AgrumeDataSource? = nil, startIndex: Int,
-	             background: Background) {
+               background: Background, dismissal: Dismissal) {
     switch (images, urls) {
     case (let images?, nil):
       self.images = images.map { AgrumeImage(image: $0) }
@@ -95,6 +110,7 @@ public final class Agrume: UIViewController {
 		
     self.startIndex = startIndex
     self.background = background
+    self.dismissal = dismissal
     super.init(nibName: nil, bundle: nil)
     
     self.dataSource = dataSource ?? self
@@ -135,7 +151,7 @@ public final class Agrume: UIViewController {
     let blurView = UIVisualEffectView(effect: UIBlurEffect(style: style))
     blurView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
     blurView.frame = view.frame
-        _blurView = blurView
+    _blurView = blurView
     return _blurView!
   }
   private var _collectionView: UICollectionView?
@@ -185,8 +201,10 @@ public final class Agrume: UIViewController {
   }
 
   /// Present Agrume
-  /// - Parameter viewController: The UIViewController to present from
-  /// - Parameter backgroundSnapshotVC: Optional UIViewController that will be used as basis for a blurred background
+  ///
+  /// - Parameters:
+  ///   - viewController: The UIViewController to present from
+  ///   - backgroundSnapshotVC: Optional UIViewController that will be used as basis for a blurred background
   public func show(from viewController: UIViewController, backgroundSnapshotVC: UIViewController? = nil) {
     backgroundSnapshot = (backgroundSnapshotVC ?? viewControllerForSnapshot(fromViewController: viewController))?.view.snapshot()
     view.isUserInteractionEnabled = false
@@ -231,10 +249,22 @@ public final class Agrume: UIViewController {
                        animations: {
                         self.collectionView.alpha = 1
                         self.collectionView.transform = .identity
+                        self.addOverlayView()
           }, completion: { _ in
             self.view.isUserInteractionEnabled = true
           })
       }
+    }
+  }
+  
+  private func addOverlayView() {
+    if case .withButton(let button) = dismissal {
+      let overlayView = AgrumeOverlayView(closeButton: button)
+      overlayView.delegate = self
+      overlayView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+      overlayView.frame = view.bounds
+      view.addSubview(overlayView)
+      self.overlayView = overlayView
     }
   }
 
@@ -306,6 +336,11 @@ extension Agrume: UICollectionViewDataSource {
     let cell: AgrumeCell = collectionView.dequeue(indexPath: indexPath)
     
     cell.tapBehavior = tapBehavior
+    if case .withPhysics = dismissal {
+      cell.hasPhysics = true
+    } else {
+      cell.hasPhysics = false
+    }
 
     spinner.alpha = 1
     dataSource?.image(forIndex: indexPath.item) { [weak self] image in
@@ -350,6 +385,7 @@ extension Agrume: AgrumeCellDelegate {
                    animations: {
                     self.collectionView.alpha = 0
                     self.blurContainerView.alpha = 0
+                    self.overlayView?.alpha = 0
       }, completion: dismissCompletion)
   }
   
@@ -362,6 +398,7 @@ extension Agrume: AgrumeCellDelegate {
                    animations: {
                     self.collectionView.alpha = 0
                     self.blurContainerView.alpha = 0
+                    self.overlayView?.alpha = 0
                     let scaling: CGFloat = .maxScalingForExpandingOffscreen
                     self.collectionView.transform = CGAffineTransform(scaleX: scaling, y: scaling)
       }, completion: dismissCompletion)
@@ -370,4 +407,12 @@ extension Agrume: AgrumeCellDelegate {
   func isSingleImageMode() -> Bool {
     return dataSource?.numberOfImages == 1
   }
+}
+
+extension Agrume: AgrumeOverlayViewDelegate {
+
+  func agrumeOverlayViewWantsToClose(_ view: AgrumeOverlayView) {
+    dismiss()
+  }
+
 }

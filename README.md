@@ -11,7 +11,7 @@ An iOS image viewer written in Swift with support for multiple images.
 
 ## Requirements
 
-- Swift 4.1 (for Swift 3 support, use version 3.x)
+- Swift 4.2 (for Swift 3 support, use version 3.x)
 - iOS 9.0+
 - Xcode 9+
 
@@ -105,6 +105,23 @@ let agrume = Agrume(images: images)
 ```
 
 Remote animated gifs (i.e. using the url or urls initializer) are supported. Agrume does the image type detection and displays them properly. If using Agrume from a custom `UIImageView` you may need to rebuild the `UIImage` using the original data to preserve animation vs. using the `UIImage` instance from the image view.
+
+### Close Button
+
+Per default you dismiss the zoomed view by dragging/flicking the image off screen. You can opt out of this behaviour and instead display a close button. To match the look and feel of your app you can pass in a custom `UIBarButtonItem`:
+
+```swift
+
+// Default button that displays NSLocalizedString("Close", …)
+let agrume = Agrume(image: UIImage(named: "…")!, .dismissal: .withButton(nil))
+// Customise the button any way you like. For example display a system "x" button
+let button = UIBarButtonItem(barButtonSystemItem: .stop, target: nil, action: nil)
+button.tintColor = .red
+let agrume = Agrume(image: UIImage(named: "…")!, .dismissal: .withButton(button))
+
+```
+
+The included sample app shows both cases for reference.
 
 ### Custom Download Handler
 

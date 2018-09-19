@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14109" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="hvw-Fc-Hya">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14113" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="hvw-Fc-Hya">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
@@ -160,6 +160,46 @@
                                             <segue destination="h3d-oq-uMr" kind="show" id="KGE-li-Sgl"/>
                                         </connections>
                                     </tableViewCell>
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" textLabel="EYU-A6-RJZ" style="IBUITableViewCellStyleDefault" id="Ute-DI-Wu6">
+                                        <rect key="frame" x="0.0" y="308" width="375" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Ute-DI-Wu6" id="Q01-NE-Gug">
+                                            <rect key="frame" x="0.0" y="0.0" width="341" height="43.5"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="With Close Button" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="EYU-A6-RJZ">
+                                                    <rect key="frame" x="16" y="0.0" width="324" height="43.5"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                        </tableViewCellContentView>
+                                        <connections>
+                                            <segue destination="XDR-Vl-Vln" kind="show" id="iab-77-NBI"/>
+                                        </connections>
+                                    </tableViewCell>
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" textLabel="7mq-3b-nAO" style="IBUITableViewCellStyleDefault" id="N7W-k7-LDv">
+                                        <rect key="frame" x="0.0" y="352" width="375" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="N7W-k7-LDv" id="7al-78-I8z">
+                                            <rect key="frame" x="0.0" y="0.0" width="341" height="43.5"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="With Custom Close Button" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="7mq-3b-nAO">
+                                                    <rect key="frame" x="16" y="0.0" width="324" height="43.5"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                        </tableViewCellContentView>
+                                        <connections>
+                                            <segue destination="YOL-GU-4S0" kind="show" id="UnH-mA-SgX"/>
+                                        </connections>
+                                    </tableViewCell>
                                 </cells>
                             </tableViewSection>
                         </sections>
@@ -285,6 +325,68 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="roC-NH-QyC" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="477" y="1545"/>
+        </scene>
+        <!--Close Button-->
+        <scene sceneID="6iX-fm-nEv">
+            <objects>
+                <viewController title="Close Button" id="XDR-Vl-Vln" customClass="CloseButtonViewController" customModule="Agrume_Example" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="yOH-8x-Gwg"/>
+                        <viewControllerLayoutGuide type="bottom" id="Fmv-FJ-oxR"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="hIX-bE-6BT">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="KmE-2Z-HVh">
+                                <rect key="frame" x="146" y="318" width="83" height="30"/>
+                                <state key="normal" title="Open Image"/>
+                                <connections>
+                                    <action selector="showImage" destination="XDR-Vl-Vln" eventType="touchUpInside" id="V6o-0v-gCE"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="KmE-2Z-HVh" firstAttribute="centerX" secondItem="hIX-bE-6BT" secondAttribute="centerX" id="YmC-Ka-ldD"/>
+                            <constraint firstItem="KmE-2Z-HVh" firstAttribute="centerY" secondItem="hIX-bE-6BT" secondAttribute="centerY" id="tDv-cV-phE"/>
+                        </constraints>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="4ga-Fs-VXm" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1281" y="1545"/>
+        </scene>
+        <!--Custom Close Button-->
+        <scene sceneID="A1a-Sp-oQy">
+            <objects>
+                <viewController title="Custom Close Button" id="YOL-GU-4S0" customClass="CustomCloseButtonViewController" customModule="Agrume_Example" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="3D6-dn-BRN"/>
+                        <viewControllerLayoutGuide type="bottom" id="nLt-rN-LY0"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="EM6-2G-0Ge">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="QC9-3M-Kjs">
+                                <rect key="frame" x="145.5" y="318" width="83" height="30"/>
+                                <state key="normal" title="Open Image"/>
+                                <connections>
+                                    <action selector="showImage" destination="YOL-GU-4S0" eventType="touchUpInside" id="U4n-2z-pnA"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="QC9-3M-Kjs" firstAttribute="centerX" secondItem="EM6-2G-0Ge" secondAttribute="centerX" id="0V6-Xf-bpe"/>
+                            <constraint firstItem="QC9-3M-Kjs" firstAttribute="centerY" secondItem="EM6-2G-0Ge" secondAttribute="centerY" id="fJl-gh-sMj"/>
+                        </constraints>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="pfY-N3-Twn" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2001" y="1545"/>
         </scene>
         <!--Single Image View Controller-->
         <scene sceneID="Lh6-OX-hiT">

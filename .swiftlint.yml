@@ -48,6 +48,7 @@ disabled_rules:
   - force_cast
   - colon
   - unused_optional_binding
+  - vertical_parameter_alignment
   
 excluded:
   - Frameworks/SwiftyGif
