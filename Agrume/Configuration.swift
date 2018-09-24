@@ -10,7 +10,7 @@ import UIKit
 /// - blurred: Overlay with a UIBlurEffectStyle
 public enum Background {
   case colored(UIColor)
-  case blurred(UIBlurEffectStyle)
+  case blurred(UIBlurEffect.Style)
 }
 
 /// Control the way Agrume is dismissed
