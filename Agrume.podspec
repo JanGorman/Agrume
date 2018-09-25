@@ -1,7 +1,7 @@
 Pod::Spec.new do |s|
 
   s.name          = "Agrume"
-  s.version       = "5.2.0"
+  s.version       = "5.2.1"
   s.summary       = "An iOS image viewer written in Swift."
   s.swift_version = "4.2"
 
@@ -22,6 +22,6 @@ Pod::Spec.new do |s|
 
   s.source_files  = "Classes", "Agrume/*.swift"
   
-  s.dependency "SwiftyGif"
+  s.dependency "Zoetrope"
 
 end
