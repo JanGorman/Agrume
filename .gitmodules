@@ -1,0 +1,3 @@
+[submodule "Frameworks/Zoetrope"]
+	path = Frameworks/Zoetrope
+	url = https://github.com/JanGorman/Zoetrope
