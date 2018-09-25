@@ -5,7 +5,7 @@
 import UIKit
 import ImageIO
 import MobileCoreServices
-import SwiftyGif
+import Zoetrope
 
 final class ImageDownloader {
 
