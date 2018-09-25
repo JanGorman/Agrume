@@ -1,3 +1,3 @@
-[submodule "Frameworks/SwiftyGif"]
-	path = Frameworks/SwiftyGif
-	url = https://github.com/kirualex/SwiftyGif
+[submodule "Frameworks/Zoetrope"]
+	path = Frameworks/Zoetrope
+	url = https://github.com/JanGorman/Zoetrope

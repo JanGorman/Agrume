@@ -14,6 +14,7 @@ type_name:
     error: 50
   excluded:
     - id
+    - i
     
 type_body_length:
   - 600
@@ -51,4 +52,4 @@ disabled_rules:
   - vertical_parameter_alignment
   
 excluded:
-  - Frameworks/SwiftyGif
+  - Frameworks/Zoetrope
