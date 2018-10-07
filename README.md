@@ -38,14 +38,12 @@ For just a single image it's as easy as
 ### Basic
 
 ```swift
-
 import Agrume
 
 @IBAction func openImage(_ sender: Any) {
   let agrume = Agrume(image: UIImage(named: "…")!)
   agrume.show(from: self)
 }
-
 ```
 
 You can also pass in a `URL` and Agrume will take care of the download for you.
@@ -55,11 +53,9 @@ You can also pass in a `URL` and Agrume will take care of the download for you.
 Agrume has different background configurations. You can have it blur the view it's covering or supply a background color:
 
 ```swift
-
 let agrume = Agrume(image: UIImage(named: "…")!, background: .blurred(.regular))
 // or
 let agrume = Agrume(image: UIImage(named: "…")!, background: .colored(.green))
-
 ```
 
 ### Multiple Images
@@ -67,7 +63,6 @@ let agrume = Agrume(image: UIImage(named: "…")!, background: .colored(.green))
 If you're displaying a `UICollectionView` and want to add support for zooming, you can also call Agrume with an array of either images or URLs.
 
 ```swift
-
 // In case of an array of [UIImage]:
 let agrume = Agrume(images: images, startIndex: indexPath.item, background: .blurred(.light))
 // Or an array of [URL]:
@@ -77,7 +72,6 @@ agrume.didScroll = { [unowned self] index in
   self.collectionView.scrollToItem(at: IndexPath(item: index, section: 0), at: [], animated: false)
 }
 agrume.show(from: self)
-
 ```
 
 This shows a way of keeping the zoomed library and the one in the background synced.
@@ -87,7 +81,6 @@ This shows a way of keeping the zoomed library and the one in the background syn
 Agrume bundles [Zoetrope](https://github.com/JanGorman/Zoetrope) to display animated gifs. You use Zoetrope's custom `UIImage` initializer:
 
 ```swift
-
 let image = UIImage(gifName: "animated.gif")
 let agrume = Agrume(image: image)
 agrume.display(from: self)
@@ -101,7 +94,6 @@ let agrume = Agrume(image: image)
 
 let images = [UIImage(gifName: "animated.gif"), UIImage(named: "foo.png")] // You can pass both animated and regular images at the same time
 let agrume = Agrume(images: images)
-
 ```
 
 Remote animated gifs (i.e. using the url or urls initializer) are supported. Agrume does the image type detection and displays them properly. If using Agrume from a custom `UIImageView` you may need to rebuild the `UIImage` using the original data to preserve animation vs. using the `UIImage` instance from the image view.
@@ -111,14 +103,12 @@ Remote animated gifs (i.e. using the url or urls initializer) are supported. Agr
 Per default you dismiss the zoomed view by dragging/flicking the image off screen. You can opt out of this behaviour and instead display a close button. To match the look and feel of your app you can pass in a custom `UIBarButtonItem`:
 
 ```swift
-
 // Default button that displays NSLocalizedString("Close", …)
 let agrume = Agrume(image: UIImage(named: "…")!, .dismissal: .withButton(nil))
 // Customise the button any way you like. For example display a system "x" button
 let button = UIBarButtonItem(barButtonSystemItem: .stop, target: nil, action: nil)
 button.tintColor = .red
 let agrume = Agrume(image: UIImage(named: "…")!, .dismissal: .withButton(button))
-
 ```
 
 The included sample app shows both cases for reference.
@@ -128,7 +118,6 @@ The included sample app shows both cases for reference.
 If you want to take control of downloading images (e.g. for caching), you can also set a download closure that calls back to Agrume to set the image. For example, let's use [MapleBacon](https://github.com/JanGorman/MapleBacon).
 
 ```swift
-
 import Agrume
 import MapleBacon
 
@@ -148,7 +137,6 @@ import MapleBacon
 Instead of having to define a handler on a per instance basis you can instead set a handler on the `AgrumeServiceLocator`. Agrume will use this handler for all downloads unless overriden on an instance as described above:
 
 ```swift
-
 import Agrume
 
 AgrumeServiceLocator.shared.setDownloadHandler { url, completion in
@@ -157,7 +145,6 @@ AgrumeServiceLocator.shared.setDownloadHandler { url, completion in
 
 // Some other place
 agrume.show(from: self)
-
 ```
 
 ### Custom Data Source
@@ -165,14 +152,12 @@ agrume.show(from: self)
 For more dynamic library needs you can implement the `AgrumeDataSource` protocol that supplies images to Agrume. Agrume will query the data source for the number of images and if that number changes, reload it's scrolling image view.
 
 ```swift
-
 import Agrume
 
 let dataSource: AgrumeDataSource = MyDataSourceImplementation()
 let agrume = Agrume(dataSource: dataSource)
 
 agrume.show(from: self)
-
 ```
 
 ### Custom Background Snapshot
@@ -180,10 +165,8 @@ agrume.show(from: self)
 When showing the Agrume view controller, it'll default to taking a snapshot of the root view and blurring that. You can customize this behaviour by passing in a different view that it will blur and display:
 
 ```swift
-
 let agrume = Agrume(image: image)
 agrume.show(from: self, backgroundSnapshotVC: self)
-
 ```
 
 ### Status Bar Appearance
@@ -191,12 +174,14 @@ agrume.show(from: self, backgroundSnapshotVC: self)
 You can customize the status bar appearance when displaying the zoomed in view. `Agrume` has a `statusBarStyle` property:
 
 ```swift
-
 let agrume = Agrume(image: image)
 agrume.statusBarStyle = .lightContent
 agrume.show(from: self)
-
 ```
+
+### Lifecycle
+
+To get information about lifecycle events in `Agrume` you have the option to set a `didDismiss` handler. Similarly, to be informed about whenever the user scrolls through the image collection, there is a `didScroll` handler that is called with the current page index.
 
 ## Licence
 
