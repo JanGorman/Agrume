@@ -27,7 +27,7 @@ public final class Agrume: UIViewController {
   fileprivate var images: [UIImage]!
   fileprivate var imageUrls: [URL]!
   private var startIndex: Int?
-  private let backgroundBlurStyle: UIBlurEffectStyle?
+  private let backgroundBlurStyle: UIBlurEffect.Style?
   private let backgroundColor: UIColor?
   fileprivate let dataSource: AgrumeDataSource?
   private var containerSubviews = [UIView]()
@@ -57,7 +57,7 @@ public final class Agrume: UIViewController {
   /// - Parameter image: The image to present
   /// - Parameter backgroundBlurStyle: The UIBlurEffectStyle to apply to the background when presenting
   /// - Parameter backgroundColor: The background color when presenting
-  public convenience init(image: UIImage, backgroundBlurStyle: UIBlurEffectStyle? = nil, backgroundColor: UIColor? = nil, isShareNeeded: Bool? = false) {
+  public convenience init(image: UIImage, backgroundBlurStyle: UIBlurEffect.Style? = nil, backgroundColor: UIColor? = nil, isShareNeeded: Bool? = false) {
     self.init(image: image, imageUrl: nil, backgroundBlurStyle: backgroundBlurStyle, backgroundColor: backgroundColor, isShareNeeded: isShareNeeded)
   }
   
@@ -66,7 +66,7 @@ public final class Agrume: UIViewController {
   /// - Parameter imageUrl: The image url to present
   /// - Parameter backgroundBlurStyle: The UIBlurEffectStyle to apply to the background when presenting
   /// - Parameter backgroundColor: The background color when presenting
-  public convenience init(imageUrl: URL, backgroundBlurStyle: UIBlurEffectStyle? = nil, backgroundColor: UIColor? = nil, isShareNeeded: Bool? = false) {
+  public convenience init(imageUrl: URL, backgroundBlurStyle: UIBlurEffect.Style? = nil, backgroundColor: UIColor? = nil, isShareNeeded: Bool? = false) {
     self.init(image: nil, imageUrl: imageUrl, backgroundBlurStyle: backgroundBlurStyle, backgroundColor: backgroundColor, isShareNeeded: isShareNeeded)
   }
   
@@ -77,7 +77,7 @@ public final class Agrume: UIViewController {
   /// - Parameter backgroundBlurStyle: The UIBlurEffectStyle to apply to the background when presenting
   /// - Parameter backgroundColor: The background color when presenting
   public convenience init(dataSource: AgrumeDataSource, startIndex: Int? = nil,
-                          backgroundBlurStyle: UIBlurEffectStyle? = .dark, backgroundColor: UIColor? = nil) {
+                          backgroundBlurStyle: UIBlurEffect.Style? = .dark, backgroundColor: UIColor? = nil) {
     self.init(image: nil, images: nil, dataSource: dataSource, startIndex: startIndex,
               backgroundBlurStyle: backgroundBlurStyle, backgroundColor: backgroundColor)
   }
@@ -88,7 +88,7 @@ public final class Agrume: UIViewController {
   /// - Parameter startIndex: The optional start index when showing multiple images
   /// - Parameter backgroundBlurStyle: The UIBlurEffectStyle to apply to the background when presenting
   /// - Parameter backgroundColor: The background color when presenting
-  public convenience init(images: [UIImage], startIndex: Int? = nil, backgroundBlurStyle: UIBlurEffectStyle? = .dark,
+  public convenience init(images: [UIImage], startIndex: Int? = nil, backgroundBlurStyle: UIBlurEffect.Style? = .dark,
                           backgroundColor: UIColor? = nil) {
     self.init(image: nil, images: images, startIndex: startIndex, backgroundBlurStyle: backgroundBlurStyle,
               backgroundColor: backgroundColor)
@@ -100,7 +100,7 @@ public final class Agrume: UIViewController {
   /// - Parameter startIndex: The optional start index when showing multiple images
   /// - Parameter backgroundBlurStyle: The UIBlurEffectStyle to apply to the background when presenting
   /// - Parameter backgroundColor: The background color when presenting
-  public convenience init(imageUrls: [URL], startIndex: Int? = nil, backgroundBlurStyle: UIBlurEffectStyle? = .dark,
+  public convenience init(imageUrls: [URL], startIndex: Int? = nil, backgroundBlurStyle: UIBlurEffect.Style? = .dark,
                           backgroundColor: UIColor? = nil) {
     self.init(image: nil, imageUrls: imageUrls, startIndex: startIndex, backgroundBlurStyle: backgroundBlurStyle,
               backgroundColor: backgroundColor)
@@ -108,7 +108,7 @@ public final class Agrume: UIViewController {
   
   private init(image: UIImage? = nil, imageUrl: URL? = nil, images: [UIImage]? = nil,
                dataSource: AgrumeDataSource? = nil, imageUrls: [URL]? = nil, startIndex: Int? = nil,
-               backgroundBlurStyle: UIBlurEffectStyle? = nil, backgroundColor: UIColor? = nil, isShareNeeded: Bool? = false) {
+               backgroundBlurStyle: UIBlurEffect.Style? = nil, backgroundColor: UIColor? = nil, isShareNeeded: Bool? = false) {
     switch (backgroundBlurStyle, backgroundColor) {
     case (let blur, .none):
       self.backgroundBlurStyle = blur
@@ -143,7 +143,7 @@ public final class Agrume: UIViewController {
     
     UIDevice.current.beginGeneratingDeviceOrientationNotifications()
     NotificationCenter.default.addObserver(self, selector: #selector(orientationDidChange),
-                                           name: .UIDeviceOrientationDidChange, object: nil)
+                                           name: UIDevice.orientationDidChangeNotification, object: nil)
   }
   
   deinit {
@@ -158,7 +158,7 @@ public final class Agrume: UIViewController {
   
   private func frameForCurrentDeviceOrientation() -> CGRect {
     let bounds = view.bounds
-    if UIDeviceOrientationIsLandscape(currentDeviceOrientation()) {
+    if currentDeviceOrientation().isLandscape {
       if bounds.width / bounds.height > bounds.height / bounds.width {
         return bounds
       } else {
@@ -218,8 +218,8 @@ public final class Agrume: UIViewController {
   fileprivate var _spinner: UIActivityIndicatorView?
   fileprivate var spinner: UIActivityIndicatorView {
     if _spinner == nil {
-      let activityIndicatorStyle: UIActivityIndicatorViewStyle = self.backgroundBlurStyle == .dark ? .whiteLarge : .gray
-      let spinner = UIActivityIndicatorView(activityIndicatorStyle: activityIndicatorStyle)
+      let activityIndicatorStyle: UIActivityIndicatorView.Style = self.backgroundBlurStyle == .dark ? .whiteLarge : .gray
+      let spinner = UIActivityIndicatorView(style: activityIndicatorStyle)
       spinner.center = self.view.center
       spinner.startAnimating()
       spinner.alpha = 0
@@ -237,7 +237,7 @@ public final class Agrume: UIViewController {
     view.addSubview(backgroundImageView)
     
     
-    let shareButton = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.action, target: self, action: #selector(share))
+    let shareButton = UIBarButtonItem(barButtonSystemItem: UIBarButtonItem.SystemItem.action, target: self, action: #selector(share))
     
     toolbar.frame = CGRect(x: 0, y: view.frame.size.height - 46, width: view.frame.size.width, height: 46)
     toolbar.sizeToFit()
@@ -357,8 +357,8 @@ public final class Agrume: UIViewController {
   private func orientationDidChange() {
     let orientation = currentDeviceOrientation()
     guard let lastOrientation = lastUsedOrientation else { return }
-    let landscapeToLandscape = UIDeviceOrientationIsLandscape(orientation) && UIDeviceOrientationIsLandscape(lastOrientation)
-    let portraitToPortrait = UIDeviceOrientationIsPortrait(orientation) && UIDeviceOrientationIsPortrait(lastOrientation)
+    let landscapeToLandscape = orientation.isLandscape && lastOrientation.isLandscape
+    let portraitToPortrait = orientation.isPortrait && lastOrientation.isPortrait
     guard (landscapeToLandscape || portraitToPortrait) && orientation != lastUsedOrientation else { return }
     lastUsedOrientation = orientation
     UIView.animate(withDuration: 0.6) { [weak self] in
@@ -401,13 +401,13 @@ public final class Agrume: UIViewController {
   
   private func newTransform() -> CGAffineTransform {
     switch initialOrientation {
-    case .portrait:
+    case .portrait?:
       return transformPortrait()
-    case .portraitUpsideDown:
+    case .portraitUpsideDown?:
       return transformPortraitUpsideDown()
-    case .landscapeLeft:
+    case .landscapeLeft?:
       return transformLandscapeLeft()
-    case .landscapeRight:
+    case .landscapeRight?:
       return transformLandscapeRight()
     default:
       return .identity
