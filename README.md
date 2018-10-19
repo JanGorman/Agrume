@@ -78,7 +78,7 @@ This shows a way of keeping the zoomed library and the one in the background syn
 
 ### Animated gifs
 
-Agrume bundles [Zoetrope](https://github.com/JanGorman/Zoetrope) to display animated gifs. You use Zoetrope's custom `UIImage` initializer:
+Agrume bundles [SwiftyGif](https://github.com/kirualex/SwiftyGif) to display animated gifs. You use SwiftyGif's custom `UIImage` initializer:
 
 ```swift
 let image = UIImage(gifName: "animated.gif")
