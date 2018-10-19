@@ -3,7 +3,7 @@
 //
 
 import UIKit
-import Zoetrope
+import SwiftyGif
 
 protocol AgrumeCellDelegate: AnyObject {
   
@@ -41,8 +41,8 @@ final class AgrumeCell: UICollectionViewCell {
 
   var image: UIImage? {
     didSet {
-      if image?.zoetrope != nil, let image = image {
-        imageView.displayGif(image)
+      if image?.imageData != nil, let image = image {
+        imageView.setGifImage(image)
       } else {
         imageView.image = image
       }

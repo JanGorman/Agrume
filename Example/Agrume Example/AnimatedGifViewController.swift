@@ -4,14 +4,12 @@
 
 import UIKit
 import Agrume
-import Zoetrope
+import SwiftyGif
 
 final class AnimatedGifViewController: UIViewController {
 
   @IBAction func openImage(_ sender: Any?) {
-    guard let image = UIImage(gifName: "animated.gif") else {
-      return
-    }
+    let image = UIImage(gifName: "animated.gif")
     let agrume = Agrume(image: image, background: .blurred(.regular))
     agrume.show(from: self)
   }

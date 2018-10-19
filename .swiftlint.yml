@@ -52,4 +52,4 @@ disabled_rules:
   - vertical_parameter_alignment
   
 excluded:
-  - Frameworks/Zoetrope
+  - Frameworks/SwiftyGif
