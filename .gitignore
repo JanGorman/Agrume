@@ -24,4 +24,6 @@ DerivedData/
 *.perspectivev3
 !default.perspectivev3
 
-
+### Carthage
+Carthage/Checkouts/
+Carthage/Build/
