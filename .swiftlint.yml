@@ -53,3 +53,4 @@ disabled_rules:
   
 excluded:
   - Frameworks/SwiftyGif
+  - Carthage/Checkouts
