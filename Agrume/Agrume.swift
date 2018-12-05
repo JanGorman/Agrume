@@ -223,7 +223,7 @@ public final class Agrume: UIViewController {
     backgroundImageView.image = backgroundSnapshot
     view.addSubview(backgroundImageView)
     
-    if case .blurred(_) = background {
+    if case .blurred = background {
       blurContainerView.addSubview(blurView)
     }
     view.addSubview(blurContainerView)
@@ -258,13 +258,16 @@ public final class Agrume: UIViewController {
   }
   
   private func addOverlayView() {
-    if case .withButton(let button) = dismissal {
+    switch dismissal {
+    case .withButton(let button), .withPhysicsAndButton(let button):
       let overlayView = AgrumeOverlayView(closeButton: button)
       overlayView.delegate = self
       overlayView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
       overlayView.frame = view.bounds
       view.addSubview(overlayView)
       self.overlayView = overlayView
+    default:
+      break
     }
   }
 
@@ -336,9 +339,10 @@ extension Agrume: UICollectionViewDataSource {
     let cell: AgrumeCell = collectionView.dequeue(indexPath: indexPath)
     
     cell.tapBehavior = tapBehavior
-    if case .withPhysics = dismissal {
+    switch dismissal {
+    case .withPhysics, .withPhysicsAndButton:
       cell.hasPhysics = true
-    } else {
+    case .withButton:
       cell.hasPhysics = false
     }
 
