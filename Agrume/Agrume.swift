@@ -167,6 +167,7 @@ public final class Agrume: UIViewController {
       collectionView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
       collectionView.register(AgrumeCell.self, forCellWithReuseIdentifier: String(describing: AgrumeCell.self))
       collectionView.dataSource = self
+      collectionView.delegate = self
       collectionView.isPagingEnabled = true
       collectionView.backgroundColor = .clear
       collectionView.delaysContentTouches = false
@@ -358,6 +359,18 @@ extension Agrume: UICollectionViewDataSource {
     cell.delegate = self
     return cell
   }
+
+}
+
+extension Agrume: UICollectionViewDelegate {
+
+  public func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
+    guard let indexPath = collectionView.indexPathsForVisibleItems.first else {
+      return
+    }
+    didScroll?(indexPath.item)
+  }
+
 }
 
 extension Agrume: AgrumeCellDelegate {
