@@ -1,9 +1,9 @@
 Pod::Spec.new do |s|
 
   s.name          = "Agrume"
-  s.version       = "5.2.5"
+  s.version       = "5.3.0"
   s.summary       = "An iOS image viewer written in Swift."
-  s.swift_version = "4.2"
+  s.swift_version = "5.0"
 
   s.description   = <<-DESC
                     An iOS image viewer written in Swift with support for multiple images.
