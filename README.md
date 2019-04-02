@@ -11,13 +11,13 @@ An iOS image viewer written in Swift with support for multiple images.
 
 ## Requirements
 
-- Swift 4.2 (for Swift 3 support, use version 3.x)
+- Swift 5.0
 - iOS 9.0+
-- Xcode 9+
+- Xcode 10.2+
 
 ## Installation
 
-The easiest way is via [CocoaPods](http://cocoapods.org). Add the dependency to your `Podfile` and then run `pod install`:
+Use [CocoaPods](http://cocoapods.org). Add the dependency to your `Podfile` and then run `pod install`:
 
 ```ruby
 pod "Agrume"
