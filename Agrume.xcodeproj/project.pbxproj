@@ -19,37 +19,10 @@
 		F2D9598C1B1A108800073772 /* AgrumeCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2D9598B1B1A108800073772 /* AgrumeCell.swift */; };
 		F2DC79D61B170C4B00818A8C /* ImageDownloader.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2DC79D51B170C4B00818A8C /* ImageDownloader.swift */; };
 		F2EE29AE209F31B800F281A2 /* Foundation+Agrume.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2EE29AD209F31B800F281A2 /* Foundation+Agrume.swift */; };
+		F2FA5E7F2288602F009C0DA0 /* SwiftyGif.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F2FA5E7E22885FFB009C0DA0 /* SwiftyGif.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
-		F20B98AF21B8687600585F48 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = F20B98A921B8687600585F48 /* SwiftyGif.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = FA29E9321CA9340E00E579D5;
-			remoteInfo = SwiftyGifExample;
-		};
-		F20B98B121B8687600585F48 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = F20B98A921B8687600585F48 /* SwiftyGif.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = FA29E9461CA9340F00E579D5;
-			remoteInfo = SwiftyGifTests;
-		};
-		F20B98B321B8687600585F48 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = F20B98A921B8687600585F48 /* SwiftyGif.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 3B18BAF41E289899009C125A;
-			remoteInfo = SwiftyGif;
-		};
-		F20B98B521B8688200585F48 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = F20B98A921B8687600585F48 /* SwiftyGif.xcodeproj */;
-			proxyType = 1;
-			remoteGlobalIDString = 3B18BAF31E289899009C125A;
-			remoteInfo = SwiftyGif;
-		};
 		F2A51FFB1B10E00700924912 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = F2A51FE51B10E00700924912 /* Project object */;
@@ -57,11 +30,24 @@
 			remoteGlobalIDString = F2A51FED1B10E00700924912;
 			remoteInfo = Agrume;
 		};
+		F2FA5E7B22885FFB009C0DA0 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = F2FA5E7622885FFB009C0DA0 /* SwiftyGif.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = FA29E9321CA9340E00E579D5;
+			remoteInfo = SwiftyGifExample;
+		};
+		F2FA5E7D22885FFB009C0DA0 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = F2FA5E7622885FFB009C0DA0 /* SwiftyGif.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 3B18BAF41E289899009C125A;
+			remoteInfo = SwiftyGif;
+		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
 		94318E531D32612D0096215A /* AgrumeServiceLocator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AgrumeServiceLocator.swift; sourceTree = "<group>"; };
-		F20B98A921B8687600585F48 /* SwiftyGif.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = SwiftyGif.xcodeproj; path = Frameworks/SwiftyGif/SwiftyGif.xcodeproj; sourceTree = "<group>"; };
 		F2539BA020F22E7700062C80 /* AgrumeOverlayView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AgrumeOverlayView.swift; sourceTree = "<group>"; };
 		F2609E22209F047200E0E93D /* AgrumeDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AgrumeDataSource.swift; sourceTree = "<group>"; };
 		F2609E25209F06F800E0E93D /* AgrumeImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AgrumeImage.swift; sourceTree = "<group>"; };
@@ -76,6 +62,7 @@
 		F2D9598B1B1A108800073772 /* AgrumeCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AgrumeCell.swift; sourceTree = "<group>"; };
 		F2DC79D51B170C4B00818A8C /* ImageDownloader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageDownloader.swift; sourceTree = "<group>"; };
 		F2EE29AD209F31B800F281A2 /* Foundation+Agrume.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Foundation+Agrume.swift"; sourceTree = "<group>"; };
+		F2FA5E7622885FFB009C0DA0 /* SwiftyGif.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = SwiftyGif.xcodeproj; path = Frameworks/SwiftyGif/SwiftyGif.xcodeproj; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -83,6 +70,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F2FA5E7F2288602F009C0DA0 /* SwiftyGif.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -97,16 +85,6 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		F20B98AA21B8687600585F48 /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				F20B98B021B8687600585F48 /* SwiftyGifExample.app */,
-				F20B98B221B8687600585F48 /* SwiftyGifTests.xctest */,
-				F20B98B421B8687600585F48 /* SwiftyGif.framework */,
-			);
-			name = Products;
-			sourceTree = "<group>";
-		};
 		F2539B9A20F22D6F00062C80 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
@@ -117,7 +95,7 @@
 		F2A51FE41B10E00700924912 = {
 			isa = PBXGroup;
 			children = (
-				F20B98A921B8687600585F48 /* SwiftyGif.xcodeproj */,
+				F2FA5E7622885FFB009C0DA0 /* SwiftyGif.xcodeproj */,
 				F2A51FF01B10E00700924912 /* Agrume */,
 				F2A51FFD1B10E00700924912 /* AgrumeTests */,
 				F2A51FEF1B10E00700924912 /* Products */,
@@ -179,6 +157,15 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
+		F2FA5E7722885FFB009C0DA0 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				F2FA5E7C22885FFB009C0DA0 /* SwiftyGifExample.app */,
+				F2FA5E7E22885FFB009C0DA0 /* SwiftyGif.framework */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXHeadersBuildPhase section */
@@ -206,7 +193,6 @@
 			buildRules = (
 			);
 			dependencies = (
-				F20B98B621B8688200585F48 /* PBXTargetDependency */,
 			);
 			name = Agrume;
 			productName = Agrume;
@@ -265,8 +251,8 @@
 			projectDirPath = "";
 			projectReferences = (
 				{
-					ProductGroup = F20B98AA21B8687600585F48 /* Products */;
-					ProjectRef = F20B98A921B8687600585F48 /* SwiftyGif.xcodeproj */;
+					ProductGroup = F2FA5E7722885FFB009C0DA0 /* Products */;
+					ProjectRef = F2FA5E7622885FFB009C0DA0 /* SwiftyGif.xcodeproj */;
 				},
 			);
 			projectRoot = "";
@@ -278,25 +264,18 @@
 /* End PBXProject section */
 
 /* Begin PBXReferenceProxy section */
-		F20B98B021B8687600585F48 /* SwiftyGifExample.app */ = {
+		F2FA5E7C22885FFB009C0DA0 /* SwiftyGifExample.app */ = {
 			isa = PBXReferenceProxy;
 			fileType = wrapper.application;
 			path = SwiftyGifExample.app;
-			remoteRef = F20B98AF21B8687600585F48 /* PBXContainerItemProxy */;
+			remoteRef = F2FA5E7B22885FFB009C0DA0 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		F20B98B221B8687600585F48 /* SwiftyGifTests.xctest */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.cfbundle;
-			path = SwiftyGifTests.xctest;
-			remoteRef = F20B98B121B8687600585F48 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		F20B98B421B8687600585F48 /* SwiftyGif.framework */ = {
+		F2FA5E7E22885FFB009C0DA0 /* SwiftyGif.framework */ = {
 			isa = PBXReferenceProxy;
 			fileType = wrapper.framework;
 			path = SwiftyGif.framework;
-			remoteRef = F20B98B321B8687600585F48 /* PBXContainerItemProxy */;
+			remoteRef = F2FA5E7D22885FFB009C0DA0 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 /* End PBXReferenceProxy section */
@@ -363,11 +342,6 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
-		F20B98B621B8688200585F48 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = SwiftyGif;
-			targetProxy = F20B98B521B8688200585F48 /* PBXContainerItemProxy */;
-		};
 		F2A51FFC1B10E00700924912 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = F2A51FED1B10E00700924912 /* Agrume */;

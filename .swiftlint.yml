@@ -50,6 +50,7 @@ disabled_rules:
   - colon
   - unused_optional_binding
   - vertical_parameter_alignment
+  - force_try
   
 excluded:
   - Frameworks/SwiftyGif

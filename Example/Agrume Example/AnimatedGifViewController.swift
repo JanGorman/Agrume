@@ -9,7 +9,7 @@ import SwiftyGif
 final class AnimatedGifViewController: UIViewController {
 
   @IBAction func openImage(_ sender: Any?) {
-    let image = UIImage(gifName: "animated.gif")
+    let image = try! UIImage(gifName: "animated.gif")
     let agrume = Agrume(image: image, background: .blurred(.regular))
     agrume.show(from: self)
   }
