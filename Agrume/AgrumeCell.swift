@@ -311,7 +311,7 @@ extension AgrumeCell: UIGestureRecognizerDelegate {
 
     if !animated {
       imageView.transform = .identity
-      imageView.center = CGPoint(x: scrollView.contentSize.width / 2, y: scrollView.contentSize.height / 2)
+      recenterImage(size: scrollView.contentSize)
     } else {
       UIView.animate(withDuration: 0.7,
                      delay: 0,
@@ -321,7 +321,7 @@ extension AgrumeCell: UIGestureRecognizerDelegate {
                      animations: {
                       guard !self.isDraggingImage else { return }
                       
-                      self.imageView.transform = CGAffineTransform.identity
+                      self.imageView.transform = .identity
                       if !self.scrollView.isDragging && !self.scrollView.isDecelerating {
                         self.recenterImage(size: self.scrollView.contentSize)
                         self.updateScrollViewAndImageViewForCurrentMetrics()

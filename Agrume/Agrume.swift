@@ -338,7 +338,7 @@ extension Agrume: UICollectionViewDataSource {
 
   public func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
     let cell: AgrumeCell = collectionView.dequeue(indexPath: indexPath)
-    
+
     cell.tapBehavior = tapBehavior
     switch dismissal {
     case .withPhysics, .withPhysicsAndButton:
