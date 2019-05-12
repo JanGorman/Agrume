@@ -368,7 +368,7 @@ extension AgrumeCell: UIGestureRecognizerDelegate {
 
     frame.size = CGSize(width: targetWidth, height: targetHeight)
     frame.origin = .zero
-    return frame
+    return frame.integral
   }
 
   private func startImageDragging(_ locationInView: CGPoint, translationOffset: UIOffset) {
