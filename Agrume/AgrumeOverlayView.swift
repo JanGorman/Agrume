@@ -43,7 +43,7 @@ final class AgrumeOverlayView: UIView {
       navigationBar.topAnchor.constraint(equalTo: portableSafeTopInset),
       navigationBar.widthAnchor.constraint(equalTo: widthAnchor),
       navigationBar.centerXAnchor.constraint(equalTo: centerXAnchor)
-      ])
+    ])
   }
   
   required init?(coder aDecoder: NSCoder) {

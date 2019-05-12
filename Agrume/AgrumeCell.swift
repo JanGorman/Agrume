@@ -120,18 +120,18 @@ final class AgrumeCell: UICollectionViewCell {
 
 extension AgrumeCell: UIGestureRecognizerDelegate {
 
-  func notZoomed() -> Bool {
+  var notZoomed: Bool {
     return scrollView.zoomScale == 1
   }
 
   override func gestureRecognizerShouldBegin(_ gestureRecognizer: UIGestureRecognizer) -> Bool {
-    if let pan = gestureRecognizer as? UIPanGestureRecognizer, notZoomed() {
+    if let pan = gestureRecognizer as? UIPanGestureRecognizer, notZoomed {
       let velocity = pan.velocity(in: scrollView)
       if let delegate = delegate, delegate.isSingleImageMode() {
         return true
       }
       return abs(velocity.y) > abs(velocity.x)
-    } else if let _ = gestureRecognizer as? UISwipeGestureRecognizer, notZoomed() {
+    } else if let _ = gestureRecognizer as? UISwipeGestureRecognizer, notZoomed {
       return false
     }
     return true
@@ -139,7 +139,7 @@ extension AgrumeCell: UIGestureRecognizerDelegate {
 
   func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldReceive touch: UITouch) -> Bool {
     if let _ = gestureRecognizer as? UIPanGestureRecognizer {
-      return notZoomed()
+      return notZoomed
     }
     return true
   }
@@ -148,7 +148,7 @@ extension AgrumeCell: UIGestureRecognizerDelegate {
   private func doubleTap(_ sender: UITapGestureRecognizer) {
     let point = scrollView.convert(sender.location(in: sender.view), from: sender.view)
     
-    if notZoomed() {
+    if notZoomed {
       zoom(to: point, scale: .targetZoomForDoubleTap)
     } else {
       zoom(to: .zero, scale: 1)
@@ -216,17 +216,15 @@ extension AgrumeCell: UIGestureRecognizerDelegate {
   private func singleTap() {
     switch tapBehavior {
     case .dismissIfZoomedOut:
-      if notZoomed() {
+      if notZoomed {
         dismiss()
       }
     case .dismissAlways:
       dismiss()
+    case .zoomOut where notZoomed:
+      dismiss()
     case .zoomOut:
-      if notZoomed() {
-        dismiss()
-      } else {
-        zoom(to: .zero, scale: 1)
-      }
+      zoom(to: .zero, scale: 1)
     }
   }
 
@@ -440,7 +438,7 @@ extension AgrumeCell: UIScrollViewDelegate {
   func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
     let highVelocity: CGFloat = .highScrollVelocity
     let velocity = scrollView.panGestureRecognizer.velocity(in: scrollView.panGestureRecognizer.view)
-    if notZoomed() && (abs(velocity.x) > highVelocity || abs(velocity.y) > highVelocity) {
+    if notZoomed && (abs(velocity.x) > highVelocity || abs(velocity.y) > highVelocity) {
       dismiss()
     }
   }
