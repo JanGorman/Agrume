@@ -6,8 +6,8 @@ import UIKit
 
 extension CGFloat {
   
-  static let initialScalingToExpandFrom: CGFloat = 0.6
-  static let maxScalingForExpandingOffscreen: CGFloat = 1.25
+  static let initialScaleToExpandFrom: CGFloat = 0.6
+  static let maxScaleForExpandingOffscreen: CGFloat = 1.25
   static let targetZoomForDoubleTap: CGFloat = 3
   static let minFlickDismissalVelocity: CGFloat = 800
   static let highScrollVelocity: CGFloat = 1600
@@ -34,17 +34,6 @@ extension UIView {
     }
     layer.render(in: context)
     return UIImageView(image: UIGraphicsGetImageFromCurrentImageContext())
-  }
-  
-  func translatedCenter(toContainerView containerView: UIView) -> CGPoint {
-    guard let superView = superview else { return .zero }
-    
-    var centerPoint = center
-    if let scrollView = superView as? UIScrollView, scrollView.zoomScale != 1 {
-      centerPoint.x += (scrollView.bounds.width - scrollView.contentSize.width) / 2 + scrollView.contentOffset.x
-      centerPoint.y += (scrollView.bounds.height - scrollView.contentSize.height) / 2 + scrollView.contentOffset.y
-    }
-    return superView.convert(centerPoint, to: containerView)
   }
   
   func usesAutoLayout(_ useAutoLayout: Bool) {

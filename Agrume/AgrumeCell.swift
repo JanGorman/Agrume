@@ -6,11 +6,12 @@ import UIKit
 import SwiftyGif
 
 protocol AgrumeCellDelegate: AnyObject {
-  
+
+  var isSingleImageMode: Bool { get }
+
   func dismissAfterFlick()
   func dismissAfterTap()
-  func isSingleImageMode() -> Bool
-  
+
 }
 
 final class AgrumeCell: UICollectionViewCell {
@@ -19,7 +20,7 @@ final class AgrumeCell: UICollectionViewCell {
   var hasPhysics = true
 
   private lazy var scrollView: UIScrollView = {
-    let scrollView = UIScrollView(frame: contentView.bounds)
+    let scrollView = UIScrollView()
     scrollView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
     scrollView.delegate = self
     scrollView.zoomScale = 1
@@ -30,14 +31,38 @@ final class AgrumeCell: UICollectionViewCell {
     return scrollView
   }()
   private lazy var imageView: UIImageView = {
-    let imageView = UIImageView(frame: contentView.bounds)
+    let imageView = UIImageView()
     imageView.contentMode = .scaleAspectFit
-    imageView.isUserInteractionEnabled = true
     imageView.clipsToBounds = true
     imageView.layer.allowsEdgeAntialiasing = true
     return imageView
   }()
   private var animator: UIDynamicAnimator?
+
+  private lazy var singleTapGesture: UITapGestureRecognizer = {
+    let singleTapGesture = UITapGestureRecognizer(target: self, action: #selector(singleTap))
+    singleTapGesture.require(toFail: doubleTapGesture)
+    singleTapGesture.delegate = self
+    return singleTapGesture
+  }()
+  private lazy var doubleTapGesture: UITapGestureRecognizer = {
+    let doubleTapGesture = UITapGestureRecognizer(target: self, action: #selector(doubleTap))
+    doubleTapGesture.numberOfTapsRequired = 2
+    return doubleTapGesture
+  }()
+  private lazy var panGesture: UIPanGestureRecognizer = {
+    let panGesture = UIPanGestureRecognizer(target: self, action: #selector(dismissPan))
+    panGesture.maximumNumberOfTouches = 1
+    panGesture.delegate = self
+    return panGesture
+  }()
+
+  private var flickedToDismiss = false
+  private var isDraggingImage = false
+  private var imageDragStartingPoint: CGPoint!
+  private var imageDragOffsetFromActualTranslation: UIOffset!
+  private var imageDragOffsetFromImageCenter: UIOffset!
+  private var attachmentBehavior: UIAttachmentBehavior?
 
   var image: UIImage? {
     didSet {
@@ -50,6 +75,13 @@ final class AgrumeCell: UICollectionViewCell {
     }
   }
   weak var delegate: AgrumeCellDelegate?
+
+  private(set) lazy var swipeGesture: UISwipeGestureRecognizer = {
+    let swipeGesture = UISwipeGestureRecognizer(target: self, action: nil)
+    swipeGesture.direction = [.left, .right]
+    swipeGesture.delegate = self
+    return swipeGesture
+  }()
 
   override init(frame: CGRect) {
     super.init(frame: frame)
@@ -74,37 +106,6 @@ final class AgrumeCell: UICollectionViewCell {
     updateScrollViewAndImageViewForCurrentMetrics()
   }
 
-  private lazy var singleTapGesture: UITapGestureRecognizer = {
-    let singleTapGesture = UITapGestureRecognizer(target: self, action: #selector(singleTap))
-    singleTapGesture.require(toFail: doubleTapGesture)
-    singleTapGesture.delegate = self
-    return singleTapGesture
-  }()
-  private lazy var doubleTapGesture: UITapGestureRecognizer = {
-    let doubleTapGesture = UITapGestureRecognizer(target: self, action: #selector(doubleTap))
-    doubleTapGesture.numberOfTapsRequired = 2
-    return doubleTapGesture
-  }()
-  private lazy var panGesture: UIPanGestureRecognizer = {
-    let panGesture = UIPanGestureRecognizer(target: self, action: #selector(dismissPan))
-    panGesture.maximumNumberOfTouches = 1
-    panGesture.delegate = self
-    return panGesture
-  }()
-  lazy var swipeGesture: UISwipeGestureRecognizer = {
-    let swipeGesture = UISwipeGestureRecognizer(target: self, action: nil)
-    swipeGesture.direction = [.left, .right]
-    swipeGesture.delegate = self
-    return swipeGesture
-  }()
-
-  private var flickedToDismiss = false
-  private var isDraggingImage = false
-  private var imageDragStartingPoint: CGPoint!
-  private var imageDragOffsetFromActualTranslation: UIOffset!
-  private var imageDragOffsetFromImageCenter: UIOffset!
-  private var attachmentBehavior: UIAttachmentBehavior?
-
   private func setupGestureRecognizers() {
     contentView.addGestureRecognizer(singleTapGesture)
     contentView.addGestureRecognizer(doubleTapGesture)
@@ -120,14 +121,19 @@ final class AgrumeCell: UICollectionViewCell {
 
 extension AgrumeCell: UIGestureRecognizerDelegate {
 
-  var notZoomed: Bool {
+  private var notZoomed: Bool {
     return scrollView.zoomScale == 1
+  }
+
+  private var isImageViewOffscreen: Bool {
+    let visibleRect = scrollView.convert(contentView.bounds, from: contentView)
+    return animator?.items(in: visibleRect).count == 0
   }
 
   override func gestureRecognizerShouldBegin(_ gestureRecognizer: UIGestureRecognizer) -> Bool {
     if let pan = gestureRecognizer as? UIPanGestureRecognizer, notZoomed {
       let velocity = pan.velocity(in: scrollView)
-      if let delegate = delegate, delegate.isSingleImageMode() {
+      if let delegate = delegate, delegate.isSingleImageMode {
         return true
       }
       return abs(velocity.y) > abs(velocity.x)
@@ -291,17 +297,12 @@ extension AgrumeCell: UIGestureRecognizerDelegate {
   }
   
   private func pushAction() {
-    if isImageViewOffscreen() {
+    if isImageViewOffscreen {
       animator?.removeAllBehaviors()
       attachmentBehavior = nil
       imageView.removeFromSuperview()
       dismiss()
     }
-  }
-
-  private func isImageViewOffscreen() -> Bool {
-    let visibleRect = scrollView.convert(contentView.bounds, from: contentView)
-    return animator?.items(in: visibleRect).count == 0
   }
 
   private func cancelCurrentImageDrag(_ animated: Bool) {
@@ -319,7 +320,9 @@ extension AgrumeCell: UIGestureRecognizerDelegate {
                      initialSpringVelocity: 0,
                      options: [.allowUserInteraction, .beginFromCurrentState],
                      animations: {
-                      guard !self.isDraggingImage else { return }
+                      guard !self.isDraggingImage else {
+                        return
+                      }
                       
                       self.imageView.transform = .identity
                       if !self.scrollView.isDragging && !self.scrollView.isDecelerating {

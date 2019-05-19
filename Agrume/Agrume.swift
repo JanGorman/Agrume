@@ -132,7 +132,7 @@ public final class Agrume: UIViewController {
   private var _blurContainerView: UIView?
   private var blurContainerView: UIView {
     if _blurContainerView == nil {
-      let view = UIView(frame: self.view.frame)
+      let view = UIView()
       view.autoresizingMask = [.flexibleWidth, .flexibleHeight]
       if case .colored(let color) = background {
         view.backgroundColor = color
@@ -162,8 +162,8 @@ public final class Agrume: UIViewController {
       layout.minimumLineSpacing = 0
       layout.scrollDirection = .horizontal
       layout.itemSize = view.frame.size
-      
-      let collectionView = UICollectionView(frame: view.frame, collectionViewLayout: layout)
+
+      let collectionView = UICollectionView(frame: view.bounds, collectionViewLayout: layout)
       collectionView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
       collectionView.register(AgrumeCell.self, forCellWithReuseIdentifier: String(describing: AgrumeCell.self))
       collectionView.dataSource = self
@@ -239,9 +239,8 @@ public final class Agrume: UIViewController {
     DispatchQueue.main.async {
       self.blurContainerView.alpha = 1
       self.collectionView.alpha = 0
-      self.collectionView.frame = self.view.frame
-      let scaling: CGFloat = .initialScalingToExpandFrom
-      self.collectionView.transform = CGAffineTransform(scaleX: scaling, y: scaling)
+      let scale: CGFloat = .initialScaleToExpandFrom
+      self.collectionView.transform = CGAffineTransform(scaleX: scale, y: scale)
 
       viewController.present(self, animated: false) {
         UIView.animate(withDuration: .transitionAnimationDuration,
@@ -374,6 +373,10 @@ extension Agrume: UICollectionViewDelegate {
 }
 
 extension Agrume: AgrumeCellDelegate {
+
+  var isSingleImageMode: Bool {
+    return dataSource?.numberOfImages == 1
+  }
   
   private func dismissCompletion(_ finished: Bool) {
     presentingViewController?.dismiss(animated: false) { [unowned self] in
@@ -416,14 +419,11 @@ extension Agrume: AgrumeCellDelegate {
                     self.collectionView.alpha = 0
                     self.blurContainerView.alpha = 0
                     self.overlayView?.alpha = 0
-                    let scaling: CGFloat = .maxScalingForExpandingOffscreen
-                    self.collectionView.transform = CGAffineTransform(scaleX: scaling, y: scaling)
+                    let scale: CGFloat = .maxScaleForExpandingOffscreen
+                    self.collectionView.transform = CGAffineTransform(scaleX: scale, y: scale)
       }, completion: dismissCompletion)
   }
-  
-  func isSingleImageMode() -> Bool {
-    return dataSource?.numberOfImages == 1
-  }
+
 }
 
 extension Agrume: AgrumeOverlayViewDelegate {
