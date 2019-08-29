@@ -132,14 +132,15 @@ public final class Agrume: UIViewController {
   private var _blurContainerView: UIView?
   private var blurContainerView: UIView {
     if _blurContainerView == nil {
-      let view = UIView()
-      view.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+      let blurContainerView = UIView()
+      blurContainerView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
       if case .colored(let color) = background {
-        view.backgroundColor = color
+        blurContainerView.backgroundColor = color
       } else {
-        view.backgroundColor = .clear
+        blurContainerView.backgroundColor = .clear
       }
-      _blurContainerView = view
+      blurContainerView.frame = view.frame
+      _blurContainerView = blurContainerView
     }
     return _blurContainerView!
   }
