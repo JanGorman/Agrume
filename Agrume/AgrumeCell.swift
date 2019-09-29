@@ -122,7 +122,7 @@ final class AgrumeCell: UICollectionViewCell {
 extension AgrumeCell: UIGestureRecognizerDelegate {
 
   private var notZoomed: Bool {
-    return scrollView.zoomScale == 1
+    scrollView.zoomScale == 1
   }
 
   private var isImageViewOffscreen: Bool {
@@ -422,7 +422,7 @@ extension AgrumeCell: UIGestureRecognizerDelegate {
 extension AgrumeCell: UIScrollViewDelegate {
 
   func viewForZooming(in scrollView: UIScrollView) -> UIView? {
-    return imageView
+    imageView
   }
 
   func scrollViewDidZoom(_ scrollView: UIScrollView) {

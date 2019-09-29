@@ -295,7 +295,7 @@ public final class Agrume: UIViewController {
 	}
   
   public override var prefersStatusBarHidden: Bool {
-    return hideStatusBar
+    hideStatusBar
   }
   
   public override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
@@ -315,7 +315,7 @@ public final class Agrume: UIViewController {
 extension Agrume: AgrumeDataSource {
   
   public var numberOfImages: Int {
-    return images.count
+    images.count
   }
   
   public func image(forIndex index: Int, completion: @escaping (UIImage?) -> Void) {
@@ -333,7 +333,7 @@ extension Agrume: AgrumeDataSource {
 extension Agrume: UICollectionViewDataSource {
 
   public func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-    return dataSource?.numberOfImages ?? 0
+    dataSource?.numberOfImages ?? 0
   }
 
   public func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -376,7 +376,7 @@ extension Agrume: UICollectionViewDelegate {
 extension Agrume: AgrumeCellDelegate {
 
   var isSingleImageMode: Bool {
-    return dataSource?.numberOfImages == 1
+    dataSource?.numberOfImages == 1
   }
   
   private func dismissCompletion(_ finished: Bool) {
