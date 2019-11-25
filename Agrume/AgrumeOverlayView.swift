@@ -16,6 +16,7 @@ final class AgrumeOverlayView: UIView {
     let navigationBar = UINavigationBar()
     navigationBar.usesAutoLayout(true)
     navigationBar.backgroundColor = .clear
+    navigationBar.isTranslucent = true
     navigationBar.shadowImage = UIImage()
     navigationBar.setBackgroundImage(UIImage(), for: .default)
     navigationBar.items = [navigationItem]
