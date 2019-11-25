@@ -333,6 +333,10 @@ extension AgrumeCell: UIGestureRecognizerDelegate {
       }
   }
   
+  func recenterAfterRotation() {
+    cancelCurrentImageDrag(true)
+  }
+  
   func recenterImage(size: CGSize) {
     imageView.center = CGPoint(x: size.width / 2, y: size.height / 2)
   }
