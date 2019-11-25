@@ -305,7 +305,9 @@ public final class Agrume: UIViewController {
       layout.invalidateLayout()
       
       self.collectionView.visibleCells.forEach { cell in
-        (cell as! AgrumeCell).recenterImage(size: size)
+        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 0.1, execute: {
+            (cell as! AgrumeCell).recenterAfterRotation()
+        })
       }
     }
     super.viewWillTransition(to: size, with: coordinator)
