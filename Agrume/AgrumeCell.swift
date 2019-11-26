@@ -305,7 +305,7 @@ extension AgrumeCell: UIGestureRecognizerDelegate {
     }
   }
 
-  private func cancelCurrentImageDrag(_ animated: Bool) {
+  private func cancelCurrentImageDrag(_ animated: Bool, duration: TimeInterval = 0.7) {
     animator?.removeAllBehaviors()
     attachmentBehavior = nil
     isDraggingImage = false
@@ -314,7 +314,7 @@ extension AgrumeCell: UIGestureRecognizerDelegate {
       imageView.transform = .identity
       recenterImage(size: scrollView.contentSize)
     } else {
-      UIView.animate(withDuration: 0.7,
+      UIView.animate(withDuration: duration,
                      delay: 0,
                      usingSpringWithDamping: 0.7,
                      initialSpringVelocity: 0,
@@ -331,6 +331,10 @@ extension AgrumeCell: UIGestureRecognizerDelegate {
                       }
         })
       }
+  }
+  
+  func recenterAfterRotation() {
+    cancelCurrentImageDrag(true, duration: .transitionAnimationDuration)
   }
   
   func recenterImage(size: CGSize) {
