@@ -173,6 +173,9 @@ public final class Agrume: UIViewController {
       collectionView.backgroundColor = .clear
       collectionView.delaysContentTouches = false
       collectionView.showsHorizontalScrollIndicator = false
+      if #available(iOS 11.0, *) {
+        collectionView.contentInsetAdjustmentBehavior = .never
+      }
       _collectionView = collectionView
     }
     return _collectionView!
