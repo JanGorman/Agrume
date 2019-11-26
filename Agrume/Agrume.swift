@@ -139,7 +139,8 @@ public final class Agrume: UIViewController {
       } else {
         blurContainerView.backgroundColor = .clear
       }
-      blurContainerView.frame = view.frame
+      let frame = view.frame
+      blurContainerView.frame = CGRect(x: frame.origin.x, y: frame.origin.y, width: frame.width * 2, height: frame.height * 2)
       _blurContainerView = blurContainerView
     }
     return _blurContainerView!
