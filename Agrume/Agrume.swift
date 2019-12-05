@@ -371,10 +371,11 @@ extension Agrume: UICollectionViewDataSource {
 extension Agrume: UICollectionViewDelegate {
 
   public func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
-    guard let indexPath = collectionView.indexPathsForVisibleItems.first else {
-      return
-    }
-    didScroll?(indexPath.item)
+    let visibleRect    = CGRect(origin: collectionView.contentOffset, size: collectionView.bounds.size)
+    let visiblePoint   = CGPoint(x: visibleRect.midX, y: visibleRect.midY)
+    
+    guard let visibleIndexPath: IndexPath = collectionView.indexPathForItem(at: visiblePoint) else { return }
+    didScroll?(visibleIndexPath.item)
   }
 
 }
