@@ -302,18 +302,33 @@ public final class Agrume: UIViewController {
     hideStatusBar
   }
   
+  private func scrollToImage(withIndex: Int, animated: Bool = false) {
+      collectionView.scrollToItem(at: IndexPath(item: withIndex, section: 0), at: .centeredHorizontally, animated: animated)
+  }
+  
+  private func getCurrentVisibleImage() -> Int {
+      let visibleRect = CGRect(origin: self.collectionView.contentOffset, size: self.collectionView.bounds.size)
+      let visiblePoint = CGPoint(x: visibleRect.midX, y: visibleRect.midY)
+      guard let visibleIndexPath = self.collectionView.indexPathForItem(at: visiblePoint) else { return startIndex }
+      return visibleIndexPath.item
+  }
+  
+  public override func viewWillLayoutSubviews() {
+    super.viewWillLayoutSubviews()
+    guard let layout = self.collectionView.collectionViewLayout as? UICollectionViewFlowLayout else { return }
+    layout.itemSize = view.bounds.size
+    layout.invalidateLayout()
+  }
+  
   public override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
-    coordinator.animate(alongsideTransition: nil) { _ in
-      guard let layout = self.collectionView.collectionViewLayout as? UICollectionViewFlowLayout else { return }
-      layout.itemSize = size
-      layout.invalidateLayout()
-      
-      self.collectionView.visibleCells.forEach { cell in
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
-            (cell as! AgrumeCell).recenterAfterRotation()
+    let indexToRotate = self.getCurrentVisibleImage()
+    let rotationHandler: ((UIViewControllerTransitionCoordinatorContext) -> Void) = { _ in
+        self.scrollToImage(withIndex: indexToRotate )
+        self.collectionView.visibleCells.forEach { cell in
+          (cell as! AgrumeCell).recenterDuringRotation(size: size)
         }
-      }
     }
+    coordinator.animate(alongsideTransition: rotationHandler, completion: rotationHandler)
     super.viewWillTransition(to: size, with: coordinator)
   }
 }
@@ -371,12 +386,7 @@ extension Agrume: UICollectionViewDataSource {
 extension Agrume: UICollectionViewDelegate {
 
   public func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
-    let visibleRect = CGRect(origin: collectionView.contentOffset, size: collectionView.bounds.size)
-    let visiblePoint = CGPoint(x: visibleRect.midX, y: visibleRect.midY)
-    guard let visibleIndexPath = collectionView.indexPathForItem(at: visiblePoint) else {
-      return
-    }
-    didScroll?(visibleIndexPath.item)
+    didScroll?(getCurrentVisibleImage())
   }
 
 }
