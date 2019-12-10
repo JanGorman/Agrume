@@ -68,10 +68,10 @@ public final class Agrume: UIViewController {
   ///   - startIndex: The optional start index when showing multiple images
   ///   - background: The background configuration
   ///   - dismissal: The dismiss configuration
-	public convenience init(dataSource: AgrumeDataSource, startIndex: Int = 0, background: Background = .colored(.black),
+  public convenience init(dataSource: AgrumeDataSource, startIndex: Int = 0, background: Background = .colored(.black),
                           dismissal: Dismissal = .withPhysics) {
     self.init(images: nil, dataSource: dataSource, startIndex: startIndex, background: background, dismissal: dismissal)
-	}
+  }
 
   /// Initialize with an array of images
   ///
@@ -97,7 +97,7 @@ public final class Agrume: UIViewController {
     self.init(images: nil, urls: urls, startIndex: startIndex, background: background, dismissal: dismissal)
   }
 
-	private init(images: [UIImage]? = nil, urls: [URL]? = nil, dataSource: AgrumeDataSource? = nil, startIndex: Int,
+  private init(images: [UIImage]? = nil, urls: [URL]? = nil, dataSource: AgrumeDataSource? = nil, startIndex: Int,
                background: Background, dismissal: Dismissal) {
     switch (images, urls) {
     case (let images?, nil):
@@ -107,7 +107,7 @@ public final class Agrume: UIViewController {
     default:
       assert(dataSource != nil, "No images or URLs passed. You must provide an AgrumeDataSource in that case.")
     }
-		
+
     self.startIndex = startIndex
     self.background = background
     self.dismissal = dismissal
@@ -255,9 +255,9 @@ public final class Agrume: UIViewController {
                         self.collectionView.alpha = 1
                         self.collectionView.transform = .identity
                         self.addOverlayView()
-          }, completion: { _ in
-            self.view.isUserInteractionEnabled = true
-          })
+        }, completion: { _ in
+          self.view.isUserInteractionEnabled = true
+        })
       }
     }
   }
@@ -292,41 +292,40 @@ public final class Agrume: UIViewController {
     collectionView.scrollToItem(at: IndexPath(item: index, section: 0), at: [], animated: true)
   }
 
-	public func reload() {
-		DispatchQueue.main.async {
-			self.collectionView.reloadData()
-		}
-	}
+  public func reload() {
+    DispatchQueue.main.async {
+      self.collectionView.reloadData()
+    }
+  }
   
   public override var prefersStatusBarHidden: Bool {
     hideStatusBar
   }
   
   private func scrollToImage(withIndex: Int, animated: Bool = false) {
-      collectionView.scrollToItem(at: IndexPath(item: withIndex, section: 0), at: .centeredHorizontally, animated: animated)
+    collectionView.scrollToItem(at: IndexPath(item: withIndex, section: 0), at: .centeredHorizontally, animated: animated)
   }
   
-  private func getCurrentVisibleImage() -> Int {
-      let visibleRect = CGRect(origin: self.collectionView.contentOffset, size: self.collectionView.bounds.size)
-      let visiblePoint = CGPoint(x: visibleRect.midX, y: visibleRect.midY)
-      guard let visibleIndexPath = self.collectionView.indexPathForItem(at: visiblePoint) else { return startIndex }
-      return visibleIndexPath.item
+  private func currentlyVisibleCellIndex() -> Int {
+    let visibleRect = CGRect(origin: collectionView.contentOffset, size: collectionView.bounds.size)
+    let visiblePoint = CGPoint(x: visibleRect.midX, y: visibleRect.midY)
+    return collectionView.indexPathForItem(at: visiblePoint)?.item ?? startIndex
   }
   
   public override func viewWillLayoutSubviews() {
     super.viewWillLayoutSubviews()
-    guard let layout = self.collectionView.collectionViewLayout as? UICollectionViewFlowLayout else { return }
+    let layout = collectionView.collectionViewLayout as! UICollectionViewFlowLayout
     layout.itemSize = view.bounds.size
     layout.invalidateLayout()
   }
   
   public override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
-    let indexToRotate = self.getCurrentVisibleImage()
+    let indexToRotate = currentlyVisibleCellIndex()
     let rotationHandler: ((UIViewControllerTransitionCoordinatorContext) -> Void) = { _ in
-        self.scrollToImage(withIndex: indexToRotate )
-        self.collectionView.visibleCells.forEach { cell in
-          (cell as! AgrumeCell).recenterDuringRotation(size: size)
-        }
+      self.scrollToImage(withIndex: indexToRotate )
+      self.collectionView.visibleCells.forEach { cell in
+        (cell as! AgrumeCell).recenterDuringRotation(size: size)
+      }
     }
     coordinator.animate(alongsideTransition: rotationHandler, completion: rotationHandler)
     super.viewWillTransition(to: size, with: coordinator)
@@ -386,7 +385,7 @@ extension Agrume: UICollectionViewDataSource {
 extension Agrume: UICollectionViewDelegate {
 
   public func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
-    didScroll?(getCurrentVisibleImage())
+    didScroll?(currentlyVisibleCellIndex())
   }
 
 }
@@ -425,7 +424,7 @@ extension Agrume: AgrumeCellDelegate {
                     self.collectionView.alpha = 0
                     self.blurContainerView.alpha = 0
                     self.overlayView?.alpha = 0
-      }, completion: dismissCompletion)
+    }, completion: dismissCompletion)
   }
   
   func dismissAfterTap() {
@@ -440,7 +439,7 @@ extension Agrume: AgrumeCellDelegate {
                     self.overlayView?.alpha = 0
                     let scale: CGFloat = .maxScaleForExpandingOffscreen
                     self.collectionView.transform = CGAffineTransform(scaleX: scale, y: scale)
-      }, completion: dismissCompletion)
+    }, completion: dismissCompletion)
   }
 
 }
