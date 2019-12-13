@@ -344,7 +344,7 @@ extension AgrumeCell: UIGestureRecognizerDelegate {
 
   private func updateScrollViewAndImageViewForCurrentMetrics() {
     scrollView.frame = contentView.frame
-    if let image = imageView.image {
+    if let image = imageView.image ?? imageView.currentImage {
       imageView.frame = resizedFrame(forSize: image.size)
     }
     scrollView.contentSize = imageView.frame.size
