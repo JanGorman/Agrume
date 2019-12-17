@@ -44,7 +44,7 @@ extension UIView {
     if #available(iOS 11.0, *) {
       return safeAreaLayoutGuide.topAnchor
     }
-    return topAnchor
+    return layoutMarginsGuide.topAnchor
   }
 
 }
