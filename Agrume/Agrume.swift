@@ -15,7 +15,9 @@ public final class Agrume: UIViewController {
   private weak var dataSource: AgrumeDataSource?
 
   public typealias DownloadCompletion = (_ image: UIImage?) -> Void
-  
+
+  /// Optional closure to call whenever Agrume is about to dismiss.
+  public var willDismiss: (() -> Void)?
   /// Optional closure to call whenever Agrume is dismissed.
   public var didDismiss: (() -> Void)?
   /// Optional closure to call whenever Agrume scrolls to the next image in a collection. Passes the "page" index
@@ -417,6 +419,7 @@ extension Agrume: AgrumeCellDelegate {
   }
 
   func dismissAfterFlick() {
+    self.willDismiss?()
     UIView.animate(withDuration: .transitionAnimationDuration,
                    delay: 0,
                    options: .beginFromCurrentState,
@@ -429,7 +432,8 @@ extension Agrume: AgrumeCellDelegate {
   
   func dismissAfterTap() {
     view.isUserInteractionEnabled = false
-    
+
+    self.willDismiss?()
     UIView.animate(withDuration: .transitionAnimationDuration,
                    delay: 0,
                    options: .beginFromCurrentState,
