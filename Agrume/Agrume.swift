@@ -165,7 +165,7 @@ public final class Agrume: UIViewController {
       layout.minimumInteritemSpacing = 0
       layout.minimumLineSpacing = 0
       layout.scrollDirection = .horizontal
-      layout.itemSize = view.frame.size
+      layout.itemSize = view.bounds.size
 
       let collectionView = UICollectionView(frame: view.bounds, collectionViewLayout: layout)
       collectionView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
@@ -319,6 +319,7 @@ public final class Agrume: UIViewController {
     let layout = collectionView.collectionViewLayout as! UICollectionViewFlowLayout
     layout.itemSize = view.bounds.size
     layout.invalidateLayout()
+    collectionView.frame = view.bounds
   }
   
   public override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
