@@ -226,7 +226,7 @@ public final class Agrume: UIViewController {
     super.viewDidLoad()
     addSubviews()
 
-    if let onLongPress = onLongPress {
+    if onLongPress != nil {
       let longPress = UILongPressGestureRecognizer(target: self, action: #selector(didLongPress(_:)))
       view.addGestureRecognizer(longPress)
     }
