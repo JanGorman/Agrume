@@ -16,6 +16,8 @@ public final class Agrume: UIViewController {
 
   public typealias DownloadCompletion = (_ image: UIImage?) -> Void
 
+  /// Optional closure to call when user long pressed on an image
+  public var onLongPress: (() -> Void)?
   /// Optional closure to call whenever Agrume is about to dismiss.
   public var willDismiss: (() -> Void)?
   /// Optional closure to call whenever Agrume is dismissed.
@@ -165,7 +167,7 @@ public final class Agrume: UIViewController {
       layout.minimumInteritemSpacing = 0
       layout.minimumLineSpacing = 0
       layout.scrollDirection = .horizontal
-      layout.itemSize = view.bounds.size
+      layout.itemSize = view.frame.size
 
       let collectionView = UICollectionView(frame: view.bounds, collectionViewLayout: layout)
       collectionView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
@@ -223,8 +225,18 @@ public final class Agrume: UIViewController {
   override public func viewDidLoad() {
     super.viewDidLoad()
     addSubviews()
+
+    if let onLongPress = onLongPress {
+      let longPress = UILongPressGestureRecognizer(target: self, action: #selector(didLongPress(_:)))
+      view.addGestureRecognizer(longPress)
+    }
   }
-  
+
+  @objc func didLongPress(_ gr: UIGestureRecognizer) {
+    guard gr.state == .began else { return }
+    onLongPress?()
+  }
+
   private func addSubviews() {
     view.autoresizingMask = [.flexibleHeight, .flexibleWidth]
     backgroundImageView = UIImageView(frame: view.frame)
@@ -319,7 +331,6 @@ public final class Agrume: UIViewController {
     let layout = collectionView.collectionViewLayout as! UICollectionViewFlowLayout
     layout.itemSize = view.bounds.size
     layout.invalidateLayout()
-    collectionView.frame = view.bounds
   }
   
   public override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
