@@ -410,8 +410,8 @@ extension AgrumeCell: UIGestureRecognizerDelegate {
   }
 
   private func appropriateValue(defaultValue: CGFloat) -> CGFloat {
-    let screenWidth = UIApplication.shared.windows.first?.bounds.width ?? UIScreen.main.bounds.width
-    let screenHeight = UIApplication.shared.windows.first?.bounds.height ?? UIScreen.main.bounds.height
+    let screenWidth = UIScreen.main.bounds.width
+    let screenHeight = UIScreen.main.bounds.height
     // Default value that works well for the screenSize adjusted for the actual size of the device
     return defaultValue * ((320 * 480) / (screenWidth * screenHeight))
   }
