@@ -16,6 +16,8 @@ public final class Agrume: UIViewController {
 
   public typealias DownloadCompletion = (_ image: UIImage?) -> Void
 
+  /// Optional closure to call when user long pressed on an image
+  public var onLongPress: (() -> Void)?
   /// Optional closure to call whenever Agrume is about to dismiss.
   public var willDismiss: (() -> Void)?
   /// Optional closure to call whenever Agrume is dismissed.
@@ -220,11 +222,35 @@ public final class Agrume: UIViewController {
     show(from: viewController)
   }
   
+  /// Update image at a specific index
+  ///
+  /// - Parameters:
+  ///   - idx: The target index to update
+  ///   - image: Optional UIImage to replace the old image if loading directly
+  ///   - url: Optional URL to replace the old url if loading from one
+  public func updateImage(at idx: Int, image: UIImage?, url: URL?) {
+    guard images.count > idx else { return }
+    images[idx].image = image
+    images[idx].url = url
+    reload()
+  }
+  
   override public func viewDidLoad() {
     super.viewDidLoad()
     addSubviews()
+
+    if onLongPress != nil {
+      let longPress = UILongPressGestureRecognizer(target: self, action: #selector(didLongPress(_:)))
+      view.addGestureRecognizer(longPress)
+    }
   }
-  
+
+  @objc 
+  func didLongPress(_ gesture: UIGestureRecognizer) {
+    guard gesture.state == .began else { return }
+    onLongPress?()
+  }
+
   private func addSubviews() {
     view.autoresizingMask = [.flexibleHeight, .flexibleWidth]
     backgroundImageView = UIImageView(frame: view.frame)
