@@ -245,8 +245,9 @@ public final class Agrume: UIViewController {
     }
   }
 
-  @objc func didLongPress(_ gr: UIGestureRecognizer) {
-    guard gr.state == .began else { return }
+  @objc 
+  func didLongPress(_ gesture: UIGestureRecognizer) {
+    guard gesture.state == .began else { return }
     onLongPress?()
   }
 
