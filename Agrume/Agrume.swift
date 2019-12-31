@@ -331,7 +331,6 @@ public final class Agrume: UIViewController {
     let layout = collectionView.collectionViewLayout as! UICollectionViewFlowLayout
     layout.itemSize = view.bounds.size
     layout.invalidateLayout()
-    collectionView.frame = view.bounds
   }
   
   public override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
