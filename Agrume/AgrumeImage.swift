@@ -7,8 +7,8 @@ import UIKit
 public struct AgrumeImage: Equatable {
   
   public let image: UIImage?
-  public let url: URL?
-  public let title: NSAttributedString?
+  public var url: URL?
+  public var title: NSAttributedString?
   
   private init(image: UIImage?, url: URL?, title: NSAttributedString?) {
     self.image = image
