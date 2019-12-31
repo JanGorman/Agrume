@@ -222,6 +222,19 @@ public final class Agrume: UIViewController {
     show(from: viewController)
   }
   
+  /// Update image at a specific index
+  ///
+  /// - Parameters:
+  ///   - idx: The target index to update
+  ///   - image: Optional UIImage to replace the old image if loading directly
+  ///   - url: Optional URL to replace the old url if loading from one
+  public func updateImage(at idx: Int, image: UIImage?, url: URL?) {
+    guard images.count > idx else { return }
+    images[idx].image = image
+    images[idx].url = url
+    reload()
+  }
+  
   override public func viewDidLoad() {
     super.viewDidLoad()
     addSubviews()
