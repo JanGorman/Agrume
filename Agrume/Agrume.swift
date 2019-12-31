@@ -143,8 +143,7 @@ public final class Agrume: UIViewController {
       } else {
         blurContainerView.backgroundColor = .clear
       }
-      let frame = view.frame
-      blurContainerView.frame = CGRect(x: frame.origin.x, y: frame.origin.y, width: frame.width * 2, height: frame.height * 2)
+      blurContainerView.frame = CGRect(origin: view.frame.origin, size: view.frame.size * 2)
       _blurContainerView = blurContainerView
     }
     return _blurContainerView!
@@ -221,17 +220,26 @@ public final class Agrume: UIViewController {
     addSubviews()
     show(from: viewController)
   }
-  
-  /// Update image at a specific index
-  ///
+
+  /// Update image at index
   /// - Parameters:
-  ///   - idx: The target index to update
-  ///   - image: Optional UIImage to replace the old image if loading directly
-  ///   - url: Optional URL to replace the old url if loading from one
-  public func updateImage(at idx: Int, image: UIImage?, url: URL?) {
-    guard images.count > idx else { return }
-    images[idx].image = image
-    images[idx].url = url
+  ///   - index: The target index
+  ///   - image: The replacement UIImage
+  public func updateImage(at index: Int, with image: UIImage) {
+    assert(images.count > index)
+    let replacement = with(images[index]) { $0.image = image }
+    images[index] = replacement
+    reload()
+  }
+
+  /// Update image at a specific index
+  /// - Parameters:
+  ///   - index: The target index
+  ///   - url: The replacement URL
+  public func updateImage(at index: Int, with url: URL) {
+    assert(images.count > index)
+    let replacement = with(images[index]) { $0.url = url }
+    images[index] = replacement
     reload()
   }
   
@@ -245,9 +253,11 @@ public final class Agrume: UIViewController {
     }
   }
 
-  @objc 
+  @objc
   func didLongPress(_ gesture: UIGestureRecognizer) {
-    guard gesture.state == .began else { return }
+    guard gesture.state == .began else {
+      return
+    }
     onLongPress?()
   }
 

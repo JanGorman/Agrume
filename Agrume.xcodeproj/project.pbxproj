@@ -19,6 +19,7 @@
 		F2D9598C1B1A108800073772 /* AgrumeCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2D9598B1B1A108800073772 /* AgrumeCell.swift */; };
 		F2DC79D61B170C4B00818A8C /* ImageDownloader.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2DC79D51B170C4B00818A8C /* ImageDownloader.swift */; };
 		F2EE29AE209F31B800F281A2 /* Foundation+Agrume.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2EE29AD209F31B800F281A2 /* Foundation+Agrume.swift */; };
+		F2F24F9423BB3BBE005AA731 /* With.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2F24F9323BB3BBE005AA731 /* With.swift */; };
 		F2FA5E7F2288602F009C0DA0 /* SwiftyGif.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F2FA5E7E22885FFB009C0DA0 /* SwiftyGif.framework */; };
 /* End PBXBuildFile section */
 
@@ -62,6 +63,7 @@
 		F2D9598B1B1A108800073772 /* AgrumeCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AgrumeCell.swift; sourceTree = "<group>"; };
 		F2DC79D51B170C4B00818A8C /* ImageDownloader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageDownloader.swift; sourceTree = "<group>"; };
 		F2EE29AD209F31B800F281A2 /* Foundation+Agrume.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Foundation+Agrume.swift"; sourceTree = "<group>"; };
+		F2F24F9323BB3BBE005AA731 /* With.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = With.swift; sourceTree = "<group>"; };
 		F2FA5E7622885FFB009C0DA0 /* SwiftyGif.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = SwiftyGif.xcodeproj; path = Frameworks/SwiftyGif/SwiftyGif.xcodeproj; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -129,6 +131,7 @@
 				F2DC79D51B170C4B00818A8C /* ImageDownloader.swift */,
 				F2A51FF11B10E00700924912 /* Supporting Files */,
 				F2609E29209F2E0200E0E93D /* UIKit+Agrume.swift */,
+				F2F24F9323BB3BBE005AA731 /* With.swift */,
 			);
 			path = Agrume;
 			sourceTree = "<group>";
@@ -240,11 +243,11 @@
 			};
 			buildConfigurationList = F2A51FE81B10E00700924912 /* Build configuration list for PBXProject "Agrume" */;
 			compatibilityVersion = "Xcode 3.2";
-			developmentRegion = English;
+			developmentRegion = en;
 			hasScannedForEncodings = 0;
 			knownRegions = (
-				English,
 				en,
+				Base,
 			);
 			mainGroup = F2A51FE41B10E00700924912;
 			productRefGroup = F2A51FEF1B10E00700924912 /* Products */;
@@ -324,6 +327,7 @@
 				F2609E2A209F2E0200E0E93D /* UIKit+Agrume.swift in Sources */,
 				F2609E28209F2BC600E0E93D /* Configuration.swift in Sources */,
 				F2EE29AE209F31B800F281A2 /* Foundation+Agrume.swift in Sources */,
+				F2F24F9423BB3BBE005AA731 /* With.swift in Sources */,
 				F2DC79D61B170C4B00818A8C /* ImageDownloader.swift in Sources */,
 				F2539BA120F22E7700062C80 /* AgrumeOverlayView.swift in Sources */,
 				F2609E23209F047200E0E93D /* AgrumeDataSource.swift in Sources */,

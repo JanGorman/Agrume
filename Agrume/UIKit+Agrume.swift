@@ -14,6 +14,12 @@ extension CGFloat {
   
 }
 
+extension CGSize {
+  static func * (size: CGSize, scale: CGFloat) -> CGSize {
+    size.applying(CGAffineTransform(scaleX: scale, y: scale))
+  }
+}
+
 extension UIView {
   
   final func snapshot() -> UIImage {
