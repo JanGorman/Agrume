@@ -8,6 +8,7 @@ public final class Agrume: UIViewController {
 
   private var images: [AgrumeImage]!
   private let startIndex: Int
+  private var currentIndex: Int
   private let background: Background
   private let dismissal: Dismissal
   
@@ -113,6 +114,7 @@ public final class Agrume: UIViewController {
     }
 
     self.startIndex = startIndex
+    self.currentIndex = startIndex
     self.background = background
     self.dismissal = dismissal
     super.init(nibName: nil, bundle: nil)
@@ -155,7 +157,7 @@ public final class Agrume: UIViewController {
     }
     let blurView = UIVisualEffectView(effect: UIBlurEffect(style: style))
     blurView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
-    blurView.frame = view.frame
+    blurView.frame = blurContainerView.bounds
     _blurView = blurView
     return _blurView!
   }
@@ -272,9 +274,6 @@ public final class Agrume: UIViewController {
     }
     view.addSubview(blurContainerView)
     view.addSubview(collectionView)
-    if startIndex > 0 {
-      collectionView.scrollToItem(at: IndexPath(item: startIndex, section: 0), at: [], animated: false)
-    }
     view.addSubview(spinner)
   }
   
@@ -326,8 +325,8 @@ public final class Agrume: UIViewController {
     dismissAfterFlick()
   }
 
-  public func showImage(atIndex index : Int) {
-    collectionView.scrollToItem(at: IndexPath(item: index, section: 0), at: [], animated: true)
+  public func showImage(atIndex index : Int, animated: Bool = true) {
+    scrollToImage(withIndex: index, animated: animated)
   }
 
   public func reload() {
@@ -346,7 +345,7 @@ public final class Agrume: UIViewController {
   
   private func currentlyVisibleCellIndex() -> Int {
     let visibleRect = CGRect(origin: collectionView.contentOffset, size: collectionView.bounds.size)
-    let visiblePoint = CGPoint(x: visibleRect.midX, y: visibleRect.midY)
+    let visiblePoint = CGPoint(x: visibleRect.minX, y: visibleRect.minY)
     return collectionView.indexPathForItem(at: visiblePoint)?.item ?? startIndex
   }
   
@@ -355,10 +354,18 @@ public final class Agrume: UIViewController {
     let layout = collectionView.collectionViewLayout as! UICollectionViewFlowLayout
     layout.itemSize = view.bounds.size
     layout.invalidateLayout()
+    
+    backgroundImageView.frame = view.bounds
+    spinner.center = view.center
+    collectionView.frame = view.bounds
+    
+    if currentIndex != currentlyVisibleCellIndex() {
+      scrollToImage(withIndex: currentIndex)
+    }
   }
   
   public override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
-    let indexToRotate = currentlyVisibleCellIndex()
+    let indexToRotate = currentIndex
     let rotationHandler: ((UIViewControllerTransitionCoordinatorContext) -> Void) = { _ in
       self.scrollToImage(withIndex: indexToRotate )
       self.collectionView.visibleCells.forEach { cell in
@@ -425,7 +432,14 @@ extension Agrume: UICollectionViewDelegate {
   public func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
     didScroll?(currentlyVisibleCellIndex())
   }
-
+  
+  public func scrollViewDidScroll(_ scrollView: UIScrollView) {
+    let center = CGPoint(x: scrollView.contentOffset.x + (scrollView.frame.width / 2), y: (scrollView.frame.height / 2))
+    if let indexPath = collectionView.indexPathForItem(at: center) {
+      currentIndex = indexPath.row
+    }
+  }
+  
 }
 
 extension Agrume: AgrumeCellDelegate {
