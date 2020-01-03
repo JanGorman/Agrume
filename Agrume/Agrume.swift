@@ -157,7 +157,7 @@ public final class Agrume: UIViewController {
     }
     let blurView = UIVisualEffectView(effect: UIBlurEffect(style: style))
     blurView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
-    blurView.frame = view.frame
+    blurView.frame = blurContainerView.bounds
     _blurView = blurView
     return _blurView!
   }
