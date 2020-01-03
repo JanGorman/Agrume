@@ -8,6 +8,7 @@ public final class Agrume: UIViewController {
 
   private var images: [AgrumeImage]!
   private let startIndex: Int
+  private var needsDelayedScrolling = false
   private let background: Background
   private let dismissal: Dismissal
   
@@ -252,6 +253,11 @@ public final class Agrume: UIViewController {
       view.addGestureRecognizer(longPress)
     }
   }
+  
+  override public func viewWillAppear(_ animated: Bool) {
+    super.viewWillAppear(animated)
+    needsDelayedScrolling = true
+  }
 
   @objc
   func didLongPress(_ gesture: UIGestureRecognizer) {
@@ -272,9 +278,6 @@ public final class Agrume: UIViewController {
     }
     view.addSubview(blurContainerView)
     view.addSubview(collectionView)
-    if startIndex > 0 {
-      collectionView.scrollToItem(at: IndexPath(item: startIndex, section: 0), at: [], animated: false)
-    }
     view.addSubview(spinner)
   }
   
@@ -355,6 +358,18 @@ public final class Agrume: UIViewController {
     let layout = collectionView.collectionViewLayout as! UICollectionViewFlowLayout
     layout.itemSize = view.bounds.size
     layout.invalidateLayout()
+    
+    backgroundImageView.frame = view.bounds
+    spinner.center = view.center
+    collectionView.frame = view.bounds
+  }
+  
+  public override func viewDidLayoutSubviews() {
+    super.viewDidLayoutSubviews()
+    if startIndex > 0 && needsDelayedScrolling && collectionView.contentSize.width > 0 {
+      needsDelayedScrolling = false
+      scrollToImage(withIndex: startIndex)
+    }
   }
   
   public override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
