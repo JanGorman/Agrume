@@ -261,12 +261,14 @@ public final class Agrume: UIViewController {
     }
   }
 
-  @objc func didLongPress(_ gesture: UIGestureRecognizer) {
+  @objc
+  func didLongPress(_ gesture: UIGestureRecognizer) {
     guard gesture.state == .began else { return }
     onLongPress?()
   }
   
-  @objc func image(_ image: UIImage, didFinishSavingWithError error: NSError?, contextInfo: UnsafeRawPointer) {
+  @objc
+  func image(_ image: UIImage, didFinishSavingWithError error: NSError?, contextInfo: UnsafeRawPointer) {
     photoSavedToLibrary?(error)
   }
 
@@ -277,6 +279,9 @@ public final class Agrume: UIViewController {
       
       let alert = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
       alert.popoverPresentationController?.sourceView = self.view
+      alert.popoverPresentationController?.permittedArrowDirections = .up
+      let alertPosition = CGRect(x: view.bounds.midX, y: view.bounds.maxY - view.bounds.midY / 2, width: 0, height: 0)
+      alert.popoverPresentationController?.sourceRect = alertPosition
 
       alert.addAction(UIAlertAction(title: photoSaveToLibraryTitle, style: .default, handler: { _ in
           UIImageWriteToSavedPhotosAlbum(image, self,
