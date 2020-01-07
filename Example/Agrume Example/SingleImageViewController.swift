@@ -10,6 +10,7 @@ final class SingleImageViewController: UIViewController {
   private lazy var agrume = Agrume(image: #imageLiteral(resourceName: "MapleBacon"), background: .blurred(.regular))
 
   @IBAction private func openImage(_ sender: Any) {
+    agrume.onLongPress = agrume.savePhotoOnLongPress
     agrume.show(from: self)
   }
 

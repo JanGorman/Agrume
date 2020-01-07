@@ -14,6 +14,7 @@ final class SingleImageBackgroundColorViewController: UIViewController {
   }()
 
   @IBAction private func openImage(_ sender: Any) {
+    agrume.onLongPress = agrume.savePhotoOnLongPress
     agrume.show(from: self)
   }
   

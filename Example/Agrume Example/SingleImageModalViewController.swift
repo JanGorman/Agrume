@@ -15,6 +15,7 @@ final class SingleImageModalViewController: UIViewController {
   
   @IBAction private func openImage(_ sender: Any) {
     let agrume = Agrume(image: #imageLiteral(resourceName: "MapleBacon"), background: .blurred(.regular))
+    agrume.onLongPress = agrume.savePhotoOnLongPress
     agrume.show(from: self)
   }
   

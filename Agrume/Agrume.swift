@@ -25,6 +25,12 @@ public final class Agrume: UIViewController {
   public var didDismiss: (() -> Void)?
   /// Optional closure to call whenever Agrume scrolls to the next image in a collection. Passes the "page" index
   public var didScroll: ((_ index: Int) -> Void)?
+  /// Optional closure to call whenever savePhotoOnLongPress was successfull.
+  public var photoSavedToLibrary: ((_ error: Error?) -> Void)?
+  /// Alert title text to save photo to library
+  public var photoSaveToLibraryTitle = "Save Photo"
+  /// Alert cancel text to save photo to library
+  public var photoSaveToLibraryCancel = "Cancel"
   /// An optional download handler. Passed the URL that is supposed to be loaded. Call the completion with the image
   /// when the download is done.
   public var download: ((_ url: URL, _ completion: @escaping DownloadCompletion) -> Void)?
@@ -255,12 +261,30 @@ public final class Agrume: UIViewController {
     }
   }
 
-  @objc
-  func didLongPress(_ gesture: UIGestureRecognizer) {
-    guard gesture.state == .began else {
-      return
-    }
+  @objc func didLongPress(_ gesture: UIGestureRecognizer) {
+    guard gesture.state == .began else { return }
     onLongPress?()
+  }
+  
+  @objc func image(_ image: UIImage, didFinishSavingWithError error: NSError?, contextInfo: UnsafeRawPointer) {
+    photoSavedToLibrary?(error)
+  }
+
+  /// Save the current photo shown in the user's photo library
+  /// Make sure to have NSPhotoLibraryUsageDescription (ios 10) and NSPhotoLibraryAddUsageDescription (ios 11+) in your info.plist
+  public func savePhotoOnLongPress() {
+      guard let image = images[currentIndex].image else { return }
+      
+      let alert = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+      alert.popoverPresentationController?.sourceView = self.view
+
+      alert.addAction(UIAlertAction(title: photoSaveToLibraryTitle, style: .default, handler: { _ in
+          UIImageWriteToSavedPhotosAlbum(image, self,
+                                         #selector(self.image(_:didFinishSavingWithError:contextInfo:)), nil)
+      }))
+      alert.addAction(UIAlertAction(title: photoSaveToLibraryCancel, style: .cancel, handler: nil))
+
+      present(alert, animated: true)
   }
 
   private func addSubviews() {
@@ -415,6 +439,7 @@ extension Agrume: UICollectionViewDataSource {
     spinner.alpha = 1
     dataSource?.image(forIndex: indexPath.item) { [weak self] image in
       DispatchQueue.main.async {
+        self?.images[indexPath.item].image = image
         cell.image = image
         self?.spinner.alpha = 0
       }

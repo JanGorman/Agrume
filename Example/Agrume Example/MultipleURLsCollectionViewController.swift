@@ -46,7 +46,14 @@ final class MultipleURLsCollectionViewController: UICollectionViewController {
     agrume.didScroll = { [unowned self] index in
       self.collectionView?.scrollToItem(at: IndexPath(item: index, section: 0), at: [], animated: false)
     }
+    agrume.onLongPress = agrume.savePhotoOnLongPress
+    agrume.photoSavedToLibrary = { error in
+      if error != nil { // we got back an error!
+        print"Could not save your photo")
+      } else {
+        print("Photo has been saved to your library")
+      }
+    }
     agrume.show(from: self)
   }
-  
 }
