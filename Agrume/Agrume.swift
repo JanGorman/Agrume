@@ -8,13 +8,15 @@ public final class Agrume: UIViewController {
 
   private var images: [AgrumeImage]!
   private let startIndex: Int
-  private var currentIndex: Int
   private let background: Background
   private let dismissal: Dismissal
   
   private var overlayView: AgrumeOverlayView?
   private weak var dataSource: AgrumeDataSource?
 
+  /// The "page" index for the current image
+  private(set) public var currentIndex: Int
+  
   public typealias DownloadCompletion = (_ image: UIImage?) -> Void
 
   /// Optional closure to call when user long pressed on an image
