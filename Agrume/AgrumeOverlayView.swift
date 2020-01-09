@@ -4,13 +4,25 @@
 
 import UIKit
 
-protocol AgrumeOverlayViewDelegate: AnyObject {
-  func agrumeOverlayViewWantsToClose(_ view: AgrumeOverlayView)
+protocol AgrumeCloseButtonOverlayViewDelegate: AnyObject {
+  func agrumeOverlayViewWantsToClose(_ view: AgrumeCloseButtonOverlayView)
 }
 
-final class AgrumeOverlayView: UIView {
+/// A base class for a user defined view that will overlay the image.
+///
+/// An overlay view can be used to add navigation, actions, or information over the image.
+open class AgrumeOverlayView: UIView {
+  override open func hitTest(_ point: CGPoint, with event: UIEvent?) -> UIView? {
+    if let view = super.hitTest(point, with: event), view != self {
+      return view
+    }
+    return nil
+  }
+}
+
+final class AgrumeCloseButtonOverlayView: AgrumeOverlayView {
   
-  weak var delegate: AgrumeOverlayViewDelegate?
+  weak var delegate: AgrumeCloseButtonOverlayViewDelegate?
 
   private lazy var navigationBar: UINavigationBar = {
     let navigationBar = UINavigationBar()
@@ -49,13 +61,6 @@ final class AgrumeOverlayView: UIView {
   
   required init?(coder aDecoder: NSCoder) {
     fatalError("init(coder:) has not been implemented")
-  }
-  
-  override func hitTest(_ point: CGPoint, with event: UIEvent?) -> UIView? {
-    if let view = super.hitTest(point, with: event), view != self {
-      return view
-    }
-    return nil
   }
   
   @objc
