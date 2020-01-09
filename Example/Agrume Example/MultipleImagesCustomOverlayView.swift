@@ -46,6 +46,7 @@ final class MultipleImagesCusomOverlayView: UICollectionViewController {
     overlayView.navigationBar.topItem?.title = "Image \(indexPath.item + 1)"
     
     agrume = Agrume(images: images, startIndex: indexPath.item, background: .blurred(.regular), overlayView: overlayView)
+    agrume?.tapBehavior = .toggleOverlayVisibility
     agrume?.didScroll = { [unowned self] index in
       self.collectionView?.scrollToItem(at: IndexPath(item: index, section: 0), at: [], animated: false)
       self.overlayView.navigationBar.topItem?.title = "Image \(index + 1)"

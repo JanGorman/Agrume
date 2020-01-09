@@ -42,6 +42,7 @@ public final class Agrume: UIViewController {
     case dismissIfZoomedOut
     case dismissAlways
     case zoomOut
+    case toggleOverlayVisibility
   }
   /// Default tap behaviour is to dismiss the view if zoomed out
   public var tapBehavior: TapBehavior = .dismissIfZoomedOut
@@ -507,6 +508,16 @@ extension Agrume: AgrumeCellDelegate {
     }, completion: dismissCompletion)
   }
 
+  func toggleOverlayVisibility() {
+    UIView.animate(withDuration: .transitionAnimationDuration,
+                   delay: 0,
+                   options: .beginFromCurrentState,
+                   animations: {
+                    if let overlayView = self.overlayView {
+                      overlayView.alpha = overlayView.alpha < 0.5 ? 1 : 0
+                    }
+    }, completion: nil)
+  }
 }
 
 extension Agrume: AgrumeCloseButtonOverlayViewDelegate {
