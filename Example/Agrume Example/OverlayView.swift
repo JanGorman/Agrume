@@ -68,15 +68,18 @@ class OverlayView: AgrumeOverlayView {
     ])
   }
   
-  @objc private func selectShare() {
+  @objc
+  private func selectShare() {
     delegate?.overlayView(self, didSelectAction: "share")
   }
   
-  @objc private func selectDelete() {
+  @objc
+  private func selectDelete() {
     delegate?.overlayView(self, didSelectAction: "delete")
   }
   
-  @objc private func selectDone() {
+  @objc
+  private func selectDone() {
     delegate?.overlayView(self, didSelectAction: "done")
   }
 }

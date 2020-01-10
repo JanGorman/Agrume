@@ -56,7 +56,8 @@ public final class Agrume: UIViewController {
   ///   - background: The background configuration
   ///   - dismissal: The dismiss configuration
   ///   - overlayView: View to overlay the image (does not display with 'button' dismissals)
-  public convenience init(image: UIImage, background: Background = .colored(.black), dismissal: Dismissal = .withPhysics, overlayView: AgrumeOverlayView? = nil) {
+  public convenience init(image: UIImage, background: Background = .colored(.black), dismissal: Dismissal = .withPhysics,
+                          overlayView: AgrumeOverlayView? = nil) {
     self.init(images: [image], background: background, dismissal: dismissal, overlayView: overlayView)
   }
 
@@ -67,7 +68,8 @@ public final class Agrume: UIViewController {
   ///   - background: The background configuration
   ///   - dismissal: The dismiss configuration
   ///   - overlayView: View to overlay the image (does not display with 'button' dismissals)
-  public convenience init(url: URL, background: Background = .colored(.black), dismissal: Dismissal = .withPhysics, overlayView: AgrumeOverlayView? = nil) {
+  public convenience init(url: URL, background: Background = .colored(.black), dismissal: Dismissal = .withPhysics,
+                          overlayView: AgrumeOverlayView? = nil) {
     self.init(urls: [url], background: background, dismissal: dismissal, overlayView: overlayView)
   }
 
@@ -81,7 +83,8 @@ public final class Agrume: UIViewController {
   ///   - overlayView: View to overlay the image (does not display with 'button' dismissals)
   public convenience init(dataSource: AgrumeDataSource, startIndex: Int = 0, background: Background = .colored(.black),
                           dismissal: Dismissal = .withPhysics, overlayView: AgrumeOverlayView? = nil) {
-    self.init(images: nil, dataSource: dataSource, startIndex: startIndex, background: background, dismissal: dismissal, overlayView: overlayView)
+    self.init(images: nil, dataSource: dataSource, startIndex: startIndex, background: background, dismissal: dismissal,
+              overlayView: overlayView)
   }
 
   /// Initialize with an array of images
