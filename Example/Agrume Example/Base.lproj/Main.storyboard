@@ -595,10 +595,10 @@
             </objects>
             <point key="canvasLocation" x="477" y="-585"/>
         </scene>
-        <!--Multiple Images Cusom Overlay View-->
+        <!--Multiple Images Custom Overlay View-->
         <scene sceneID="5kI-sk-chS">
             <objects>
-                <collectionViewController id="3fR-r2-WqL" customClass="MultipleImagesCusomOverlayView" customModule="Agrume_Example" customModuleProvider="target" sceneMemberID="viewController">
+                <collectionViewController id="3fR-r2-WqL" customClass="MultipleImagesCustomOverlayView" customModule="Agrume_Example" customModuleProvider="target" sceneMemberID="viewController">
                     <collectionView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" pagingEnabled="YES" dataMode="prototypes" id="7Ec-kR-m0j">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
