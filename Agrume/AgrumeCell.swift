@@ -11,7 +11,7 @@ protocol AgrumeCellDelegate: AnyObject {
 
   func dismissAfterFlick()
   func dismissAfterTap()
-
+  func toggleOverlayVisibility()
 }
 
 final class AgrumeCell: UICollectionViewCell {
@@ -231,6 +231,8 @@ extension AgrumeCell: UIGestureRecognizerDelegate {
       dismiss()
     case .zoomOut:
       zoom(to: .zero, scale: 1)
+    case .toggleOverlayVisibility:
+      delegate?.toggleOverlayVisibility()
     }
   }
 

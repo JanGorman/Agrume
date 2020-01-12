@@ -8,13 +8,15 @@ public final class Agrume: UIViewController {
 
   private var images: [AgrumeImage]!
   private let startIndex: Int
-  private var currentIndex: Int
   private let background: Background
   private let dismissal: Dismissal
   
-  private var overlayView: UIView?
+  private var overlayView: AgrumeOverlayView?
   private weak var dataSource: AgrumeDataSource?
 
+  /// The "page" index for the current image
+  private(set) public var currentIndex: Int
+  
   public typealias DownloadCompletion = (_ image: UIImage?) -> Void
 
   /// Optional closure to call when user long pressed on an image
@@ -42,6 +44,7 @@ public final class Agrume: UIViewController {
     case dismissIfZoomedOut
     case dismissAlways
     case zoomOut
+    case toggleOverlayVisibility
   }
   /// Default tap behaviour is to dismiss the view if zoomed out
   public var tapBehavior: TapBehavior = .dismissIfZoomedOut
@@ -52,8 +55,10 @@ public final class Agrume: UIViewController {
   ///   - image: The image to present
   ///   - background: The background configuration
   ///   - dismissal: The dismiss configuration
-  public convenience init(image: UIImage, background: Background = .colored(.black), dismissal: Dismissal = .withPhysics) {
-    self.init(images: [image], background: background, dismissal: dismissal)
+  ///   - overlayView: View to overlay the image (does not display with 'button' dismissals)
+  public convenience init(image: UIImage, background: Background = .colored(.black), dismissal: Dismissal = .withPhysics,
+                          overlayView: AgrumeOverlayView? = nil) {
+    self.init(images: [image], background: background, dismissal: dismissal, overlayView: overlayView)
   }
 
   /// Initialize with a single image url
@@ -62,8 +67,10 @@ public final class Agrume: UIViewController {
   ///   - url: The image url to present
   ///   - background: The background configuration
   ///   - dismissal: The dismiss configuration
-  public convenience init(url: URL, background: Background = .colored(.black), dismissal: Dismissal = .withPhysics) {
-    self.init(urls: [url], background: background, dismissal: dismissal)
+  ///   - overlayView: View to overlay the image (does not display with 'button' dismissals)
+  public convenience init(url: URL, background: Background = .colored(.black), dismissal: Dismissal = .withPhysics,
+                          overlayView: AgrumeOverlayView? = nil) {
+    self.init(urls: [url], background: background, dismissal: dismissal, overlayView: overlayView)
   }
 
   /// Initialize with a data source
@@ -73,9 +80,11 @@ public final class Agrume: UIViewController {
   ///   - startIndex: The optional start index when showing multiple images
   ///   - background: The background configuration
   ///   - dismissal: The dismiss configuration
+  ///   - overlayView: View to overlay the image (does not display with 'button' dismissals)
   public convenience init(dataSource: AgrumeDataSource, startIndex: Int = 0, background: Background = .colored(.black),
-                          dismissal: Dismissal = .withPhysics) {
-    self.init(images: nil, dataSource: dataSource, startIndex: startIndex, background: background, dismissal: dismissal)
+                          dismissal: Dismissal = .withPhysics, overlayView: AgrumeOverlayView? = nil) {
+    self.init(images: nil, dataSource: dataSource, startIndex: startIndex, background: background, dismissal: dismissal,
+              overlayView: overlayView)
   }
 
   /// Initialize with an array of images
@@ -85,9 +94,10 @@ public final class Agrume: UIViewController {
   ///   - startIndex: The optional start index when showing multiple images
   ///   - background: The background configuration
   ///   - dismissal: The dismiss configuration
+  ///   - overlayView: View to overlay the image (does not display with 'button' dismissals)
   public convenience init(images: [UIImage], startIndex: Int = 0, background: Background = .colored(.black),
-                          dismissal: Dismissal = .withPhysics) {
-    self.init(images: images, urls: nil, startIndex: startIndex, background: background, dismissal: dismissal)
+                          dismissal: Dismissal = .withPhysics, overlayView: AgrumeOverlayView? = nil) {
+    self.init(images: images, urls: nil, startIndex: startIndex, background: background, dismissal: dismissal, overlayView: overlayView)
   }
 
   /// Initialize with an array of image urls
@@ -97,13 +107,14 @@ public final class Agrume: UIViewController {
   ///   - startIndex: The optional start index when showing multiple images
   ///   - background: The background configuration
   ///   - dismissal: The dismiss configuration
+  ///   - overlayView: View to overlay the image (does not display with 'button' dismissals)
   public convenience init(urls: [URL], startIndex: Int = 0, background: Background = .colored(.black),
-                          dismissal: Dismissal = .withPhysics) {
-    self.init(images: nil, urls: urls, startIndex: startIndex, background: background, dismissal: dismissal)
+                          dismissal: Dismissal = .withPhysics, overlayView: AgrumeOverlayView? = nil) {
+    self.init(images: nil, urls: urls, startIndex: startIndex, background: background, dismissal: dismissal, overlayView: overlayView)
   }
 
   private init(images: [UIImage]? = nil, urls: [URL]? = nil, dataSource: AgrumeDataSource? = nil, startIndex: Int,
-               background: Background, dismissal: Dismissal) {
+               background: Background, dismissal: Dismissal, overlayView: AgrumeOverlayView? = nil) {
     switch (images, urls) {
     case (let images?, nil):
       self.images = images.map { AgrumeImage(image: $0) }
@@ -119,6 +130,7 @@ public final class Agrume: UIViewController {
     self.dismissal = dismissal
     super.init(nibName: nil, bundle: nil)
     
+    self.overlayView = overlayView
     self.dataSource = dataSource ?? self
     
     modalPresentationStyle = .custom
@@ -300,14 +312,19 @@ public final class Agrume: UIViewController {
   }
   
   private func addOverlayView() {
-    switch dismissal {
-    case .withButton(let button), .withPhysicsAndButton(let button):
-      let overlayView = AgrumeOverlayView(closeButton: button)
+    switch (dismissal, overlayView) {
+    case (.withButton(let button), _), (.withPhysicsAndButton(let button), _):
+      let overlayView = AgrumeCloseButtonOverlayView(closeButton: button)
       overlayView.delegate = self
       overlayView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
       overlayView.frame = view.bounds
       view.addSubview(overlayView)
       self.overlayView = overlayView
+    case (.withPhysics, let overlayView?):
+      overlayView.alpha = 1
+      overlayView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+      overlayView.frame = view.bounds
+      view.addSubview(overlayView)
     default:
       break
     }
@@ -496,11 +513,21 @@ extension Agrume: AgrumeCellDelegate {
     }, completion: dismissCompletion)
   }
 
+  func toggleOverlayVisibility() {
+    UIView.animate(withDuration: .transitionAnimationDuration,
+                   delay: 0,
+                   options: .beginFromCurrentState,
+                   animations: {
+                    if let overlayView = self.overlayView {
+                      overlayView.alpha = overlayView.alpha < 0.5 ? 1 : 0
+                    }
+    }, completion: nil)
+  }
 }
 
-extension Agrume: AgrumeOverlayViewDelegate {
+extension Agrume: AgrumeCloseButtonOverlayViewDelegate {
 
-  func agrumeOverlayViewWantsToClose(_ view: AgrumeOverlayView) {
+  func agrumeOverlayViewWantsToClose(_ view: AgrumeCloseButtonOverlayView) {
     dismiss()
   }
 
