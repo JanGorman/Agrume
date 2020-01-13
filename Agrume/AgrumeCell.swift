@@ -2,8 +2,8 @@
 //  Copyright © 2016 Schnaub. All rights reserved.
 //
 
-import UIKit
 import SwiftyGif
+import UIKit
 
 protocol AgrumeCellDelegate: AnyObject {
 
@@ -127,7 +127,7 @@ extension AgrumeCell: UIGestureRecognizerDelegate {
 
   private var isImageViewOffscreen: Bool {
     let visibleRect = scrollView.convert(contentView.bounds, from: contentView)
-    return animator?.items(in: visibleRect).count == 0
+    return animator?.items(in: visibleRect).isEmpty == true
   }
 
   override func gestureRecognizerShouldBegin(_ gestureRecognizer: UIGestureRecognizer) -> Bool {
@@ -137,14 +137,14 @@ extension AgrumeCell: UIGestureRecognizerDelegate {
         return true
       }
       return abs(velocity.y) > abs(velocity.x)
-    } else if let _ = gestureRecognizer as? UISwipeGestureRecognizer, notZoomed {
+    } else if gestureRecognizer as? UISwipeGestureRecognizer != nil, notZoomed {
       return false
     }
     return true
   }
 
   func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldReceive touch: UITouch) -> Bool {
-    if let _ = gestureRecognizer as? UIPanGestureRecognizer {
+    if gestureRecognizer as? UIPanGestureRecognizer != nil {
       return notZoomed
     }
     return true

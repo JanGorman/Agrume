@@ -2,12 +2,12 @@
 //  Copyright © 2016 Schnaub. All rights reserved.
 //
 
-import UIKit
 import Agrume
+import UIKit
 
 final class SingleImageViewController: UIViewController {
   
-  private lazy var agrume = Agrume(image: #imageLiteral(resourceName: "MapleBacon"), background: .blurred(.regular))
+  private lazy var agrume = Agrume(image: UIImage(named: "MapleBacon")!, background: .blurred(.regular))
 
   @IBAction private func openImage(_ sender: Any) {
     let helper = makeHelper()

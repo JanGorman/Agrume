@@ -2,8 +2,8 @@
 //  Copyright © 2020 Schnaub. All rights reserved.
 //
 
-import UIKit
 import Agrume
+import UIKit
 
 protocol OverlayViewDelegate: AnyObject {
   func overlayView(_ overlayView: OverlayView, didSelectAction action: String)

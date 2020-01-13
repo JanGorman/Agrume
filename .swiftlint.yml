@@ -44,6 +44,12 @@ opt_in_rules:
   - prohibited_super_call
   - redundant_nil_coalescing
   - vertical_parameter_alignment_on_call
+  - discouraged_object_literal
+  - sorted_imports
+  - static_operator
+  - strong_iboutlet
+  - switch_case_on_newline
+  - toggle_bool
   
 disabled_rules:
   - force_cast
@@ -51,6 +57,7 @@ disabled_rules:
   - unused_optional_binding
   - vertical_parameter_alignment
   - force_try
+  - object_literal
   
 excluded:
   - Frameworks/SwiftyGif

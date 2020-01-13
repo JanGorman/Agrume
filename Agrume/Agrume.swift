@@ -6,6 +6,14 @@ import UIKit
 
 public final class Agrume: UIViewController {
 
+  /// Tap behaviour, i.e. what happens when you tap outside of the image area
+  public enum TapBehavior {
+    case dismissIfZoomedOut
+    case dismissAlways
+    case zoomOut
+    case toggleOverlayVisibility
+  }
+
   private var images: [AgrumeImage]!
   private let startIndex: Int
   private let background: Background
@@ -15,7 +23,7 @@ public final class Agrume: UIViewController {
   private weak var dataSource: AgrumeDataSource?
 
   /// The "page" index for the current image
-  private(set) public var currentIndex: Int
+  public private(set) var currentIndex: Int
   
   public typealias DownloadCompletion = (_ image: UIImage?) -> Void
 
@@ -39,15 +47,12 @@ public final class Agrume: UIViewController {
   /// Hide status bar when presenting. Defaults to `false`
   public var hideStatusBar = false
 
-  /// Tap behaviour, i.e. what happens when you tap outside of the image area
-  public enum TapBehavior {
-    case dismissIfZoomedOut
-    case dismissAlways
-    case zoomOut
-    case toggleOverlayVisibility
-  }
   /// Default tap behaviour is to dismiss the view if zoomed out
   public var tapBehavior: TapBehavior = .dismissIfZoomedOut
+
+  override public var preferredStatusBarStyle: UIStatusBarStyle {
+    statusBarStyle ?? super.preferredStatusBarStyle
+  }
 
   /// Initialize with a single image
   ///
@@ -141,6 +146,7 @@ public final class Agrume: UIViewController {
     downloadTask?.cancel()
   }
 
+  @available(*, unavailable)
   required public init?(coder aDecoder: NSCoder) {
     fatalError("Not implemented")
   }
@@ -218,10 +224,6 @@ public final class Agrume: UIViewController {
   }
 
   private var downloadTask: URLSessionDataTask?
-  
-  public override var preferredStatusBarStyle:  UIStatusBarStyle {
-    return statusBarStyle ?? super.preferredStatusBarStyle
-  }
 
   /// Present Agrume
   ///
@@ -342,7 +344,7 @@ public final class Agrume: UIViewController {
     dismissAfterFlick()
   }
 
-  public func showImage(atIndex index : Int, animated: Bool = true) {
+  public func showImage(atIndex index: Int, animated: Bool = true) {
     scrollToImage(withIndex: index, animated: animated)
   }
 
@@ -352,7 +354,7 @@ public final class Agrume: UIViewController {
     }
   }
   
-  public override var prefersStatusBarHidden: Bool {
+  override public var prefersStatusBarHidden: Bool {
     hideStatusBar
   }
   
@@ -366,7 +368,7 @@ public final class Agrume: UIViewController {
     return collectionView.indexPathForItem(at: visiblePoint)?.item ?? startIndex
   }
   
-  public override func viewWillLayoutSubviews() {
+  override public func viewWillLayoutSubviews() {
     super.viewWillLayoutSubviews()
     let layout = collectionView.collectionViewLayout as! UICollectionViewFlowLayout
     layout.itemSize = view.bounds.size
@@ -381,10 +383,10 @@ public final class Agrume: UIViewController {
     }
   }
   
-  public override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
+  override public func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
     let indexToRotate = currentIndex
     let rotationHandler: ((UIViewControllerTransitionCoordinatorContext) -> Void) = { _ in
-      self.scrollToImage(withIndex: indexToRotate )
+      self.scrollToImage(withIndex: indexToRotate)
       self.collectionView.visibleCells.forEach { cell in
         (cell as! AgrumeCell).recenterDuringRotation(size: size)
       }

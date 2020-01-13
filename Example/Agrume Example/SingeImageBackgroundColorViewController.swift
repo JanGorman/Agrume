@@ -2,18 +2,18 @@
 //  Copyright © 2016 Schnaub. All rights reserved.
 //
 
-import UIKit
 import Agrume
+import UIKit
 
 final class SingleImageBackgroundColorViewController: UIViewController {
   
   private lazy var agrume: Agrume = {
-    let agrume = Agrume(image: #imageLiteral(resourceName: "MapleBacon"), background: .colored(.black))
+    let agrume = Agrume(image: UIImage(named: "MapleBacon")!, background: .colored(.black))
     agrume.hideStatusBar = true
     return agrume
   }()
 
-  @IBAction private func openImage(_ sender: Any) {
+  @IBAction private func openImage() {
     let helper = makeHelper()
     agrume.onLongPress = helper.makeSaveToLibraryLongPressGesture
     agrume.show(from: self)

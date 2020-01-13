@@ -10,7 +10,7 @@ extension CGFloat {
   static let maxScaleForExpandingOffscreen: CGFloat = 1.25
   static let targetZoomForDoubleTap: CGFloat = 3
   static let minFlickDismissalVelocity: CGFloat = 800
-  static let highScrollVelocity: CGFloat = 1600
+  static let highScrollVelocity: CGFloat = 1_600
   
 }
 

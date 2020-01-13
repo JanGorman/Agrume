@@ -2,8 +2,8 @@
 //  Copyright © 2016 Schnaub. All rights reserved.
 //
 
-import UIKit
 import Agrume
+import UIKit
 
 final class MultipleURLsCollectionViewController: UICollectionViewController {
 
@@ -15,8 +15,8 @@ final class MultipleURLsCollectionViewController: UICollectionViewController {
   }
   
   private let images = [
-    ImageWithURL(image: #imageLiteral(resourceName: "MapleBacon"), url: URL(string: "https://www.dropbox.com/s/mlquw9k6ogvspox/MapleBacon.png?raw=1")!),
-    ImageWithURL(image: #imageLiteral(resourceName: "EvilBacon"), url: URL(string: "https://www.dropbox.com/s/fwjbsuonhv1wrqu/EvilBacon.png?raw=1")!)
+    ImageWithURL(image: UIImage(named: "MapleBacon")!, url: URL(string: "https://www.dropbox.com/s/mlquw9k6ogvspox/MapleBacon.png?raw=1")!),
+    ImageWithURL(image: UIImage(named: "EvilBacon")!, url: URL(string: "https://www.dropbox.com/s/fwjbsuonhv1wrqu/EvilBacon.png?raw=1")!)
   ]
   
   override func viewDidLoad() {

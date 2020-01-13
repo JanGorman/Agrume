@@ -2,16 +2,16 @@
 //  Copyright © 2016 Schnaub. All rights reserved.
 //
 
-import UIKit
 import Agrume
+import UIKit
 
 final class MultipleImagesCollectionViewController: UICollectionViewController {
 
   private let identifier = "Cell"
 
   private let images = [
-    #imageLiteral(resourceName: "MapleBacon"),
-    #imageLiteral(resourceName: "EvilBacon")
+    UIImage(named: "MapleBacon")!,
+    UIImage(named: "EvilBacon")!
   ]
 
   override func viewDidLoad() {

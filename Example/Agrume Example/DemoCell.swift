@@ -6,6 +6,6 @@ import UIKit
 
 final class DemoCell: UICollectionViewCell {
 
-  @IBOutlet var imageView: UIImageView!
+  @IBOutlet private(set) var imageView: UIImageView!
 
 }

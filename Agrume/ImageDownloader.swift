@@ -2,10 +2,10 @@
 //  Copyright © 2016 Schnaub. All rights reserved.
 //
 
-import UIKit
 import ImageIO
 import MobileCoreServices
 import SwiftyGif
+import UIKit
 
 final class ImageDownloader {
 
@@ -18,7 +18,9 @@ final class ImageDownloader {
           completion(image)
         }
       }
-      guard let data = data, error == nil else { return }
+      guard let data = data, error == nil else {
+        return
+      }
       if isAnimatedImage(data) {
         image = try? UIImage(gifData: data)
       } else {

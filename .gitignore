@@ -27,3 +27,7 @@ DerivedData/
 ### Carthage
 Carthage/Checkouts/
 Carthage/Build/
+
+# Created by https://www.gitignore.io/api/mac
+
+.DS_Store

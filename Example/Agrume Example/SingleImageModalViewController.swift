@@ -2,8 +2,8 @@
 //  Copyright © 2016 Schnaub. All rights reserved.
 //
 
-import UIKit
 import Agrume
+import UIKit
 
 final class SingleImageModalViewController: UIViewController {
 
@@ -14,14 +14,14 @@ final class SingleImageModalViewController: UIViewController {
   }
   
   @IBAction private func openImage(_ sender: Any) {
-    let agrume = Agrume(image: #imageLiteral(resourceName: "MapleBacon"), background: .blurred(.regular))
+    let agrume = Agrume(image: UIImage(named: "MapleBacon")!, background: .blurred(.regular))
     let helper = makeHelper()
     agrume.onLongPress = helper.makeSaveToLibraryLongPressGesture
     agrume.show(from: self)
   }
   
   @IBAction private func close(_ sender: Any) {
-    presentingViewController?.dismiss(animated: true, completion: nil)
+    presentingViewController?.dismiss(animated: true)
   }
 
   private func makeHelper() -> AgrumePhotoLibraryHelper {

@@ -2,16 +2,16 @@
 //  Copyright © 2020 Schnaub. All rights reserved.
 //
 
-import UIKit
 import Agrume
+import UIKit
 
 final class MultipleImagesCustomOverlayView: UICollectionViewController {
 
   private let identifier = "Cell"
 
   private let images = [
-    #imageLiteral(resourceName: "MapleBacon"),
-    #imageLiteral(resourceName: "EvilBacon")
+    UIImage(named: "MapleBacon")!,
+    UIImage(named: "EvilBacon")!
   ]
   
   private var agrume: Agrume?
@@ -58,9 +58,10 @@ final class MultipleImagesCustomOverlayView: UICollectionViewController {
 
 extension MultipleImagesCustomOverlayView: OverlayViewDelegate {
   func overlayView(_ overlayView: OverlayView, didSelectAction action: String) {
-    let alert = UIAlertController(title: nil, message: "You selected \(action) for image \((agrume?.currentIndex ?? 0) + 1)",
+    let alert = UIAlertController(title: nil,
+                                  message: "You selected \(action) for image \((agrume?.currentIndex ?? 0) + 1)",
                                   preferredStyle: .alert)
     alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
-    agrume?.present(alert, animated: true, completion: nil)
+    agrume?.present(alert, animated: true)
   }
 }
