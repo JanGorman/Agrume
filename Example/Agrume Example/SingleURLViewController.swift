@@ -14,7 +14,7 @@ final class SingleURLViewController: UIViewController {
     agrume.onLongPress = helper.makeSaveToLibraryLongPressGesture
     agrume.show(from: self)
   }
-  
+
   private func makeHelper() -> AgrumePhotoLibraryHelper {
     let saveButtonTitle = NSLocalizedString("Save Photo", comment: "Save Photo")
     let cancelButtonTitle = NSLocalizedString("Cancel", comment: "Cancel")
@@ -27,5 +27,4 @@ final class SingleURLViewController: UIViewController {
     }
     return helper
   }
-
 }
