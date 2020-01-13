@@ -11,7 +11,7 @@ final class SingleImageViewController: UIViewController {
 
   @IBAction private func openImage(_ sender: Any) {
     let helper = makeHelper()
-    agrume.onLongPress = helper.makeLongPressGesture
+    agrume.onLongPress = helper.makeSaveToLibraryLongPressGesture
     agrume.show(from: self)
   }
 

@@ -40,7 +40,7 @@ final class MultipleImagesCollectionViewController: UICollectionViewController {
       self.collectionView?.scrollToItem(at: IndexPath(item: index, section: 0), at: [], animated: false)
     }
     let helper = makeHelper()
-    agrume.onLongPress = helper.makeLongPressGesture
+    agrume.onLongPress = helper.makeSaveToLibraryLongPressGesture
     agrume.show(from: self)
   }
   
