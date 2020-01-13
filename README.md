@@ -29,7 +29,7 @@ Or [Carthage](https://github.com/Carthage/Carthage). Add the dependency to your 
 github "JanGorman/Agrume"
 ```
 
-## How
+## Usage
 
 There are multiple ways you can use the image viewer (and the included sample project shows them all).
 
@@ -181,7 +181,18 @@ agrume.show(from: self)
 
 ### Lifecycle
 
-To get information about lifecycle events in `Agrume` you have the option to set a `didDismiss` handler. Similarly, to be informed about whenever the user scrolls through the image collection, there is a `didScroll` handler that is called with the current page index.
+`Agrume` offers the following lifecycle closures that you can optionally set:
+- `willDismiss`
+- `didDismiss`
+- `didScroll`
+
+### Running the Sample Code
+
+The project ships with an example app that shows the different functions documented above. Since there is a dependency on [SwiftyGif](https://github.com/kirualex/SwiftyGif) you will also need to fetch that to run the project. It's included as git submodule. After fetching the repository, from the project's root directory run:
+
+```bash
+git submodule update --init
+```
 
 ## Licence
 
