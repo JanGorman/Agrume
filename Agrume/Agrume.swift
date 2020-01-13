@@ -259,7 +259,7 @@ public var onLongPress: ((UIImage?, UIViewController) -> Void)?  /// Optional cl
     guard gesture.state == .began else {
       return
     }
-    onLongPress?()
+    onLongPress?(images?[currentIndex].image, self)
   }
 
   private func addSubviews() {
