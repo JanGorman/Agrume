@@ -256,7 +256,9 @@ public var onLongPress: ((UIImage?, UIViewController) -> Void)?  /// Optional cl
 
   @objc
   func didLongPress(_ gesture: UIGestureRecognizer) {
-    guard gesture.state == .began else { return }
+    guard gesture.state == .began else {
+      return
+    }
     onLongPress?()
   }
 
