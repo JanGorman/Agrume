@@ -179,6 +179,32 @@ agrume.statusBarStyle = .lightContent
 agrume.show(from: self)
 ```
 
+### Long Press Gesture and Downloading Images
+
+If you want to handle long press gestures on the images, there is an optional `onLongPress` closure. This will pass an optional `UIImage` and a reference to the Agrume `UIViewController` as parameters. The project includes a helper class to easily opt into downloading the image to the user's photo library called `AgrumePhotoLibraryHelper`. First, create an instance of the helper:
+
+```swift
+private func makeHelper() -> AgrumePhotoLibraryHelper {
+  let saveButtonTitle = NSLocalizedString("Save Photo", comment: "Save Photo")
+  let cancelButtonTitle = NSLocalizedString("Cancel", comment: "Cancel")
+  let helper = AgrumePhotoLibraryHelper(saveButtonTitle: saveButtonTitle, cancelButtonTitle: cancelButtonTitle) { error in
+    guard error == nil else {
+      print("Could not save your photo")
+      return
+    }
+    print("Photo has been saved to your library")
+  }
+  return helper
+}
+```
+
+and then pass this helper's long press handler to `Agrume` as follows:
+
+```swift
+let helper = makeHelper()
+agrume.onLongPress = helper.makeSaveToLibraryLongPressGesture
+```
+
 ### Lifecycle
 
 `Agrume` offers the following lifecycle closures that you can optionally set:
