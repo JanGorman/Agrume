@@ -18,7 +18,8 @@ public final class Agrume: UIViewController {
   public typealias DownloadCompletion = (_ image: UIImage?) -> Void
 
   /// Optional closure to call when user long pressed on an image
-public var onLongPress: ((UIImage?, UIViewController) -> Void)?  /// Optional closure to call whenever Agrume is about to dismiss.
+  public var onLongPress: ((UIImage?, UIViewController) -> Void)?
+  /// Optional closure to call whenever Agrume is about to dismiss.
   public var willDismiss: (() -> Void)?
   /// Optional closure to call whenever Agrume is dismissed.
   public var didDismiss: (() -> Void)?
