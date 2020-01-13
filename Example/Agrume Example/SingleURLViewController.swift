@@ -11,7 +11,7 @@ final class SingleURLViewController: UIViewController {
     let agrume = Agrume(url: URL(string: "https://www.dropbox.com/s/mlquw9k6ogvspox/MapleBacon.png?raw=1")!,
                         background: .blurred(.regular))
     let helper = makeHelper()
-    agrume.onLongPress = helper.makeLongPressGesture
+    agrume.onLongPress = helper.makeSaveToLibraryLongPressGesture
     agrume.show(from: self)
   }
   
