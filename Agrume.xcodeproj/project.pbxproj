@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		833C23CA23CC800800F689E2 /* AgrumePhotoLibraryHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 833C23C923CC800800F689E2 /* AgrumePhotoLibraryHelper.swift */; };
 		94318E541D32612D0096215A /* AgrumeServiceLocator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94318E531D32612D0096215A /* AgrumeServiceLocator.swift */; };
 		F2539BA120F22E7700062C80 /* AgrumeOverlayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2539BA020F22E7700062C80 /* AgrumeOverlayView.swift */; };
 		F2609E23209F047200E0E93D /* AgrumeDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2609E22209F047200E0E93D /* AgrumeDataSource.swift */; };
@@ -48,6 +49,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		833C23C923CC800800F689E2 /* AgrumePhotoLibraryHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AgrumePhotoLibraryHelper.swift; sourceTree = "<group>"; };
 		94318E531D32612D0096215A /* AgrumeServiceLocator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AgrumeServiceLocator.swift; sourceTree = "<group>"; };
 		F2539BA020F22E7700062C80 /* AgrumeOverlayView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AgrumeOverlayView.swift; sourceTree = "<group>"; };
 		F2609E22209F047200E0E93D /* AgrumeDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AgrumeDataSource.swift; sourceTree = "<group>"; };
@@ -128,6 +130,7 @@
 				94318E531D32612D0096215A /* AgrumeServiceLocator.swift */,
 				F2609E27209F2BC600E0E93D /* Configuration.swift */,
 				F2EE29AD209F31B800F281A2 /* Foundation+Agrume.swift */,
+				833C23C923CC800800F689E2 /* AgrumePhotoLibraryHelper.swift */,
 				F2DC79D51B170C4B00818A8C /* ImageDownloader.swift */,
 				F2A51FF11B10E00700924912 /* Supporting Files */,
 				F2609E29209F2E0200E0E93D /* UIKit+Agrume.swift */,
@@ -327,6 +330,7 @@
 				F2609E2A209F2E0200E0E93D /* UIKit+Agrume.swift in Sources */,
 				F2609E28209F2BC600E0E93D /* Configuration.swift in Sources */,
 				F2EE29AE209F31B800F281A2 /* Foundation+Agrume.swift in Sources */,
+				833C23CA23CC800800F689E2 /* AgrumePhotoLibraryHelper.swift in Sources */,
 				F2F24F9423BB3BBE005AA731 /* With.swift in Sources */,
 				F2DC79D61B170C4B00818A8C /* ImageDownloader.swift in Sources */,
 				F2539BA120F22E7700062C80 /* AgrumeOverlayView.swift in Sources */,

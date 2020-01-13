@@ -14,8 +14,21 @@ final class SingleImageBackgroundColorViewController: UIViewController {
   }()
 
   @IBAction private func openImage(_ sender: Any) {
-    agrume.onLongPress = agrume.savePhotoOnLongPress
+    let helper = makeHelper()
+    agrume.onLongPress = helper.makeLongPressGesture
     agrume.show(from: self)
   }
   
+  private func makeHelper() -> AgrumePhotoLibraryHelper {
+    let saveButtonTitle = NSLocalizedString("Save Photo", comment: "Save Photo")
+    let cancelButtonTitle = NSLocalizedString("Cancel", comment: "Cancel")
+    let helper = AgrumePhotoLibraryHelper(saveButtonTitle: saveButtonTitle, cancelButtonTitle: cancelButtonTitle) { error in
+      guard error == nil else {
+        print("Could not save your photo")
+        return
+      }
+      print("Photo has been saved to your library")
+    }
+    return helper
+  }
 }

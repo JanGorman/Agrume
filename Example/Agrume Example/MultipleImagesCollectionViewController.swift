@@ -39,15 +39,21 @@ final class MultipleImagesCollectionViewController: UICollectionViewController {
     agrume.didScroll = { [unowned self] index in
       self.collectionView?.scrollToItem(at: IndexPath(item: index, section: 0), at: [], animated: false)
     }
-    agrume.onLongPress = agrume.savePhotoOnLongPress
-    agrume.photoSavedToLibrary = { error in
-      if error != nil { // we got back an error!
-        print"Could not save your photo")
-      } else {
-        print("Photo has been saved to your library")
-      }
-    }
+    let helper = makeHelper()
+    agrume.onLongPress = helper.makeLongPressGesture
     agrume.show(from: self)
   }
-
+  
+  private func makeHelper() -> AgrumePhotoLibraryHelper {
+    let saveButtonTitle = NSLocalizedString("Save Photo", comment: "Save Photo")
+    let cancelButtonTitle = NSLocalizedString("Cancel", comment: "Cancel")
+    let helper = AgrumePhotoLibraryHelper(saveButtonTitle: saveButtonTitle, cancelButtonTitle: cancelButtonTitle) { error in
+      guard error == nil else {
+        print("Could not save your photo")
+        return
+      }
+      print("Photo has been saved to your library")
+    }
+    return helper
+  }
 }
