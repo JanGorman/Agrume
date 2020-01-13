@@ -10,7 +10,7 @@ protocol OverlayViewDelegate: AnyObject {
 }
 
 /// Example custom image overlay
-class OverlayView: AgrumeOverlayView {
+final class OverlayView: AgrumeOverlayView {
   lazy var toolbar: UIToolbar = {
     let toolbar = UIToolbar()
     toolbar.translatesAutoresizingMaskIntoConstraints = false

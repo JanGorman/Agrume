@@ -205,6 +205,10 @@ let helper = makeHelper()
 agrume.onLongPress = helper.makeSaveToLibraryLongPressGesture
 ```
 
+### Custom Overlay View
+
+You can customise the look and functionality of the image views. To do so, you need create a class that inherits from `AgrumeOverlayView: UIView`. As this is nothing more than a regular `UIView` you can do anything you want with it like add a custom toolbar or buttons to it. The example app shows a detailed example of how this can be achieved.
+
 ### Lifecycle
 
 `Agrume` offers the following lifecycle closures that you can optionally set:
