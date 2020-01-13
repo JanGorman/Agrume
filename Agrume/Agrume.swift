@@ -20,7 +20,7 @@ public final class Agrume: UIViewController {
   public typealias DownloadCompletion = (_ image: UIImage?) -> Void
 
   /// Optional closure to call when user long pressed on an image
-  public var onLongPress: (() -> Void)?
+  public var onLongPress: ((UIImage?, UIViewController) -> Void)?
   /// Optional closure to call whenever Agrume is about to dismiss.
   public var willDismiss: (() -> Void)?
   /// Optional closure to call whenever Agrume is dismissed.
@@ -272,7 +272,7 @@ public final class Agrume: UIViewController {
     guard gesture.state == .began else {
       return
     }
-    onLongPress?()
+    onLongPress?(images?[currentIndex].image, self)
   }
 
   private func addSubviews() {
@@ -432,6 +432,7 @@ extension Agrume: UICollectionViewDataSource {
     spinner.alpha = 1
     dataSource?.image(forIndex: indexPath.item) { [weak self] image in
       DispatchQueue.main.async {
+        self?.images[indexPath.item].image = image
         cell.image = image
         self?.spinner.alpha = 0
       }
