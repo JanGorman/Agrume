@@ -1,8 +1,4 @@
 //
-//  AgrumePhotoLibraryHelper.swift
-//  Agrume
-//
-//  Created by Alexandros Lykesas on 13/1/20.
 //  Copyright © 2020 Schnaub. All rights reserved.
 //
 
