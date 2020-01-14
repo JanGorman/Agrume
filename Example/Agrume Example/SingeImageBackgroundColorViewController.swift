@@ -13,7 +13,7 @@ final class SingleImageBackgroundColorViewController: UIViewController {
     return agrume
   }()
 
-  @IBAction private func openImage() {
+  @IBAction private func openImage(_ sender: Any) {
     let helper = makeHelper()
     agrume.onLongPress = helper.makeSaveToLibraryLongPressGesture
     agrume.show(from: self)
