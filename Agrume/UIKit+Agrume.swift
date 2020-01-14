@@ -21,27 +21,7 @@ extension CGSize {
 }
 
 extension UIView {
-  
-  final func snapshot() -> UIImage {
-    UIGraphicsBeginImageContextWithOptions(bounds.size, true, 0)
-    drawHierarchy(in: bounds, afterScreenUpdates: true)
-    let snapshot = UIGraphicsGetImageFromCurrentImageContext()
-    UIGraphicsEndImageContext()
-    return snapshot!
-  }
-  
-  func snapshotView() -> UIView? {
-    UIGraphicsBeginImageContextWithOptions(layer.frame.size, false, 0)
-    defer {
-      UIGraphicsEndImageContext()
-    }
-    guard let context = UIGraphicsGetCurrentContext() else {
-      return nil
-    }
-    layer.render(in: context)
-    return UIImageView(image: UIGraphicsGetImageFromCurrentImageContext())
-  }
-  
+
   func usesAutoLayout(_ useAutoLayout: Bool) {
     translatesAutoresizingMaskIntoConstraints = !useAutoLayout
   }

@@ -151,8 +151,6 @@ public final class Agrume: UIViewController {
     fatalError("Not implemented")
   }
 
-  private var backgroundSnapshot: UIImage!
-  private var backgroundImageView: UIImageView!
   private var _blurContainerView: UIView?
   private var blurContainerView: UIView {
     if _blurContainerView == nil {
@@ -229,12 +227,10 @@ public final class Agrume: UIViewController {
   ///
   /// - Parameters:
   ///   - viewController: The UIViewController to present from
-  ///   - backgroundSnapshotVC: Optional UIViewController that will be used as basis for a blurred background
-  public func show(from viewController: UIViewController, backgroundSnapshotVC: UIViewController? = nil) {
-    backgroundSnapshot = (backgroundSnapshotVC ?? viewControllerForSnapshot(fromViewController: viewController))?.view.snapshot()
+  public func show(from viewController: UIViewController) {
     view.isUserInteractionEnabled = false
     addSubviews()
-    show(from: viewController)
+    present(from: viewController)
   }
 
   /// Update image at index
@@ -279,10 +275,7 @@ public final class Agrume: UIViewController {
 
   private func addSubviews() {
     view.autoresizingMask = [.flexibleHeight, .flexibleWidth]
-    backgroundImageView = UIImageView(frame: view.frame)
-    backgroundImageView.image = backgroundSnapshot
-    view.addSubview(backgroundImageView)
-    
+
     if case .blurred = background {
       blurContainerView.addSubview(blurView)
     }
@@ -291,7 +284,7 @@ public final class Agrume: UIViewController {
     view.addSubview(spinner)
   }
   
-  private func show(from viewController: UIViewController) {
+  private func present(from viewController: UIViewController) {
     DispatchQueue.main.async {
       self.blurContainerView.alpha = 1
       self.collectionView.alpha = 0
@@ -374,7 +367,7 @@ public final class Agrume: UIViewController {
     layout.itemSize = view.bounds.size
     layout.invalidateLayout()
     
-    backgroundImageView.frame = view.bounds
+//    backgroundImageView.frame = view.bounds
     spinner.center = view.center
     collectionView.frame = view.bounds
     

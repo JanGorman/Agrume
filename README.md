@@ -160,15 +160,6 @@ let agrume = Agrume(dataSource: dataSource)
 agrume.show(from: self)
 ```
 
-### Custom Background Snapshot
-
-When showing the Agrume view controller, it'll default to taking a snapshot of the root view and blurring that. You can customize this behaviour by passing in a different view that it will blur and display:
-
-```swift
-let agrume = Agrume(image: image)
-agrume.show(from: self, backgroundSnapshotVC: self)
-```
-
 ### Status Bar Appearance
 
 You can customize the status bar appearance when displaying the zoomed in view. `Agrume` has a `statusBarStyle` property:
