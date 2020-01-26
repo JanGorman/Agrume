@@ -367,9 +367,7 @@ public final class Agrume: UIViewController {
     layout.itemSize = view.bounds.size
     layout.invalidateLayout()
     
-//    backgroundImageView.frame = view.bounds
     spinner.center = view.center
-    collectionView.frame = view.bounds
     
     if currentIndex != currentlyVisibleCellIndex() {
       scrollToImage(withIndex: currentIndex)
