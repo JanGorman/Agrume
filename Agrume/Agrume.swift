@@ -270,7 +270,12 @@ public final class Agrume: UIViewController {
     guard gesture.state == .began else {
       return
     }
-    onLongPress?(images?[currentIndex].image, self)
+    fetchImage(forIndex: currentIndex) { [weak self] image in
+      guard let self = self else {
+        return
+      }
+      self.onLongPress?(image, self)
+    }
   }
 
   private func addSubviews() {
@@ -423,17 +428,22 @@ extension Agrume: UICollectionViewDataSource {
     }
 
     spinner.alpha = 1
-    dataSource?.image(forIndex: indexPath.item) { [weak self] image in
-      DispatchQueue.main.async {
-        self?.images[indexPath.item].image = image
-        cell.image = image
-        self?.spinner.alpha = 0
-      }
+    fetchImage(forIndex: indexPath.item) { [weak self] image in
+      cell.image = image
+      self?.spinner.alpha = 0
     }
     // Only allow panning if horizontal swiping fails. Horizontal swiping is only active for zoomed in images
     collectionView.panGestureRecognizer.require(toFail: cell.swipeGesture)
     cell.delegate = self
     return cell
+  }
+
+  private func fetchImage(forIndex index: Int, handler: @escaping (UIImage?) -> Void) {
+    dataSource?.image(forIndex: index) { image in
+      DispatchQueue.main.async {
+        handler(image)
+      }
+    }
   }
 
 }
