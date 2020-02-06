@@ -2,7 +2,7 @@
 import PackageDescription
 
 let package = Package(
-    name: "MyLibrary",
+    name: "Agrume",
     platforms: [
         .iOS(.v9)
     ],
