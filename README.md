@@ -4,6 +4,7 @@
 [![Version](https://img.shields.io/cocoapods/v/Agrume.svg?style=flat)](http://cocoapods.org/pods/Agrume)
 [![License](https://img.shields.io/cocoapods/l/Agrume.svg?style=flat)](http://cocoapods.org/pods/Agrume)
 [![Platform](https://img.shields.io/cocoapods/p/Agrume.svg?style=flat)](http://cocoapods.org/pods/Agrume)
+[![SPM](https://img.shields.io/badge/spm-compatible-brightgreen.svg?style=flat)](https://swift.org/package-manager)
 
 An iOS image viewer written in Swift with support for multiple images.
 
@@ -17,7 +18,9 @@ An iOS image viewer written in Swift with support for multiple images.
 
 ## Installation
 
-Use [CocoaPods](http://cocoapods.org). Add the dependency to your `Podfile` and then run `pod install`:
+Use [Swift Package Manager](https://swift.org/package-manager).
+
+Or [CocoaPods](http://cocoapods.org). Add the dependency to your `Podfile` and then run `pod install`:
 
 ```ruby
 pod "Agrume"
