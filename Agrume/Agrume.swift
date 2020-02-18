@@ -16,11 +16,13 @@ public final class Agrume: UIViewController {
 
   private var images: [AgrumeImage]!
   private let startIndex: Int
-  public var background: Background
   private let dismissal: Dismissal
   
   private var overlayView: AgrumeOverlayView?
   private weak var dataSource: AgrumeDataSource?
+
+  /// The background property. Set through the initialiser for most use cases.
+  public var background: Background
 
   /// The "page" index for the current image
   public private(set) var currentIndex: Int
