@@ -16,7 +16,7 @@ public final class Agrume: UIViewController {
 
   private var images: [AgrumeImage]!
   private let startIndex: Int
-  private let background: Background
+  public var background: Background
   private let dismissal: Dismissal
   
   private var overlayView: AgrumeOverlayView?
