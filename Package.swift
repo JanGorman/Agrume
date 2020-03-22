@@ -13,7 +13,6 @@ let package = Package(
         .package(url: "https://github.com/kirualex/SwiftyGif", .upToNextMajor(from: "5.0.0"))
     ],
     targets: [
-        .target(name: "Agrume", dependencies: ["SwiftyGif"], path: "./Agrume"),
-        .testTarget(name: "AgrumeTests", dependencies: ["Agrume"], path: "./AgrumeTests")
+        .target(name: "Agrume", dependencies: ["SwiftyGif"], path: "./Agrume")
     ]
 )
