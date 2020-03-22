@@ -401,7 +401,8 @@ extension Agrume: AgrumeDataSource {
   }
   
   public func image(forIndex index: Int, completion: @escaping (UIImage?) -> Void) {
-    if let handler = AgrumeServiceLocator.shared.downloadHandler, let url = images[index].url {
+    let downloadHandler = download ?? AgrumeServiceLocator.shared.downloadHandler
+    if let handler = downloadHandler, let url = images[index].url {
       handler(url, completion)
     } else if let url = images[index].url {
       downloadTask = ImageDownloader.downloadImage(url, completion: completion)
