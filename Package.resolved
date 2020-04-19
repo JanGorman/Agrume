@@ -1,0 +1,16 @@
+{
+  "object": {
+    "pins": [
+      {
+        "package": "SwiftyGif",
+        "repositoryURL": "https://github.com/kirualex/SwiftyGif",
+        "state": {
+          "branch": null,
+          "revision": "4d851de4cdecb6c5453c8d529c3578dd49086408",
+          "version": "5.2.0"
+        }
+      }
+    ]
+  },
+  "version": 1
+}

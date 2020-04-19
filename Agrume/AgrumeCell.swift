@@ -19,8 +19,7 @@ final class AgrumeCell: UICollectionViewCell {
   var tapBehavior: Agrume.TapBehavior = .dismissIfZoomedOut
   var hasPhysics = true
 
-  private lazy var scrollView: UIScrollView = {
-    let scrollView = UIScrollView()
+  private lazy var scrollView = with(UIScrollView()) { scrollView in
     scrollView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
     scrollView.delegate = self
     scrollView.zoomScale = 1
@@ -28,34 +27,25 @@ final class AgrumeCell: UICollectionViewCell {
     scrollView.isScrollEnabled = false
     scrollView.showsHorizontalScrollIndicator = false
     scrollView.showsVerticalScrollIndicator = false
-    return scrollView
-  }()
-  private lazy var imageView: UIImageView = {
-    let imageView = UIImageView()
+  }
+  private lazy var imageView = with(UIImageView()) { imageView in
     imageView.contentMode = .scaleAspectFit
     imageView.clipsToBounds = true
     imageView.layer.allowsEdgeAntialiasing = true
-    return imageView
-  }()
+  }
   private var animator: UIDynamicAnimator?
 
-  private lazy var singleTapGesture: UITapGestureRecognizer = {
-    let singleTapGesture = UITapGestureRecognizer(target: self, action: #selector(singleTap))
-    singleTapGesture.require(toFail: doubleTapGesture)
-    singleTapGesture.delegate = self
-    return singleTapGesture
-  }()
-  private lazy var doubleTapGesture: UITapGestureRecognizer = {
-    let doubleTapGesture = UITapGestureRecognizer(target: self, action: #selector(doubleTap))
-    doubleTapGesture.numberOfTapsRequired = 2
-    return doubleTapGesture
-  }()
-  private lazy var panGesture: UIPanGestureRecognizer = {
-    let panGesture = UIPanGestureRecognizer(target: self, action: #selector(dismissPan))
-    panGesture.maximumNumberOfTouches = 1
-    panGesture.delegate = self
-    return panGesture
-  }()
+  private lazy var singleTapGesture = with(UITapGestureRecognizer(target: self, action: #selector(singleTap))) { gesture in
+    gesture.require(toFail: doubleTapGesture)
+    gesture.delegate = self
+  }
+  private lazy var doubleTapGesture = with(UITapGestureRecognizer(target: self, action: #selector(doubleTap))) { gesture in
+    gesture.numberOfTapsRequired = 2
+  }
+  private lazy var panGesture = with(UIPanGestureRecognizer(target: self, action: #selector(dismissPan))) { gesture in
+    gesture.maximumNumberOfTouches = 1
+    gesture.delegate = self
+  }
 
   private var flickedToDismiss = false
   private var isDraggingImage = false
@@ -76,12 +66,10 @@ final class AgrumeCell: UICollectionViewCell {
   }
   weak var delegate: AgrumeCellDelegate?
 
-  private(set) lazy var swipeGesture: UISwipeGestureRecognizer = {
-    let swipeGesture = UISwipeGestureRecognizer(target: self, action: nil)
-    swipeGesture.direction = [.left, .right]
-    swipeGesture.delegate = self
-    return swipeGesture
-  }()
+  private(set) lazy var swipeGesture = with(UISwipeGestureRecognizer(target: self, action: nil)) { gesture in
+    gesture.direction = [.left, .right]
+    gesture.delegate = self
+  }
 
   override init(frame: CGRect) {
     super.init(frame: frame)

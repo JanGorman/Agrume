@@ -24,16 +24,14 @@ final class AgrumeCloseButtonOverlayView: AgrumeOverlayView {
   
   weak var delegate: AgrumeCloseButtonOverlayViewDelegate?
 
-  private lazy var navigationBar: UINavigationBar = {
-    let navigationBar = UINavigationBar()
+  private lazy var navigationBar = with(UINavigationBar()) { navigationBar in
     navigationBar.usesAutoLayout(true)
     navigationBar.backgroundColor = .clear
     navigationBar.isTranslucent = true
     navigationBar.shadowImage = UIImage()
     navigationBar.setBackgroundImage(UIImage(), for: .default)
     navigationBar.items = [navigationItem]
-    return navigationBar
-  }()
+  }
   
   private lazy var navigationItem = UINavigationItem(title: "")
   private lazy var defaultCloseButton = UIBarButtonItem(title: NSLocalizedString("Close", comment: "Close image view"),

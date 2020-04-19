@@ -31,3 +31,17 @@ Carthage/Build/
 # Created by https://www.gitignore.io/api/mac
 
 .DS_Store
+# Created by https://www.gitignore.io/api/SwiftPM
+# Edit at https://www.gitignore.io/?templates=SwiftPM
+
+### SwiftPM ###
+Packages
+.build/
+xcuserdata
+DerivedData/
+*.xcodeproj
+
+
+# End of https://www.gitignore.io/api/SwiftPM
+
+.swiftpm/
