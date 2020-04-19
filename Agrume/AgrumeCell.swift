@@ -310,10 +310,10 @@ extension AgrumeCell: UIGestureRecognizerDelegate {
                      initialSpringVelocity: 0,
                      options: [.allowUserInteraction, .beginFromCurrentState],
                      animations: {
-                      guard !self.isDraggingImage else {
+                      if self.isDraggingImage {
                         return
                       }
-                      
+
                       self.imageView.transform = .identity
                       if !self.scrollView.isDragging && !self.scrollView.isDecelerating {
                         self.recenterImage(size: self.scrollView.contentSize)

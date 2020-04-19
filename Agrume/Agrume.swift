@@ -221,6 +221,10 @@ public final class Agrume: UIViewController {
     }
     return _spinner!
   }
+  // Container for the collection view. Fixes an RTL display bug
+  private lazy var containerView = with(UIView(frame: view.bounds)) { containerView in
+    containerView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+  }
 
   private var downloadTask: URLSessionDataTask?
 
@@ -286,24 +290,26 @@ public final class Agrume: UIViewController {
       blurContainerView.addSubview(blurView)
     }
     view.addSubview(blurContainerView)
-    view.addSubview(collectionView)
+    view.addSubview(containerView)
+    containerView.addSubview(collectionView)
     view.addSubview(spinner)
   }
   
   private func present(from viewController: UIViewController) {
     DispatchQueue.main.async {
       self.blurContainerView.alpha = 1
-      self.collectionView.alpha = 0
+      self.containerView.alpha = 0
       let scale: CGFloat = .initialScaleToExpandFrom
-      self.collectionView.transform = CGAffineTransform(scaleX: scale, y: scale)
+      // Transform the container view, not the collection view to prevent an RTL display bug
+      self.containerView.transform = CGAffineTransform(scaleX: scale, y: scale)
 
       viewController.present(self, animated: false) {
         UIView.animate(withDuration: .transitionAnimationDuration,
                        delay: 0,
                        options: .beginFromCurrentState,
                        animations: {
-                        self.collectionView.alpha = 1
-                        self.collectionView.transform = .identity
+                        self.containerView.alpha = 1
+                        self.containerView.transform = .identity
                         self.addOverlayView()
         }, completion: { _ in
           self.view.isUserInteractionEnabled = true
