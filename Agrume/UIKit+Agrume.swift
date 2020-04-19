@@ -46,6 +46,10 @@ extension UIColor {
 }
 
 extension UICollectionView {
+
+  func register<T: UICollectionViewCell>(_ cell: T.Type) {
+    register(cell, forCellWithReuseIdentifier: String(describing: cell))
+  }
   
   func dequeue<T: UICollectionViewCell>(indexPath: IndexPath) -> T {
     let id = String(describing: T.self)

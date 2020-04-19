@@ -186,11 +186,10 @@ public final class Agrume: UIViewController {
       layout.minimumInteritemSpacing = 0
       layout.minimumLineSpacing = 0
       layout.scrollDirection = .horizontal
-      layout.itemSize = view.frame.size
 
       let collectionView = UICollectionView(frame: view.bounds, collectionViewLayout: layout)
       collectionView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
-      collectionView.register(AgrumeCell.self, forCellWithReuseIdentifier: String(describing: AgrumeCell.self))
+      collectionView.register(AgrumeCell.self)
       collectionView.dataSource = self
       collectionView.delegate = self
       collectionView.isPagingEnabled = true
@@ -345,7 +344,7 @@ public final class Agrume: UIViewController {
   }
 
   public func showImage(atIndex index: Int, animated: Bool = true) {
-    scrollToImage(withIndex: index, animated: animated)
+    scrollToImage(atIndex: index, animated: animated)
   }
 
   public func reload() {
@@ -358,8 +357,8 @@ public final class Agrume: UIViewController {
     hideStatusBar
   }
   
-  private func scrollToImage(withIndex: Int, animated: Bool = false) {
-    collectionView.scrollToItem(at: IndexPath(item: withIndex, section: 0), at: .centeredHorizontally, animated: animated)
+  private func scrollToImage(atIndex index: Int, animated: Bool = false) {
+    collectionView.scrollToItem(at: IndexPath(item: index, section: 0), at: .centeredHorizontally, animated: animated)
   }
   
   private func currentlyVisibleCellIndex() -> Int {
@@ -377,14 +376,14 @@ public final class Agrume: UIViewController {
     spinner.center = view.center
     
     if currentIndex != currentlyVisibleCellIndex() {
-      scrollToImage(withIndex: currentIndex)
+      scrollToImage(atIndex: currentIndex)
     }
   }
   
   override public func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
     let indexToRotate = currentIndex
     let rotationHandler: ((UIViewControllerTransitionCoordinatorContext) -> Void) = { _ in
-      self.scrollToImage(withIndex: indexToRotate)
+      self.scrollToImage(atIndex: indexToRotate)
       self.collectionView.visibleCells.forEach { cell in
         (cell as! AgrumeCell).recenterDuringRotation(size: size)
       }

@@ -337,12 +337,12 @@ extension AgrumeCell: UIGestureRecognizerDelegate {
     if let image = imageView.image ?? imageView.currentImage {
       imageView.frame = resizedFrame(forSize: image.size)
     }
-    scrollView.contentSize = imageView.frame.size
+    scrollView.contentSize = imageView.bounds.size
     scrollView.contentInset = contentInsetForScrollView(atScale: scrollView.zoomScale)
   }
 
   private func resizedFrame(forSize size: CGSize) -> CGRect {
-    var frame = contentView.frame
+    var frame = contentView.bounds
     let screenWidth = frame.width * scrollView.zoomScale
     let screenHeight = frame.height * scrollView.zoomScale
     var targetWidth = screenWidth
@@ -365,7 +365,6 @@ extension AgrumeCell: UIGestureRecognizerDelegate {
     }
 
     frame.size = CGSize(width: targetWidth, height: targetHeight)
-    frame.origin = .zero
     return frame.integral
   }
 
