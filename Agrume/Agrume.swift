@@ -456,7 +456,15 @@ extension Agrume: UICollectionViewDataSource {
 
 }
 
-extension Agrume: UICollectionViewDelegate {
+extension Agrume: UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
+  public func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
+    // Center cells horizontally
+    let cellWidth = view.bounds.width
+    let totalWidth = cellWidth * CGFloat(numberOfImages)
+    let leftInset = max(0, (collectionView.bounds.width - totalWidth) / 2)
+    let rightInset = leftInset
+    return UIEdgeInsets(top: 0, left: leftInset, bottom: 0, right: rightInset)
+  }
 
   public func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
     didScroll?(currentlyVisibleCellIndex())
