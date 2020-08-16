@@ -459,8 +459,7 @@ extension Agrume: UICollectionViewDataSource {
 extension Agrume: UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
   public func collectionView(_ collectionView: UICollectionView,
                              layout collectionViewLayout: UICollectionViewLayout,
-                             insetForSectionAt section: Int) -> UIEdgeInsets
-  {
+                             insetForSectionAt section: Int) -> UIEdgeInsets {
     // Center cells horizontally
     let cellWidth = view.bounds.width
     let totalWidth = cellWidth * CGFloat(numberOfImages)
