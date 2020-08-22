@@ -34,8 +34,10 @@ final class AgrumeCloseButtonOverlayView: AgrumeOverlayView {
   }
   
   private lazy var navigationItem = UINavigationItem(title: "")
-  private lazy var defaultCloseButton = UIBarButtonItem(title: NSLocalizedString("Close", comment: "Close image view"),
-                                                        style: .plain, target: self, action: #selector(close))
+  private lazy var defaultCloseButton = UIBarButtonItem(
+    title: NSLocalizedString("Close", comment: "Close image view"),
+    style: .plain, target: self, action: #selector(close)
+  )
   
   init(closeButton: UIBarButtonItem?) {
     super.init(frame: .zero)

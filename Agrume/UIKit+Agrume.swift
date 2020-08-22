@@ -5,13 +5,11 @@
 import UIKit
 
 extension CGFloat {
-  
   static let initialScaleToExpandFrom: CGFloat = 0.6
   static let maxScaleForExpandingOffscreen: CGFloat = 1.25
   static let targetZoomForDoubleTap: CGFloat = 3
   static let minFlickDismissalVelocity: CGFloat = 800
   static let highScrollVelocity: CGFloat = 1_600
-  
 }
 
 extension CGSize {
@@ -36,13 +34,11 @@ extension UIView {
 }
 
 extension UIColor {
-  
   var isLight: Bool {
     var white: CGFloat = 0
     getWhite(&white, alpha: nil)
     return white > 0.5
   }
-
 }
 
 extension UICollectionView {

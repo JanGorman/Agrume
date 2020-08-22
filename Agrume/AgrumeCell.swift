@@ -151,8 +151,10 @@ extension AgrumeCell: UIGestureRecognizerDelegate {
   
   private func zoom(to point: CGPoint, scale: CGFloat) {
     let factor = 1 / scrollView.zoomScale
-    let translatedZoom = CGPoint(x: (point.x + scrollView.contentOffset.x) * factor,
-                                 y: (point.y + scrollView.contentOffset.y) * factor)
+    let translatedZoom = CGPoint(
+      x: (point.x + scrollView.contentOffset.x) * factor,
+      y: (point.y + scrollView.contentOffset.y) * factor
+    )
 
     let width = scrollView.frame.width / scale
     let height = scrollView.frame.height / scale
@@ -304,23 +306,25 @@ extension AgrumeCell: UIGestureRecognizerDelegate {
       imageView.transform = .identity
       recenterImage(size: scrollView.contentSize)
     } else {
-      UIView.animate(withDuration: duration,
-                     delay: 0,
-                     usingSpringWithDamping: 0.7,
-                     initialSpringVelocity: 0,
-                     options: [.allowUserInteraction, .beginFromCurrentState],
-                     animations: {
-                      if self.isDraggingImage {
-                        return
-                      }
+      UIView.animate(
+        withDuration: duration,
+        delay: 0,
+        usingSpringWithDamping: 0.7,
+        initialSpringVelocity: 0,
+        options: [.allowUserInteraction, .beginFromCurrentState],
+        animations: {
+          if self.isDraggingImage {
+            return
+          }
 
-                      self.imageView.transform = .identity
-                      if !self.scrollView.isDragging && !self.scrollView.isDecelerating {
-                        self.recenterImage(size: self.scrollView.contentSize)
-                        self.updateScrollViewAndImageViewForCurrentMetrics()
-                      }
-        })
-      }
+          self.imageView.transform = .identity
+          if !self.scrollView.isDragging && !self.scrollView.isDecelerating {
+            self.recenterImage(size: self.scrollView.contentSize)
+            self.updateScrollViewAndImageViewForCurrentMetrics()
+          }
+        }
+      )
+    }
   }
   
   func recenterDuringRotation(size: CGSize) {

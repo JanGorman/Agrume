@@ -58,9 +58,11 @@ final class MultipleImagesCustomOverlayView: UICollectionViewController {
 
 extension MultipleImagesCustomOverlayView: OverlayViewDelegate {
   func overlayView(_ overlayView: OverlayView, didSelectAction action: String) {
-    let alert = UIAlertController(title: nil,
-                                  message: "You selected \(action) for image \((agrume?.currentIndex ?? 0) + 1)",
-                                  preferredStyle: .alert)
+    let alert = UIAlertController(
+      title: nil,
+      message: "You selected \(action) for image \((agrume?.currentIndex ?? 0) + 1)",
+      preferredStyle: .alert
+    )
     alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
     agrume?.present(alert, animated: true)
   }
