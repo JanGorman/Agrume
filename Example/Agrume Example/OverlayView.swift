@@ -15,11 +15,12 @@ final class OverlayView: AgrumeOverlayView {
     let toolbar = UIToolbar()
     toolbar.translatesAutoresizingMaskIntoConstraints = false
     
-    toolbar.setItems([
-      UIBarButtonItem(barButtonSystemItem: .action, target: self, action: #selector(selectShare)),
-      UIBarButtonItem(barButtonSystemItem: .trash, target: self, action: #selector(selectDelete)),
-      UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(selectDone))
-    ], animated: false)
+    toolbar.setItems(
+      [UIBarButtonItem(barButtonSystemItem: .action, target: self, action: #selector(selectShare)),
+       UIBarButtonItem(barButtonSystemItem: .trash, target: self, action: #selector(selectDelete)),
+       UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(selectDone))],
+      animated: false
+    )
     
     return toolbar
   }()

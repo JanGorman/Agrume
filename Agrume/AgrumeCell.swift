@@ -33,8 +33,6 @@ final class AgrumeCell: UICollectionViewCell {
     imageView.clipsToBounds = true
     imageView.layer.allowsEdgeAntialiasing = true
   }
-  private var animator: UIDynamicAnimator?
-
   private lazy var singleTapGesture = with(UITapGestureRecognizer(target: self, action: #selector(singleTap))) { gesture in
     gesture.require(toFail: doubleTapGesture)
     gesture.delegate = self
@@ -47,6 +45,7 @@ final class AgrumeCell: UICollectionViewCell {
     gesture.delegate = self
   }
 
+  private var animator: UIDynamicAnimator?
   private var flickedToDismiss = false
   private var isDraggingImage = false
   private var imageDragStartingPoint: CGPoint!
@@ -119,13 +118,13 @@ extension AgrumeCell: UIGestureRecognizerDelegate {
   }
 
   override func gestureRecognizerShouldBegin(_ gestureRecognizer: UIGestureRecognizer) -> Bool {
-    if let pan = gestureRecognizer as? UIPanGestureRecognizer, notZoomed {
+    if notZoomed, let pan = gestureRecognizer as? UIPanGestureRecognizer {
       let velocity = pan.velocity(in: scrollView)
-      if let delegate = delegate, delegate.isSingleImageMode {
+      if delegate?.isSingleImageMode == true {
         return true
       }
       return abs(velocity.y) > abs(velocity.x)
-    } else if gestureRecognizer as? UISwipeGestureRecognizer != nil, notZoomed {
+    } else if notZoomed, gestureRecognizer as? UISwipeGestureRecognizer != nil {
       return false
     }
     return true
@@ -239,17 +238,17 @@ extension AgrumeCell: UIGestureRecognizerDelegate {
     if !hasPhysics {
       return
     }
-    let translation = gesture.translation(in: gesture.view!)
+    let translation = gesture.translation(in: gesture.view)
     let locationInView = gesture.location(in: gesture.view)
     let velocity = gesture.velocity(in: gesture.view)
     let vectorDistance = sqrt(pow(velocity.x, 2) + pow(velocity.y, 2))
 
-    if gesture.state == .began {
+    if case .began = gesture.state {
       isDraggingImage = imageView.frame.contains(locationInView)
       if isDraggingImage {
         startImageDragging(locationInView, translationOffset: .zero)
       }
-    } else if gesture.state == .changed {
+    } else if case .changed = gesture.state {
       if isDraggingImage {
         var newAnchor = imageDragStartingPoint
         newAnchor?.x += translation.x + imageDragOffsetFromActualTranslation.horizontal

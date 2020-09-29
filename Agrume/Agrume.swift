@@ -208,9 +208,9 @@ public final class Agrume: UIViewController {
     if _spinner == nil {
       let indicatorStyle: UIActivityIndicatorView.Style
       switch background {
-      case .blurred(let style):
+      case let .blurred(style):
         indicatorStyle = style == .dark ? .whiteLarge : .gray
-      case .colored(let color):
+      case let .colored(color):
         indicatorStyle = color.isLight ? .gray : .whiteLarge
       }
       let spinner = UIActivityIndicatorView(style: indicatorStyle)
@@ -272,7 +272,7 @@ public final class Agrume: UIViewController {
 
   @objc
   func didLongPress(_ gesture: UIGestureRecognizer) {
-    guard gesture.state == .began else {
+    guard case .began = gesture.state else {
       return
     }
     fetchImage(forIndex: currentIndex) { [weak self] image in
@@ -323,7 +323,7 @@ public final class Agrume: UIViewController {
   
   private func addOverlayView() {
     switch (dismissal, overlayView) {
-    case (.withButton(let button), _), (.withPhysicsAndButton(let button), _):
+    case let (.withButton(button), _), let (.withPhysicsAndButton(button), _):
       let overlayView = AgrumeCloseButtonOverlayView(closeButton: button)
       overlayView.delegate = self
       overlayView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
