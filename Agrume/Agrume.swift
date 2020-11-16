@@ -465,7 +465,7 @@ extension Agrume: UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
                              insetForSectionAt section: Int) -> UIEdgeInsets {
     // Center cells horizontally
     let cellWidth = view.bounds.width
-    let totalWidth = cellWidth * CGFloat(numberOfImages)
+    let totalWidth = cellWidth * CGFloat(dataSource?.numberOfImages ?? 0)
     let leftRightEdgeInset = max(0, (collectionView.bounds.width - totalWidth) / 2)
     return UIEdgeInsets(top: 0, left: leftRightEdgeInset, bottom: 0, right: leftRightEdgeInset)
   }
