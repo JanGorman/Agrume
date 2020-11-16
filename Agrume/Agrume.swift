@@ -405,7 +405,11 @@ public final class Agrume: UIViewController {
 extension Agrume: AgrumeDataSource {
   
   public var numberOfImages: Int {
-    images.count
+    if let images = self.images {
+      return images.count
+    } else {
+      return self.dataSource?.numberOfImages ?? 0
+    }
   }
   
   public func image(forIndex index: Int, completion: @escaping (UIImage?) -> Void) {
