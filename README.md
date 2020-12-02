@@ -43,8 +43,9 @@ For just a single image it's as easy as
 ```swift
 import Agrume
 
+private lazy var agrume = Agrume(image: UIImage(named: "…")!)
+
 @IBAction func openImage(_ sender: Any) {
-  let agrume = Agrume(image: UIImage(named: "…")!)
   agrume.show(from: self)
 }
 ```
@@ -124,8 +125,9 @@ If you want to take control of downloading images (e.g. for caching), you can al
 import Agrume
 import MapleBacon
 
+private lazy var agrume = Agrume(url: URL(string: "https://dl.dropboxusercontent.com/u/512759/MapleBacon.png")!)
+
 @IBAction func openURL(_ sender: Any) {
-  let agrume = Agrume(url: URL(string: "https://dl.dropboxusercontent.com/u/512759/MapleBacon.png")!)
   agrume.download = { url, completion in
     Downloader.default.download(url) { image in
       completion(image)
@@ -206,6 +208,7 @@ You can customise the look and functionality of the image views. To do so, you n
 ### Lifecycle
 
 `Agrume` offers the following lifecycle closures that you can optionally set:
+
 - `willDismiss`
 - `didDismiss`
 - `didScroll`
