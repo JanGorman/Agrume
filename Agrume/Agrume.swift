@@ -300,10 +300,11 @@ public final class Agrume: UIViewController {
       self.blurContainerView.alpha = 1
       self.containerView.alpha = 0
       let scale: CGFloat = .initialScaleToExpandFrom
-      // Transform the container view, not the collection view to prevent an RTL display bug
-      self.containerView.transform = CGAffineTransform(scaleX: scale, y: scale)
 
       viewController.present(self, animated: false) {
+        // Transform the container view, not the collection view to prevent an RTL display bug
+        self.containerView.transform = CGAffineTransform(scaleX: scale, y: scale)
+        
         UIView.animate(
           withDuration: .transitionAnimationDuration,
           delay: 0,
