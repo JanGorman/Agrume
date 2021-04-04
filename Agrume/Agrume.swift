@@ -349,6 +349,16 @@ public final class Agrume: UIViewController {
     return presentingVC
   }
 
+  public override var keyCommands: [UIKeyCommand]? {
+    return [
+      UIKeyCommand(input: UIKeyCommand.inputEscape, modifierFlags: [], action: #selector(escPressed)),
+    ]
+  }
+
+  @objc func escPressed() {
+    dismiss()
+  }
+  
   public func dismiss() {
     dismissAfterFlick()
   }
