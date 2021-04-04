@@ -355,7 +355,7 @@ public final class Agrume: UIViewController {
     ]
   }
 
-  @objc 
+  @objc
   func escPressed() {
     dismiss()
   }
