@@ -446,6 +446,7 @@ extension Agrume: UICollectionViewDataSource {
     dataSource?.numberOfImages ?? 0
   }
 
+  @MainActor
   public func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
     let cell: AgrumeCell = collectionView.dequeue(indexPath: indexPath)
 
@@ -458,9 +459,16 @@ extension Agrume: UICollectionViewDataSource {
     }
 
     spinner.alpha = 1
-    fetchImage(forIndex: indexPath.item) { [weak self] image in
-      cell.image = image
-      self?.spinner.alpha = 0
+    if #available(iOS 15.0, *) {
+      Task {
+        cell.image = await dataSource?.asyncImage(forIndex: indexPath.item)
+        spinner.alpha = 0
+      }
+    } else {
+      fetchImage(forIndex: indexPath.item) { [weak self] image in
+        cell.image = image
+        self?.spinner.alpha = 0
+      }
     }
     // Only allow panning if horizontal swiping fails. Horizontal swiping is only active for zoomed in images
     collectionView.panGestureRecognizer.require(toFail: cell.swipeGesture)
@@ -468,22 +476,13 @@ extension Agrume: UICollectionViewDataSource {
     return cell
   }
 
-  @MainActor
   private func fetchImage(forIndex index: Int, handler: @escaping (UIImage?) -> Void) {
-    if #available(iOS 15.0.0, *) {
-      Task {
-        let image = await dataSource?.asyncImage(forIndex: index)
+    dataSource?.image(forIndex: index) { image in
+      DispatchQueue.main.async {
         handler(image)
-      }
-    } else {
-      dataSource?.image(forIndex: index) { image in
-        DispatchQueue.main.async {
-          handler(image)
-        }
       }
     }
   }
-
 }
 
 extension Agrume: UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
