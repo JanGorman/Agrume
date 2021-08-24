@@ -579,8 +579,7 @@ extension Agrume: AgrumeCellDelegate {
         if let overlayView = self.overlayView {
           overlayView.alpha = overlayView.alpha < 0.5 ? 1 : 0
         }
-      },
-      completion: nil
+      }
     )
   }
 }
