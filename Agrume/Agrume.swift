@@ -415,7 +415,7 @@ public final class Agrume: UIViewController {
 }
 
 extension Agrume: AgrumeDataSource {
-  
+
   public var numberOfImages: Int {
     images.count
   }
@@ -430,7 +430,14 @@ extension Agrume: AgrumeDataSource {
       completion(images[index].image)
     }
   }
-  
+
+  @available(iOS 15.0.0, *)
+  public func asyncImage(forIndex index: Int) async -> UIImage? {
+    if let url = images[index].url {
+      return try? await ImageDownloader.asyncImage(url)
+    }
+    return images[index].image
+  }
 }
 
 extension Agrume: UICollectionViewDataSource {
@@ -461,10 +468,18 @@ extension Agrume: UICollectionViewDataSource {
     return cell
   }
 
+  @MainActor
   private func fetchImage(forIndex index: Int, handler: @escaping (UIImage?) -> Void) {
-    dataSource?.image(forIndex: index) { image in
-      DispatchQueue.main.async {
+    if #available(iOS 15.0.0, *) {
+      Task {
+        let image = await dataSource?.asyncImage(forIndex: index)
         handler(image)
+      }
+    } else {
+      dataSource?.image(forIndex: index) { image in
+        DispatchQueue.main.async {
+          handler(image)
+        }
       }
     }
   }

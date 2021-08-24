@@ -14,5 +14,10 @@ public protocol AgrumeDataSource: AnyObject {
   /// - Parameter index: The index (collection view item) being displayed
   /// - Parameter completion: The completion that returns the image to be shown at the index
   func image(forIndex index: Int, completion: @escaping (UIImage?) -> Void)
+
+  @available(iOS 15.0.0, *)
+  /// Return the image for the passed index
+  /// - Returns: an optional UIImage
+  func asyncImage(forIndex index: Int) async -> UIImage?
   
 }

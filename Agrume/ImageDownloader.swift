@@ -30,6 +30,18 @@ final class ImageDownloader {
     task.resume()
     return task
   }
+
+  @available(iOS 15.0.0, *)
+  @MainActor
+  static func asyncImage(_ url: URL) async throws -> UIImage? {
+    let session = URLSession(configuration: newConfiguration())
+    let (data, _) = try await session.data(from: url)
+
+    if isAnimatedImage(data) {
+      return try? UIImage(gifData: data)
+    }
+    return UIImage(data: data)
+  }
   
   private static func newConfiguration() -> URLSessionConfiguration {
     let configuration = URLSessionConfiguration.default
