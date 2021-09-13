@@ -70,7 +70,9 @@ final class AgrumeCell: UICollectionViewCell {
                relativeZoomScaleBeforeUpdate > 1 {
         // Since navigation require zoom level to be at 1, so zoomScale > 1 implies that this image set is trigger by image update instead cell re-use.
         // In this case we retain the pre-update zoom scale & position
-        zoom(to: CGPoint(x: scrollView.frame.size.width * relativeCenterBeforeUpdate.x, y: scrollView.frame.size.height * relativeCenterBeforeUpdate.y), scale: relativeZoomScaleBeforeUpdate)
+        zoom(to: CGPoint(x: scrollView.frame.size.width * relativeCenterBeforeUpdate.x, y: scrollView.frame.size.height * relativeCenterBeforeUpdate.y),
+             scale: relativeZoomScaleBeforeUpdate,
+             animated: false)
       }
     }
   }
@@ -165,7 +167,7 @@ extension AgrumeCell: UIGestureRecognizerDelegate {
     }
   }
   
-  private func zoom(to point: CGPoint, scale: CGFloat) {
+  private func zoom(to point: CGPoint, scale: CGFloat, animated: Bool = true) {
     let factor = 1 / scrollView.zoomScale
     let translatedZoom = CGPoint(
       x: (point.x + scrollView.contentOffset.x) * factor,
@@ -182,7 +184,7 @@ extension AgrumeCell: UIGestureRecognizerDelegate {
     CATransaction.setCompletionBlock { [unowned self] in
       self.contentView.isUserInteractionEnabled = true
     }
-    scrollView.zoom(to: destination, animated: true)
+    scrollView.zoom(to: destination, animated: animated)
     CATransaction.commit()
   }
 
