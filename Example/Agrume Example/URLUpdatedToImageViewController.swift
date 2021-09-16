@@ -19,7 +19,7 @@ final class URLUpdatedToImageViewController: UIViewController {
     agrume.show(from: self)
     
     DispatchQueue.main.asyncAfter(deadline: .now() + 5) {
-      agrume.updateImage(at: 0, with: UIImage(named: "MapleBacon")!)
+      agrume.updateImage(at: 0, with: URL(string: "https://placekitten.com/2500/2500")!)
     }
   }
 }

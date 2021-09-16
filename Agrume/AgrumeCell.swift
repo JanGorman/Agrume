@@ -53,9 +53,13 @@ final class AgrumeCell: UICollectionViewCell {
   private var imageDragOffsetFromImageCenter: UIOffset!
   private var attachmentBehavior: UIAttachmentBehavior?
   
-  private var relativeZoomScaleBeforeUpdate: CGFloat?
-  private var relativeCenterBeforeUpdate: CGPoint?
 
+  // index of the cell in the collection view
+  var index = 0
+  
+  // if set to true, it means we are updating image on the same cell, so we want to reserve the zoom level & position
+  var updatingImageOnSameCell = false
+  
   var image: UIImage? {
     didSet {
       if image?.imageData != nil, let image = image {
@@ -63,17 +67,10 @@ final class AgrumeCell: UICollectionViewCell {
       } else {
         imageView.image = image
       }
-      updateScrollViewAndImageViewForCurrentMetrics()
-
-      if let relativeZoomScaleBeforeUpdate = relativeZoomScaleBeforeUpdate,
-         let relativeCenterBeforeUpdate = relativeCenterBeforeUpdate,
-               relativeZoomScaleBeforeUpdate > 1 {
-        // Since navigation require zoom level to be at 1, so zoomScale > 1 implies that this image set is trigger by image update instead cell re-use.
-        // In this case we retain the pre-update zoom scale & position
-        zoom(to: CGPoint(x: scrollView.frame.size.width * relativeCenterBeforeUpdate.x, y: scrollView.frame.size.height * relativeCenterBeforeUpdate.y),
-             scale: relativeZoomScaleBeforeUpdate,
-             animated: false)
+      if !updatingImageOnSameCell {
+        updateScrollViewAndImageViewForCurrentMetrics()
       }
+      updatingImageOnSameCell = false
     }
   }
   weak var delegate: AgrumeCellDelegate?
@@ -102,14 +99,11 @@ final class AgrumeCell: UICollectionViewCell {
   override func prepareForReuse() {
     super.prepareForReuse()
 
-    relativeZoomScaleBeforeUpdate = scrollView.zoomScale
-    relativeCenterBeforeUpdate = CGPoint(
-      x: (scrollView.contentOffset.x + scrollView.frame.width / 2) / scrollView.contentSize.width,
-      y: (scrollView.contentOffset.y + scrollView.frame.height / 2) / scrollView.contentSize.height)
-
-    imageView.image = nil
-    scrollView.zoomScale = 1
-    updateScrollViewAndImageViewForCurrentMetrics()
+    if !updatingImageOnSameCell {
+      imageView.image = nil
+      scrollView.zoomScale = 1
+      updateScrollViewAndImageViewForCurrentMetrics()
+    }
   }
 
   private func setupGestureRecognizers() {

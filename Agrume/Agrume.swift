@@ -270,6 +270,11 @@ public final class Agrume: UIViewController {
         $0.title = newTitle
       }
     }
+    collectionView.visibleCells.forEach({ cell in
+      if let cell = cell as? AgrumeCell, cell.index == index {
+        cell.updatingImageOnSameCell = true
+      }
+    })
     images[index] = replacement
     reload()
   }
@@ -466,6 +471,7 @@ extension Agrume: UICollectionViewDataSource {
 
     spinner.alpha = 1
     fetchImage(forIndex: indexPath.item) { [weak self] image in
+      cell.index = indexPath.item
       cell.image = image
       self?.spinner.alpha = 0
     }
