@@ -161,7 +161,7 @@ extension AgrumeCell: UIGestureRecognizerDelegate {
     }
   }
   
-  private func zoom(to point: CGPoint, scale: CGFloat, animated: Bool = true) {
+  private func zoom(to point: CGPoint, scale: CGFloat) {
     let factor = 1 / scrollView.zoomScale
     let translatedZoom = CGPoint(
       x: (point.x + scrollView.contentOffset.x) * factor,
@@ -178,7 +178,7 @@ extension AgrumeCell: UIGestureRecognizerDelegate {
     CATransaction.setCompletionBlock { [unowned self] in
       self.contentView.isUserInteractionEnabled = true
     }
-    scrollView.zoom(to: destination, animated: animated)
+    scrollView.zoom(to: destination, animated: true)
     CATransaction.commit()
   }
 
