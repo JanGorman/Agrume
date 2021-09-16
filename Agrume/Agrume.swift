@@ -252,6 +252,8 @@ public final class Agrume: UIViewController {
         $0.title = newTitle
       }
     }
+    
+    markAsUpdatingSameCell(at: index)
     images[index] = replacement
     reload()
   }
@@ -270,13 +272,18 @@ public final class Agrume: UIViewController {
         $0.title = newTitle
       }
     }
+    
+    markAsUpdatingSameCell(at: index)
+    images[index] = replacement
+    reload()
+  }
+  
+  private func markAsUpdatingSameCell(at index: Int) {
     collectionView.visibleCells.forEach({ cell in
       if let cell = cell as? AgrumeCell, cell.index == index {
         cell.updatingImageOnSameCell = true
       }
     })
-    images[index] = replacement
-    reload()
   }
   
   override public func viewDidLoad() {
