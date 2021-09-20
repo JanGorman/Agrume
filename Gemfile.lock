@@ -47,7 +47,7 @@ GEM
       no_proxy_fix
       octokit (~> 4.7)
       terminal-table (>= 1, < 4)
-    danger-swiftlint (0.27.0)
+    danger-swiftlint (0.29.4)
       danger
       rake (> 10)
       thor (~> 0.19)
@@ -59,7 +59,7 @@ GEM
     dotenv (2.7.6)
     emoji_regex (3.2.2)
     excon (0.85.0)
-    faraday (1.7.2)
+    faraday (1.8.0)
       faraday-em_http (~> 1.0)
       faraday-em_synchrony (~> 1.0)
       faraday-excon (~> 1.1)
