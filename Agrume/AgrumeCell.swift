@@ -55,7 +55,7 @@ final class AgrumeCell: UICollectionViewCell {
   
 
   // index of the cell in the collection view
-  var index = 0
+  var index: Int?
   
   // if set to true, it means we are updating image on the same cell, so we want to reserve the zoom level & position
   var updatingImageOnSameCell = false
