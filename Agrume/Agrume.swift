@@ -279,11 +279,11 @@ public final class Agrume: UIViewController {
   }
   
   private func markAsUpdatingSameCell(at index: Int) {
-    collectionView.visibleCells.forEach({ cell in
+    collectionView.visibleCells.forEach { cell in
       if let cell = cell as? AgrumeCell, cell.index == index {
         cell.updatingImageOnSameCell = true
       }
-    })
+    }
   }
   
   override public func viewDidLoad() {
