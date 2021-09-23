@@ -242,9 +242,18 @@ public final class Agrume: UIViewController {
   /// - Parameters:
   ///   - index: The target index
   ///   - image: The replacement UIImage
-  public func updateImage(at index: Int, with image: UIImage) {
+  ///   - newTitle: The new title, if nil then no change
+  public func updateImage(at index: Int, with image: UIImage, newTitle: NSAttributedString? = nil) {
     assert(images.count > index)
-    let replacement = with(images[index]) { $0.image = image }
+    let replacement = with(images[index]) {
+      $0.url = nil
+      $0.image = image
+      if let newTitle = newTitle {
+        $0.title = newTitle
+      }
+    }
+    
+    markAsUpdatingSameCell(at: index)
     images[index] = replacement
     reload()
   }
@@ -253,11 +262,28 @@ public final class Agrume: UIViewController {
   /// - Parameters:
   ///   - index: The target index
   ///   - url: The replacement URL
-  public func updateImage(at index: Int, with url: URL) {
+  ///   - newTitle: The new title, if nil then no change
+  public func updateImage(at index: Int, with url: URL, newTitle: NSAttributedString? = nil) {
     assert(images.count > index)
-    let replacement = with(images[index]) { $0.url = url }
+    let replacement = with(images[index]) {
+      $0.image = nil
+      $0.url = url
+      if let newTitle = newTitle {
+        $0.title = newTitle
+      }
+    }
+    
+    markAsUpdatingSameCell(at: index)
     images[index] = replacement
     reload()
+  }
+  
+  private func markAsUpdatingSameCell(at index: Int) {
+    collectionView.visibleCells.forEach { cell in
+      if let cell = cell as? AgrumeCell, cell.index == index {
+        cell.updatingImageOnSameCell = true
+      }
+    }
   }
   
   override public func viewDidLoad() {
@@ -452,6 +478,7 @@ extension Agrume: UICollectionViewDataSource {
 
     spinner.alpha = 1
     fetchImage(forIndex: indexPath.item) { [weak self] image in
+      cell.index = indexPath.item
       cell.image = image
       self?.spinner.alpha = 0
     }
