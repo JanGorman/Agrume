@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		39CA658926EFFC5700A5A910 /* URLUpdatedToImageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39CA658826EFFC5700A5A910 /* URLUpdatedToImageViewController.swift */; };
 		771DA7342179EF1800541206 /* SwiftyGif.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 771DA7332179EF1800541206 /* SwiftyGif.framework */; };
 		9464AFE923C692C7006ADEBD /* OverlayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9464AFE823C692C7006ADEBD /* OverlayView.swift */; };
 		948117D723C7A83600AE200D /* MultipleImagesCustomOverlayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 948117D623C7A83600AE200D /* MultipleImagesCustomOverlayView.swift */; };
@@ -85,6 +86,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		39CA658826EFFC5700A5A910 /* URLUpdatedToImageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLUpdatedToImageViewController.swift; sourceTree = "<group>"; };
 		771DA7332179EF1800541206 /* SwiftyGif.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = SwiftyGif.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		9464AFE823C692C7006ADEBD /* OverlayView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OverlayView.swift; sourceTree = "<group>"; };
 		948117D623C7A83600AE200D /* MultipleImagesCustomOverlayView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MultipleImagesCustomOverlayView.swift; sourceTree = "<group>"; };
@@ -183,6 +185,7 @@
 				E77809E21D17821400CC60F1 /* SingleImageModalViewController.swift */,
 				F2D9598D1B1A133800073772 /* SingleImageViewController.swift */,
 				F2D959901B1A140200073772 /* SingleURLViewController.swift */,
+				39CA658826EFFC5700A5A910 /* URLUpdatedToImageViewController.swift */,
 				F2A520181B130C7E00924912 /* Supporting Files */,
 			);
 			path = "Agrume Example";
@@ -354,6 +357,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				E77809E31D17821400CC60F1 /* SingleImageModalViewController.swift in Sources */,
+				39CA658926EFFC5700A5A910 /* URLUpdatedToImageViewController.swift in Sources */,
 				F2D959911B1A140200073772 /* SingleURLViewController.swift in Sources */,
 				F2D7BA1F20A47FB500D5EE66 /* AnimatedGifViewController.swift in Sources */,
 				948117D723C7A83600AE200D /* MultipleImagesCustomOverlayView.swift in Sources */,

@@ -53,7 +53,14 @@ final class AgrumeCell: UICollectionViewCell {
   private var imageDragOffsetFromActualTranslation: UIOffset!
   private var imageDragOffsetFromImageCenter: UIOffset!
   private var attachmentBehavior: UIAttachmentBehavior?
+  
 
+  // index of the cell in the collection view
+  var index: Int?
+  
+  // if set to true, it means we are updating image on the same cell, so we want to reserve the zoom level & position
+  var updatingImageOnSameCell = false
+  
   var image: UIImage? {
     didSet {
       if image?.imageData != nil, let image = image {
@@ -61,7 +68,10 @@ final class AgrumeCell: UICollectionViewCell {
       } else {
         imageView.image = image
       }
-      updateScrollViewAndImageViewForCurrentMetrics()
+      if !updatingImageOnSameCell {
+        updateScrollViewAndImageViewForCurrentMetrics()
+      }
+      updatingImageOnSameCell = false
     }
   }
   weak var delegate: AgrumeCellDelegate?
@@ -89,9 +99,12 @@ final class AgrumeCell: UICollectionViewCell {
 
   override func prepareForReuse() {
     super.prepareForReuse()
-    imageView.image = nil
-    scrollView.zoomScale = 1
-    updateScrollViewAndImageViewForCurrentMetrics()
+
+    if !updatingImageOnSameCell {
+      imageView.image = nil
+      scrollView.zoomScale = 1
+      updateScrollViewAndImageViewForCurrentMetrics()
+    }
   }
 
   private func setupGestureRecognizers() {
