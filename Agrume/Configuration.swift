@@ -19,7 +19,16 @@ public enum Background {
 /// - withButton: Overlay with a close button. Pass an optional `UIBarButtonItem` to control the look
 /// - withPhysicsAndButton: Combines both behaviours. Physics and the close button all in one
 public enum Dismissal {
-  case withPhysics
+  /// Type of physics effect
+  ///
+  /// - panHorizontalAndVertical: Allow panning freely along X and Y axes
+  /// - panVerticalOnly: Only allow panning along the Y axis
+  public enum PhysicsBehavior {
+    case panHorizontalAndVertical
+    case panVerticalOnly
+  }
+  
+  case withPhysics(PhysicsBehavior)
   case withButton(UIBarButtonItem?)
-  case withPhysicsAndButton(UIBarButtonItem?)
+  case withPhysicsAndButton(PhysicsBehavior, UIBarButtonItem?)
 }
