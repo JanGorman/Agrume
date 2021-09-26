@@ -63,7 +63,7 @@ public final class Agrume: UIViewController {
   ///   - background: The background configuration
   ///   - dismissal: The dismiss configuration
   ///   - overlayView: View to overlay the image (does not display with 'button' dismissals)
-  public convenience init(image: UIImage, background: Background = .colored(.black), dismissal: Dismissal = .withPhysics,
+  public convenience init(image: UIImage, background: Background = .colored(.black), dismissal: Dismissal = .withPhysics(.panHorizontalAndVertical),
                           overlayView: AgrumeOverlayView? = nil) {
     self.init(images: [image], background: background, dismissal: dismissal, overlayView: overlayView)
   }
@@ -75,7 +75,7 @@ public final class Agrume: UIViewController {
   ///   - background: The background configuration
   ///   - dismissal: The dismiss configuration
   ///   - overlayView: View to overlay the image (does not display with 'button' dismissals)
-  public convenience init(url: URL, background: Background = .colored(.black), dismissal: Dismissal = .withPhysics,
+  public convenience init(url: URL, background: Background = .colored(.black), dismissal: Dismissal = .withPhysics(.panHorizontalAndVertical),
                           overlayView: AgrumeOverlayView? = nil) {
     self.init(urls: [url], background: background, dismissal: dismissal, overlayView: overlayView)
   }
@@ -89,7 +89,7 @@ public final class Agrume: UIViewController {
   ///   - dismissal: The dismiss configuration
   ///   - overlayView: View to overlay the image (does not display with 'button' dismissals)
   public convenience init(dataSource: AgrumeDataSource, startIndex: Int = 0, background: Background = .colored(.black),
-                          dismissal: Dismissal = .withPhysics, overlayView: AgrumeOverlayView? = nil) {
+                          dismissal: Dismissal = .withPhysics(.panHorizontalAndVertical), overlayView: AgrumeOverlayView? = nil) {
     self.init(images: nil, dataSource: dataSource, startIndex: startIndex, background: background, dismissal: dismissal,
               overlayView: overlayView)
   }
@@ -103,7 +103,7 @@ public final class Agrume: UIViewController {
   ///   - dismissal: The dismiss configuration
   ///   - overlayView: View to overlay the image (does not display with 'button' dismissals)
   public convenience init(images: [UIImage], startIndex: Int = 0, background: Background = .colored(.black),
-                          dismissal: Dismissal = .withPhysics, overlayView: AgrumeOverlayView? = nil) {
+                          dismissal: Dismissal = .withPhysics(.panHorizontalAndVertical), overlayView: AgrumeOverlayView? = nil) {
     self.init(images: images, urls: nil, startIndex: startIndex, background: background, dismissal: dismissal, overlayView: overlayView)
   }
 
@@ -116,7 +116,7 @@ public final class Agrume: UIViewController {
   ///   - dismissal: The dismiss configuration
   ///   - overlayView: View to overlay the image (does not display with 'button' dismissals)
   public convenience init(urls: [URL], startIndex: Int = 0, background: Background = .colored(.black),
-                          dismissal: Dismissal = .withPhysics, overlayView: AgrumeOverlayView? = nil) {
+                          dismissal: Dismissal = .withPhysics(.panHorizontalAndVertical), overlayView: AgrumeOverlayView? = nil) {
     self.init(images: nil, urls: urls, startIndex: startIndex, background: background, dismissal: dismissal, overlayView: overlayView)
   }
 
@@ -324,7 +324,7 @@ public final class Agrume: UIViewController {
   
   private func addOverlayView() {
     switch (dismissal, overlayView) {
-    case let (.withButton(button), _), let (.withPhysicsAndButton(button), _):
+    case let (.withButton(button), _), let (.withPhysicsAndButton(_, button), _):
       let overlayView = AgrumeCloseButtonOverlayView(closeButton: button)
       overlayView.delegate = self
       overlayView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
@@ -444,10 +444,10 @@ extension Agrume: UICollectionViewDataSource {
 
     cell.tapBehavior = tapBehavior
     switch dismissal {
-    case .withPhysics, .withPhysicsAndButton:
-      cell.hasPhysics = true
+    case .withPhysics(let behavior), .withPhysicsAndButton(let behavior, _):
+      cell.physicsBehavior = behavior
     case .withButton:
-      cell.hasPhysics = false
+      cell.physicsBehavior = nil
     }
 
     spinner.alpha = 1

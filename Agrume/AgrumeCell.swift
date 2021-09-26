@@ -17,7 +17,8 @@ protocol AgrumeCellDelegate: AnyObject {
 final class AgrumeCell: UICollectionViewCell {
 
   var tapBehavior: Agrume.TapBehavior = .dismissIfZoomedOut
-  var hasPhysics = true
+  /// Specifies dismissal physics behavior; if `nil` then no physics is used for dismissal.
+  var physicsBehavior: Dismissal.PhysicsBehavior? = .panHorizontalAndVertical
 
   private lazy var scrollView = with(UIScrollView()) { scrollView in
     scrollView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
@@ -77,7 +78,7 @@ final class AgrumeCell: UICollectionViewCell {
     contentView.addSubview(scrollView)
     scrollView.addSubview(imageView)
     setupGestureRecognizers()
-    if hasPhysics {
+    if physicsBehavior != nil {
       animator = UIDynamicAnimator(referenceView: scrollView)
     }
   }
@@ -235,9 +236,8 @@ extension AgrumeCell: UIGestureRecognizerDelegate {
 
   @objc
   private func dismissPan(_ gesture: UIPanGestureRecognizer) {
-    if !hasPhysics {
-      return
-    }
+    guard let physicsBehavior = physicsBehavior else { return }
+
     let translation = gesture.translation(in: gesture.view)
     let locationInView = gesture.location(in: gesture.view)
     let velocity = gesture.velocity(in: gesture.view)
@@ -380,13 +380,14 @@ extension AgrumeCell: UIGestureRecognizerDelegate {
     let offset = UIOffset(horizontal: locationInView.x - imageCenter.x, vertical: locationInView.y - imageCenter.y)
     imageDragOffsetFromImageCenter = offset
 
-    if hasPhysics {
+    if let physicsBehavior = physicsBehavior {
       attachmentBehavior = UIAttachmentBehavior(item: imageView, offsetFromCenter: offset, attachedToAnchor: anchor!)
       animator!.addBehavior(attachmentBehavior!)
       
       let modifier = UIDynamicItemBehavior(items: [imageView])
       modifier.angularResistance = angularResistance(in: imageView)
       modifier.density = density(in: imageView)
+      modifier.allowsRotation = physicsBehavior.allowsRotation
       animator!.addBehavior(modifier)
     }
   }

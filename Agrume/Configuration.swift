@@ -26,6 +26,13 @@ public enum Dismissal {
   public enum PhysicsBehavior {
     case panHorizontalAndVertical
     case panVerticalOnly
+
+    var allowsRotation: Bool {
+      switch self {
+      case .panVerticalOnly: return false
+      case .panHorizontalAndVertical: return true
+      }
+    }
   }
   
   case withPhysics(PhysicsBehavior)
