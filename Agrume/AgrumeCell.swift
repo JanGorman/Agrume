@@ -241,7 +241,13 @@ extension AgrumeCell: UIGestureRecognizerDelegate {
     let translation = gesture.translation(in: gesture.view)
     let locationInView = gesture.location(in: gesture.view)
     let velocity = gesture.velocity(in: gesture.view)
-    let vectorDistance = sqrt(pow(velocity.x, 2) + pow(velocity.y, 2))
+    let vectorDistance: CGFloat
+    switch physicsBehavior {
+    case .panHorizontalAndVertical:
+      vectorDistance = sqrt(pow(velocity.x, 2) + pow(velocity.y, 2))
+    case .panVerticalOnly:
+      vectorDistance = velocity.y
+    }
 
     if case .began = gesture.state {
       isDraggingImage = imageView.frame.contains(locationInView)
@@ -251,13 +257,22 @@ extension AgrumeCell: UIGestureRecognizerDelegate {
     } else if case .changed = gesture.state {
       if isDraggingImage {
         var newAnchor = imageDragStartingPoint
-        newAnchor?.x += translation.x + imageDragOffsetFromActualTranslation.horizontal
+        if physicsBehavior == .panHorizontalAndVertical {
+          // Only include x component if panning along both axes is allowed
+          newAnchor?.x += translation.x + imageDragOffsetFromActualTranslation.horizontal
+        }
         newAnchor?.y += translation.y + imageDragOffsetFromActualTranslation.vertical
         attachmentBehavior?.anchorPoint = newAnchor!
       } else {
         isDraggingImage = imageView.frame.contains(locationInView)
         if isDraggingImage {
-          let translationOffset = UIOffset(horizontal: -1 * translation.x, vertical: -1 * translation.y)
+          let translationOffset: UIOffset
+          switch physicsBehavior {
+          case .panHorizontalAndVertical:
+            translationOffset = UIOffset(horizontal: -1 * translation.x, vertical: -1 * translation.y)
+          case .panVerticalOnly:
+            translationOffset = UIOffset(horizontal: 0, vertical: -1 * translation.y)
+          }
           startImageDragging(locationInView, translationOffset: translationOffset)
         }
       }
@@ -278,7 +293,12 @@ extension AgrumeCell: UIGestureRecognizerDelegate {
     flickedToDismiss = true
 
     let push = UIPushBehavior(items: [imageView], mode: .instantaneous)
-    push.pushDirection = CGVector(dx: velocity.x * 0.1, dy: velocity.y * 0.1)
+    switch physicsBehavior ?? .panHorizontalAndVertical {
+    case .panHorizontalAndVertical:
+      push.pushDirection = CGVector(dx: velocity.x * 0.1, dy: velocity.y * 0.1)
+    case .panVerticalOnly:
+      push.pushDirection = CGVector(dx: 0, dy: velocity.y * 0.1)
+    }
     push.setTargetOffsetFromCenter(imageDragOffsetFromImageCenter, for: imageView)
     push.action = pushAction
     if let attachmentBehavior = attachmentBehavior {
