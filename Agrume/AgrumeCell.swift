@@ -18,7 +18,7 @@ final class AgrumeCell: UICollectionViewCell {
 
   var tapBehavior: Agrume.TapBehavior = .dismissIfZoomedOut
   /// Specifies dismissal physics behavior; if `nil` then no physics is used for dismissal.
-  var physicsBehavior: Dismissal.PhysicsBehavior? = .panHorizontalAndVertical
+  var panBehavior: Dismissal.PanBehavior? = .horizontalAndVertical
 
   private lazy var scrollView = with(UIScrollView()) { scrollView in
     scrollView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
@@ -54,7 +54,6 @@ final class AgrumeCell: UICollectionViewCell {
   private var imageDragOffsetFromImageCenter: UIOffset!
   private var attachmentBehavior: UIAttachmentBehavior?
   
-
   // index of the cell in the collection view
   var index: Int?
   
@@ -88,7 +87,7 @@ final class AgrumeCell: UICollectionViewCell {
     contentView.addSubview(scrollView)
     scrollView.addSubview(imageView)
     setupGestureRecognizers()
-    if physicsBehavior != nil {
+    if panBehavior != nil {
       animator = UIDynamicAnimator(referenceView: scrollView)
     }
   }
@@ -249,16 +248,16 @@ extension AgrumeCell: UIGestureRecognizerDelegate {
 
   @objc
   private func dismissPan(_ gesture: UIPanGestureRecognizer) {
-    guard let physicsBehavior = physicsBehavior else { return }
+    guard let panBehavior = panBehavior else { return }
 
     let translation = gesture.translation(in: gesture.view)
     let locationInView = gesture.location(in: gesture.view)
     let velocity = gesture.velocity(in: gesture.view)
     let vectorDistance: CGFloat
-    switch physicsBehavior {
-    case .panHorizontalAndVertical:
+    switch panBehavior {
+    case .horizontalAndVertical:
       vectorDistance = sqrt(pow(velocity.x, 2) + pow(velocity.y, 2))
-    case .panVerticalOnly:
+    case .verticalOnly:
       vectorDistance = velocity.y
     }
 
@@ -270,7 +269,7 @@ extension AgrumeCell: UIGestureRecognizerDelegate {
     } else if case .changed = gesture.state {
       if isDraggingImage {
         var newAnchor = imageDragStartingPoint
-        if physicsBehavior == .panHorizontalAndVertical {
+        if panBehavior == .horizontalAndVertical {
           // Only include x component if panning along both axes is allowed
           newAnchor?.x += translation.x + imageDragOffsetFromActualTranslation.horizontal
         }
@@ -280,10 +279,10 @@ extension AgrumeCell: UIGestureRecognizerDelegate {
         isDraggingImage = imageView.frame.contains(locationInView)
         if isDraggingImage {
           let translationOffset: UIOffset
-          switch physicsBehavior {
-          case .panHorizontalAndVertical:
+          switch panBehavior {
+          case .horizontalAndVertical:
             translationOffset = UIOffset(horizontal: -1 * translation.x, vertical: -1 * translation.y)
-          case .panVerticalOnly:
+          case .verticalOnly:
             translationOffset = UIOffset(horizontal: 0, vertical: -1 * translation.y)
           }
           startImageDragging(locationInView, translationOffset: translationOffset)
@@ -306,10 +305,10 @@ extension AgrumeCell: UIGestureRecognizerDelegate {
     flickedToDismiss = true
 
     let push = UIPushBehavior(items: [imageView], mode: .instantaneous)
-    switch physicsBehavior ?? .panHorizontalAndVertical {
-    case .panHorizontalAndVertical:
+    switch panBehavior ?? .horizontalAndVertical {
+    case .horizontalAndVertical:
       push.pushDirection = CGVector(dx: velocity.x * 0.1, dy: velocity.y * 0.1)
-    case .panVerticalOnly:
+    case .verticalOnly:
       push.pushDirection = CGVector(dx: 0, dy: velocity.y * 0.1)
     }
     push.setTargetOffsetFromCenter(imageDragOffsetFromImageCenter, for: imageView)
@@ -413,14 +412,14 @@ extension AgrumeCell: UIGestureRecognizerDelegate {
     let offset = UIOffset(horizontal: locationInView.x - imageCenter.x, vertical: locationInView.y - imageCenter.y)
     imageDragOffsetFromImageCenter = offset
 
-    if let physicsBehavior = physicsBehavior {
+    if let panBehavior = panBehavior {
       attachmentBehavior = UIAttachmentBehavior(item: imageView, offsetFromCenter: offset, attachedToAnchor: anchor!)
       animator!.addBehavior(attachmentBehavior!)
       
       let modifier = UIDynamicItemBehavior(items: [imageView])
       modifier.angularResistance = angularResistance(in: imageView)
       modifier.density = density(in: imageView)
-      modifier.allowsRotation = physicsBehavior.allowsRotation
+      modifier.allowsRotation = panBehavior.allowsRotation
       animator!.addBehavior(modifier)
     }
   }

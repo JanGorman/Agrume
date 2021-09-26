@@ -23,19 +23,25 @@ public enum Dismissal {
   ///
   /// - panHorizontalAndVertical: Allow panning freely along X and Y axes
   /// - panVerticalOnly: Only allow panning along the Y axis
-  public enum PhysicsBehavior {
-    case panHorizontalAndVertical
-    case panVerticalOnly
+  public enum PanBehavior {
+    case horizontalAndVertical
+    case verticalOnly
 
     var allowsRotation: Bool {
       switch self {
-      case .panVerticalOnly: return false
-      case .panHorizontalAndVertical: return true
+      case .verticalOnly:
+        return false
+      case .horizontalAndVertical:
+        return true
       }
     }
   }
-  
-  case withPhysics(PhysicsBehavior)
+
+  case withPan(PanBehavior)
   case withButton(UIBarButtonItem?)
-  case withPhysicsAndButton(PhysicsBehavior, UIBarButtonItem?)
+  case withPanAndButton(PanBehavior, UIBarButtonItem?)
+  @available(*, deprecated, message: "Use .withPan(.horizontalAndVertical) instead.")
+  case withPhysics
+  @available(*, deprecated, message: "Use .withPanAndButton(.horizontalAndVertical, ...) instead.")
+  case withPhysicsAndButton(UIBarButtonItem?)
 }
