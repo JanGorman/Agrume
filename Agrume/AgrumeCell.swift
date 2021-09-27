@@ -447,7 +447,7 @@ extension AgrumeCell: UIGestureRecognizerDelegate {
   }
 
   private func factor(forView view: UIView) -> CGFloat {
-    let actualArea = contentView.bounds.height * view.bounds.height
+    let actualArea = view.bounds.width * view.bounds.height
     let referenceArea = contentView.bounds.height * contentView.bounds.width
     return referenceArea / actualArea
   }
