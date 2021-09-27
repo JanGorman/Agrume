@@ -64,7 +64,7 @@ public final class Agrume: UIViewController {
   ///   - dismissal: The dismiss configuration
   ///   - overlayView: View to overlay the image (does not display with 'button' dismissals)
   public convenience init(image: UIImage, background: Background = .colored(.black),
-                          dismissal: Dismissal = .withPan(.horizontalAndVertical), overlayView: AgrumeOverlayView? = nil) {
+                          dismissal: Dismissal = .withPan(.standard), overlayView: AgrumeOverlayView? = nil) {
     self.init(images: [image], background: background, dismissal: dismissal, overlayView: overlayView)
   }
 
@@ -75,7 +75,7 @@ public final class Agrume: UIViewController {
   ///   - background: The background configuration
   ///   - dismissal: The dismiss configuration
   ///   - overlayView: View to overlay the image (does not display with 'button' dismissals)
-  public convenience init(url: URL, background: Background = .colored(.black), dismissal: Dismissal = .withPan(.horizontalAndVertical),
+  public convenience init(url: URL, background: Background = .colored(.black), dismissal: Dismissal = .withPan(.standard),
                           overlayView: AgrumeOverlayView? = nil) {
     self.init(urls: [url], background: background, dismissal: dismissal, overlayView: overlayView)
   }
@@ -89,7 +89,7 @@ public final class Agrume: UIViewController {
   ///   - dismissal: The dismiss configuration
   ///   - overlayView: View to overlay the image (does not display with 'button' dismissals)
   public convenience init(dataSource: AgrumeDataSource, startIndex: Int = 0, background: Background = .colored(.black),
-                          dismissal: Dismissal = .withPan(.horizontalAndVertical), overlayView: AgrumeOverlayView? = nil) {
+                          dismissal: Dismissal = .withPan(.standard), overlayView: AgrumeOverlayView? = nil) {
     self.init(images: nil, dataSource: dataSource, startIndex: startIndex, background: background, dismissal: dismissal,
               overlayView: overlayView)
   }
@@ -103,7 +103,7 @@ public final class Agrume: UIViewController {
   ///   - dismissal: The dismiss configuration
   ///   - overlayView: View to overlay the image (does not display with 'button' dismissals)
   public convenience init(images: [UIImage], startIndex: Int = 0, background: Background = .colored(.black),
-                          dismissal: Dismissal = .withPan(.horizontalAndVertical), overlayView: AgrumeOverlayView? = nil) {
+                          dismissal: Dismissal = .withPan(.standard), overlayView: AgrumeOverlayView? = nil) {
     self.init(images: images, urls: nil, startIndex: startIndex, background: background, dismissal: dismissal, overlayView: overlayView)
   }
 
@@ -116,7 +116,7 @@ public final class Agrume: UIViewController {
   ///   - dismissal: The dismiss configuration
   ///   - overlayView: View to overlay the image (does not display with 'button' dismissals)
   public convenience init(urls: [URL], startIndex: Int = 0, background: Background = .colored(.black),
-                          dismissal: Dismissal = .withPan(.horizontalAndVertical), overlayView: AgrumeOverlayView? = nil) {
+                          dismissal: Dismissal = .withPan(.standard), overlayView: AgrumeOverlayView? = nil) {
     self.init(images: nil, urls: urls, startIndex: startIndex, background: background, dismissal: dismissal, overlayView: overlayView)
   }
 
@@ -470,13 +470,13 @@ extension Agrume: UICollectionViewDataSource {
 
     cell.tapBehavior = tapBehavior
     switch dismissal {
-    case .withPan(let behavior), .withPanAndButton(let behavior, _):
-      cell.panBehavior = behavior
+    case .withPan(let physics), .withPanAndButton(let physics, _):
+      cell.panPhysics = physics
     case .withButton:
-      cell.panBehavior = nil
+      cell.panPhysics = nil
     // Backward compatibility
     case .withPhysics, .withPhysicsAndButton:
-      cell.panBehavior = .horizontalAndVertical
+      cell.panPhysics = .standard
     }
 
     spinner.alpha = 1

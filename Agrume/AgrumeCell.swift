@@ -18,7 +18,7 @@ final class AgrumeCell: UICollectionViewCell {
 
   var tapBehavior: Agrume.TapBehavior = .dismissIfZoomedOut
   /// Specifies dismissal physics behavior; if `nil` then no physics is used for dismissal.
-  var panBehavior: Dismissal.PanBehavior? = .horizontalAndVertical
+  var panPhysics: Dismissal.Physics? = .standard
 
   private lazy var scrollView = with(UIScrollView()) { scrollView in
     scrollView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
@@ -87,7 +87,7 @@ final class AgrumeCell: UICollectionViewCell {
     contentView.addSubview(scrollView)
     scrollView.addSubview(imageView)
     setupGestureRecognizers()
-    if panBehavior != nil {
+    if panPhysics != nil {
       animator = UIDynamicAnimator(referenceView: scrollView)
     }
   }
@@ -248,13 +248,13 @@ extension AgrumeCell: UIGestureRecognizerDelegate {
 
   @objc
   private func dismissPan(_ gesture: UIPanGestureRecognizer) {
-    guard let panBehavior = panBehavior else { return }
+    guard let panPhysics = panPhysics else { return }
 
     let translation = gesture.translation(in: gesture.view)
     let locationInView = gesture.location(in: gesture.view)
     let velocity = gesture.velocity(in: gesture.view)
     let vectorDistance: CGFloat
-    switch panBehavior {
+    switch panPhysics.permittedDirections {
     case .horizontalAndVertical:
       vectorDistance = sqrt(pow(velocity.x, 2) + pow(velocity.y, 2))
     case .verticalOnly:
@@ -269,7 +269,7 @@ extension AgrumeCell: UIGestureRecognizerDelegate {
     } else if case .changed = gesture.state {
       if isDraggingImage {
         var newAnchor = imageDragStartingPoint
-        if panBehavior == .horizontalAndVertical {
+        if panPhysics.permittedDirections == .horizontalAndVertical {
           // Only include x component if panning along both axes is allowed
           newAnchor?.x += translation.x + imageDragOffsetFromActualTranslation.horizontal
         }
@@ -279,7 +279,7 @@ extension AgrumeCell: UIGestureRecognizerDelegate {
         isDraggingImage = imageView.frame.contains(locationInView)
         if isDraggingImage {
           let translationOffset: UIOffset
-          switch panBehavior {
+          switch panPhysics.permittedDirections {
           case .horizontalAndVertical:
             translationOffset = UIOffset(horizontal: -1 * translation.x, vertical: -1 * translation.y)
           case .verticalOnly:
@@ -302,14 +302,19 @@ extension AgrumeCell: UIGestureRecognizerDelegate {
   }
 
   private func dismissWithFlick(_ velocity: CGPoint) {
+    guard let panPhysics = panPhysics else { return }
+
     flickedToDismiss = true
 
     let push = UIPushBehavior(items: [imageView], mode: .instantaneous)
-    switch panBehavior ?? .horizontalAndVertical {
+    switch panPhysics.permittedDirections {
     case .horizontalAndVertical:
       push.pushDirection = CGVector(dx: velocity.x * 0.1, dy: velocity.y * 0.1)
     case .verticalOnly:
       push.pushDirection = CGVector(dx: 0, dy: velocity.y * 0.1)
+    }
+    if let pushMagnitude = panPhysics.pushMagnitude {
+      push.magnitude = pushMagnitude
     }
     push.setTargetOffsetFromCenter(imageDragOffsetFromImageCenter, for: imageView)
     push.action = pushAction
@@ -412,14 +417,14 @@ extension AgrumeCell: UIGestureRecognizerDelegate {
     let offset = UIOffset(horizontal: locationInView.x - imageCenter.x, vertical: locationInView.y - imageCenter.y)
     imageDragOffsetFromImageCenter = offset
 
-    if let panBehavior = panBehavior {
+    if let panPhysics = panPhysics {
       attachmentBehavior = UIAttachmentBehavior(item: imageView, offsetFromCenter: offset, attachedToAnchor: anchor!)
       animator!.addBehavior(attachmentBehavior!)
       
       let modifier = UIDynamicItemBehavior(items: [imageView])
       modifier.angularResistance = angularResistance(in: imageView)
       modifier.density = density(in: imageView)
-      modifier.allowsRotation = panBehavior.allowsRotation
+      modifier.allowsRotation = panPhysics.allowsRotation
       animator!.addBehavior(modifier)
     }
   }
