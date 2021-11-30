@@ -6,10 +6,14 @@
 
 import SwiftUI
 
-struct AgrumeView: UIViewControllerRepresentable {
+public struct AgrumeView: UIViewControllerRepresentable {
     let image: UIImage
 
-    func makeUIViewController(context: UIViewControllerRepresentableContext<AgrumeView>) -> Agrume {
+    public init(image: UIImage) {
+        self.image = image
+    }
+
+    public func makeUIViewController(context: UIViewControllerRepresentableContext<AgrumeView>) -> Agrume {
         let agrume = Agrume(image: self.image)
         agrume.addSubviews()
         agrume.addOverlayView()
@@ -20,7 +24,7 @@ struct AgrumeView: UIViewControllerRepresentable {
         return agrume
     }
 
-    func updateUIViewController(_ uiViewController: Agrume,
+    public func updateUIViewController(_ uiViewController: Agrume,
                                 context: UIViewControllerRepresentableContext<AgrumeView>)
     {}
 }
