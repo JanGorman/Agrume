@@ -309,7 +309,7 @@ public final class Agrume: UIViewController {
     }
   }
 
-  private func addSubviews() {
+  public func addSubviews() {
     view.autoresizingMask = [.flexibleHeight, .flexibleWidth]
 
     if case .blurred = background {
@@ -348,7 +348,7 @@ public final class Agrume: UIViewController {
     }
   }
   
-  private func addOverlayView() {
+  public func addOverlayView() {
     switch (dismissal, overlayView) {
     case let (.withButton(button), _), let (.withPanAndButton(_, button), _):
       let overlayView = AgrumeCloseButtonOverlayView(closeButton: button)

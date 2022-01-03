@@ -52,6 +52,27 @@ private lazy var agrume = Agrume(image: UIImage(named: "…")!)
 
 You can also pass in a `URL` and Agrume will take care of the download for you.
 
+### SwiftUI
+
+Currently the SwiftUI implementation doesn't surface configurations, so can only be used as a single image basic viewer - PRs welcome to extend its functionality.
+
+```swift
+import Agrume
+
+struct ExampleView: View {
+    let image: UIImage
+    @State var showAgrume = false
+
+    VStack {
+        Text("Test")
+    }
+    .fullScreenCover(isPresented: $showAgrume, onDismiss: {}) {
+        AgrumeView(image: image)
+            .ignoresSafeArea()
+    }
+}
+```
+
 ### Background Configuration
 
 Agrume has different background configurations. You can have it blur the view it's covering or supply a background color:
