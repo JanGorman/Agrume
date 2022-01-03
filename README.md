@@ -60,16 +60,20 @@ Currently the SwiftUI implementation doesn't surface configurations, so can only
 import Agrume
 
 struct ExampleView: View {
-    let image: UIImage
-    @State var showAgrume = false
+    
+  let image: UIImage
+  
+  @State var showAgrume = false
 
-    VStack {
-        Text("Test")
+  var body: some View {
+    Button("Launch Agrume from SwiftUI") {
+      showAgrume.toggle()
     }
-    .fullScreenCover(isPresented: $showAgrume, onDismiss: {}) {
-        AgrumeView(image: image)
-            .ignoresSafeArea()
+    .fullScreenCover(isPresented: $showAgrume) {
+      AgrumeView(image: image)
+        .ignoresSafeArea()
     }
+  }
 }
 ```
 
