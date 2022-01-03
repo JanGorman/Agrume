@@ -61,17 +61,25 @@ import Agrume
 
 struct ExampleView: View {
     
-  let image: UIImage
-  
+  let images: [UIImage]
+
   @State var showAgrume = false
 
   var body: some View {
-    Button("Launch Agrume from SwiftUI") {
-      showAgrume.toggle()
-    }
-    .fullScreenCover(isPresented: $showAgrume) {
-      AgrumeView(image: image)
-        .ignoresSafeArea()
+    VStack {
+      // Hide the presenting button (or other view) whenever Agrume is shown
+      if !showAgrume {
+        Button("Launch Agrume from SwiftUI") {
+          withAnimation {
+            showAgrume = true
+          }
+        }
+      }
+
+      if showAgrume {
+        // You can pass a single or multiple images
+        AgrumeView(images: images, isPresenting: $showAgrume)
+      }
     }
   }
 }

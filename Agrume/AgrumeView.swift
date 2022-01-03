@@ -4,25 +4,54 @@
 
 import SwiftUI
 
-public struct AgrumeView: UIViewControllerRepresentable {
-  let image: UIImage
+@available(iOS 14.0, *)
+public struct AgrumeView: View {
 
-  public init(image: UIImage) {
-    self.image = image
+  private let images: [UIImage]
+  @Binding private var binding: Bool
+  @Namespace var namespace
+
+  public init(image: UIImage, isPresenting: Binding<Bool>) {
+    self.init(images: [image], isPresenting: isPresenting)
   }
 
-  public func makeUIViewController(context: UIViewControllerRepresentableContext<AgrumeView>) -> Agrume {
-    let agrume = Agrume(image: self.image)
+  public init(images: [UIImage], isPresenting: Binding<Bool>) {
+    self.images = images
+    self._binding = isPresenting
+  }
+
+  public var body: some View {
+    WrapperAgrumeView(images: images, isPresenting: $binding)
+      .matchedGeometryEffect(id: "AgrumeView", in: namespace, properties: .frame, isSource: binding)
+      .ignoresSafeArea()
+  }
+}
+
+@available(iOS 13.0, *)
+struct WrapperAgrumeView: UIViewControllerRepresentable {
+
+  private let images: [UIImage]
+  @Binding private var binding: Bool
+
+  public init(images: [UIImage], isPresenting: Binding<Bool>) {
+    self.images = images
+    self._binding = isPresenting
+  }
+
+  public func makeUIViewController(context: UIViewControllerRepresentableContext<WrapperAgrumeView>) -> UIViewController {
+    let agrume = Agrume(images: images)
+    agrume.view.backgroundColor = .clear
     agrume.addSubviews()
     agrume.addOverlayView()
     agrume.willDismiss = {
-      agrume.view.superview?.backgroundColor = .clear
-      agrume.view.superview?.superview?.backgroundColor = .clear
+      withAnimation {
+        binding = false
+      }
     }
     return agrume
   }
 
-  public func updateUIViewController(_ uiViewController: Agrume,
-                                     context: UIViewControllerRepresentableContext<AgrumeView>) {
+  public func updateUIViewController(_ uiViewController: UIViewController,
+                                     context: UIViewControllerRepresentableContext<WrapperAgrumeView>) {
   }
 }
