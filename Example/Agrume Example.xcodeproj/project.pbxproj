@@ -34,13 +34,6 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
-		F2539BD120F23F2F00062C80 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = F2A5203A1B130CC000924912 /* Agrume.xcodeproj */;
-			proxyType = 1;
-			remoteGlobalIDString = F2A51FED1B10E00700924912;
-			remoteInfo = Agrume;
-		};
 		F2A5202B1B130C7E00924912 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = F2A5200D1B130C7E00924912 /* Project object */;
@@ -243,7 +236,6 @@
 			);
 			dependencies = (
 				F2A520441B130CC800924912 /* PBXTargetDependency */,
-				F2539BD220F23F2F00062C80 /* PBXTargetDependency */,
 			);
 			name = "Agrume Example";
 			productName = "Agrume Example";
@@ -387,11 +379,6 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
-		F2539BD220F23F2F00062C80 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = Agrume;
-			targetProxy = F2539BD120F23F2F00062C80 /* PBXContainerItemProxy */;
-		};
 		F2A5202C1B130C7E00924912 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = F2A520141B130C7E00924912 /* Agrume Example */;
