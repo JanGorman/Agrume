@@ -3,12 +3,14 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 46;
+	objectVersion = 52;
 	objects = {
 
 /* Begin PBXBuildFile section */
 		833C23CA23CC800800F689E2 /* AgrumePhotoLibraryHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 833C23C923CC800800F689E2 /* AgrumePhotoLibraryHelper.swift */; };
 		94318E541D32612D0096215A /* AgrumeServiceLocator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94318E531D32612D0096215A /* AgrumeServiceLocator.swift */; };
+		C2158A8428193C2A0059AEA0 /* SDWebImage in Frameworks */ = {isa = PBXBuildFile; productRef = C2158A8328193C2A0059AEA0 /* SDWebImage */; };
+		C2158A8628193C2A0059AEA0 /* SDWebImageMapKit in Frameworks */ = {isa = PBXBuildFile; productRef = C2158A8528193C2A0059AEA0 /* SDWebImageMapKit */; };
 		F224A7392783301200A8F5ED /* AgrumeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F224A7362783301200A8F5ED /* AgrumeView.swift */; };
 		F2539BA120F22E7700062C80 /* AgrumeOverlayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2539BA020F22E7700062C80 /* AgrumeOverlayView.swift */; };
 		F2609E23209F047200E0E93D /* AgrumeDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2609E22209F047200E0E93D /* AgrumeDataSource.swift */; };
@@ -22,7 +24,6 @@
 		F2DC79D61B170C4B00818A8C /* ImageDownloader.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2DC79D51B170C4B00818A8C /* ImageDownloader.swift */; };
 		F2EE29AE209F31B800F281A2 /* Foundation+Agrume.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2EE29AD209F31B800F281A2 /* Foundation+Agrume.swift */; };
 		F2F24F9423BB3BBE005AA731 /* With.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2F24F9323BB3BBE005AA731 /* With.swift */; };
-		F2FA5E7F2288602F009C0DA0 /* SwiftyGif.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F2FA5E7E22885FFB009C0DA0 /* SwiftyGif.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -32,20 +33,6 @@
 			proxyType = 1;
 			remoteGlobalIDString = F2A51FED1B10E00700924912;
 			remoteInfo = Agrume;
-		};
-		F2FA5E7B22885FFB009C0DA0 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = F2FA5E7622885FFB009C0DA0 /* SwiftyGif.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = FA29E9321CA9340E00E579D5;
-			remoteInfo = SwiftyGifExample;
-		};
-		F2FA5E7D22885FFB009C0DA0 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = F2FA5E7622885FFB009C0DA0 /* SwiftyGif.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 3B18BAF41E289899009C125A;
-			remoteInfo = SwiftyGif;
 		};
 /* End PBXContainerItemProxy section */
 
@@ -68,7 +55,6 @@
 		F2DC79D51B170C4B00818A8C /* ImageDownloader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageDownloader.swift; sourceTree = "<group>"; };
 		F2EE29AD209F31B800F281A2 /* Foundation+Agrume.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Foundation+Agrume.swift"; sourceTree = "<group>"; };
 		F2F24F9323BB3BBE005AA731 /* With.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = With.swift; sourceTree = "<group>"; };
-		F2FA5E7622885FFB009C0DA0 /* SwiftyGif.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = SwiftyGif.xcodeproj; path = Frameworks/SwiftyGif/SwiftyGif.xcodeproj; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -76,7 +62,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				F2FA5E7F2288602F009C0DA0 /* SwiftyGif.framework in Frameworks */,
+				C2158A8428193C2A0059AEA0 /* SDWebImage in Frameworks */,
+				C2158A8628193C2A0059AEA0 /* SDWebImageMapKit in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -101,7 +88,6 @@
 		F2A51FE41B10E00700924912 = {
 			isa = PBXGroup;
 			children = (
-				F2FA5E7622885FFB009C0DA0 /* SwiftyGif.xcodeproj */,
 				F2A51FF01B10E00700924912 /* Agrume */,
 				F2A51FFD1B10E00700924912 /* AgrumeTests */,
 				F2A51FEF1B10E00700924912 /* Products */,
@@ -166,15 +152,6 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
-		F2FA5E7722885FFB009C0DA0 /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				F2FA5E7C22885FFB009C0DA0 /* SwiftyGifExample.app */,
-				F2FA5E7E22885FFB009C0DA0 /* SwiftyGif.framework */,
-			);
-			name = Products;
-			sourceTree = "<group>";
-		};
 /* End PBXGroup section */
 
 /* Begin PBXHeadersBuildPhase section */
@@ -204,6 +181,10 @@
 			dependencies = (
 			);
 			name = Agrume;
+			packageProductDependencies = (
+				C2158A8328193C2A0059AEA0 /* SDWebImage */,
+				C2158A8528193C2A0059AEA0 /* SDWebImageMapKit */,
+			);
 			productName = Agrume;
 			productReference = F2A51FEE1B10E00700924912 /* Agrume.framework */;
 			productType = "com.apple.product-type.framework";
@@ -256,14 +237,11 @@
 				Base,
 			);
 			mainGroup = F2A51FE41B10E00700924912;
+			packageReferences = (
+				C2158A8228193C2A0059AEA0 /* XCRemoteSwiftPackageReference "SDWebImage" */,
+			);
 			productRefGroup = F2A51FEF1B10E00700924912 /* Products */;
 			projectDirPath = "";
-			projectReferences = (
-				{
-					ProductGroup = F2FA5E7722885FFB009C0DA0 /* Products */;
-					ProjectRef = F2FA5E7622885FFB009C0DA0 /* SwiftyGif.xcodeproj */;
-				},
-			);
 			projectRoot = "";
 			targets = (
 				F2A51FED1B10E00700924912 /* Agrume */,
@@ -271,23 +249,6 @@
 			);
 		};
 /* End PBXProject section */
-
-/* Begin PBXReferenceProxy section */
-		F2FA5E7C22885FFB009C0DA0 /* SwiftyGifExample.app */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.application;
-			path = SwiftyGifExample.app;
-			remoteRef = F2FA5E7B22885FFB009C0DA0 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		F2FA5E7E22885FFB009C0DA0 /* SwiftyGif.framework */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.framework;
-			path = SwiftyGif.framework;
-			remoteRef = F2FA5E7D22885FFB009C0DA0 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-/* End PBXReferenceProxy section */
 
 /* Begin PBXResourcesBuildPhase section */
 		F2A51FEC1B10E00700924912 /* Resources */ = {
@@ -469,7 +430,8 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
-				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;
 				VERSIONING_SYSTEM = "apple-generic";
@@ -489,7 +451,11 @@
 				ENABLE_TESTABILITY = YES;
 				INFOPLIST_FILE = Agrume/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = "com.schnaub.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
@@ -510,7 +476,11 @@
 				ENABLE_TESTABILITY = YES;
 				INFOPLIST_FILE = Agrume/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = "com.schnaub.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
@@ -527,7 +497,11 @@
 					"$(inherited)",
 				);
 				INFOPLIST_FILE = AgrumeTests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = "com.schnaub.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
@@ -541,7 +515,11 @@
 			buildSettings = {
 				CLANG_ENABLE_MODULES = YES;
 				INFOPLIST_FILE = AgrumeTests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = "com.schnaub.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_SWIFT3_OBJC_INFERENCE = Off;
@@ -580,6 +558,30 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		C2158A8228193C2A0059AEA0 /* XCRemoteSwiftPackageReference "SDWebImage" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/SDWebImage/SDWebImage";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 5.0.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		C2158A8328193C2A0059AEA0 /* SDWebImage */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = C2158A8228193C2A0059AEA0 /* XCRemoteSwiftPackageReference "SDWebImage" */;
+			productName = SDWebImage;
+		};
+		C2158A8528193C2A0059AEA0 /* SDWebImageMapKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = C2158A8228193C2A0059AEA0 /* XCRemoteSwiftPackageReference "SDWebImage" */;
+			productName = SDWebImageMapKit;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = F2A51FE51B10E00700924912 /* Project object */;
 }

@@ -2,8 +2,8 @@
 //  Copyright © 2016 Schnaub. All rights reserved.
 //
 
-import SwiftyGif
 import UIKit
+import SDWebImage
 
 protocol AgrumeCellDelegate: AnyObject {
 
@@ -29,11 +29,12 @@ final class AgrumeCell: UICollectionViewCell {
     scrollView.showsHorizontalScrollIndicator = false
     scrollView.showsVerticalScrollIndicator = false
   }
-  private lazy var imageView = with(UIImageView()) { imageView in
+  private lazy var imageView = with(SDAnimatedImageView()) { imageView in
     imageView.contentMode = .scaleAspectFit
     imageView.clipsToBounds = true
     imageView.layer.allowsEdgeAntialiasing = true
   }
+  
   private lazy var singleTapGesture = with(UITapGestureRecognizer(target: self, action: #selector(singleTap))) { gesture in
     gesture.require(toFail: doubleTapGesture)
     gesture.delegate = self
@@ -62,9 +63,7 @@ final class AgrumeCell: UICollectionViewCell {
   
   var image: UIImage? {
     didSet {
-      if image?.imageData != nil, let image = image {
-        imageView.setGifImage(image)
-      } else {
+      if let image = image {
         imageView.image = image
       }
       if !updatingImageOnSameCell {
@@ -374,7 +373,7 @@ extension AgrumeCell: UIGestureRecognizerDelegate {
 
   private func updateScrollViewAndImageViewForCurrentMetrics() {
     scrollView.frame = contentView.frame
-    if let image = imageView.image ?? imageView.currentImage {
+    if let image = imageView.image {
       imageView.frame = resizedFrame(forSize: image.size)
     }
     scrollView.contentSize = imageView.bounds.size

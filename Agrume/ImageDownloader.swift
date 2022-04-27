@@ -4,8 +4,8 @@
 
 import ImageIO
 import MobileCoreServices
-import SwiftyGif
 import UIKit
+import SDWebImage
 
 final class ImageDownloader {
 
@@ -22,8 +22,8 @@ final class ImageDownloader {
         return
       }
       if isAnimatedImage(data) {
-        image = try? UIImage(gifData: data)
-      } else {
+        image = SDAnimatedImage(data: data)
+        } else {
         image = UIImage(data: data)
       }
     }
