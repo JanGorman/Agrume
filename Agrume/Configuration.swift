@@ -39,7 +39,7 @@ public enum Dismissal {
     /// Physics with standard (all default) settings.
     public static let standard = Physics()
 
-    public init(permittedDirections: PanDirections = .horizontalAndVertical, pushMagnitude: CGFloat? = nil, allowsRotation: Bool = true) {
+    public init(permittedDirections: PanDirections = .verticalOnly, pushMagnitude: CGFloat? = nil, allowsRotation: Bool = false) {
       self.permittedDirections = permittedDirections
       self.pushMagnitude = pushMagnitude
       self.allowsRotation = allowsRotation

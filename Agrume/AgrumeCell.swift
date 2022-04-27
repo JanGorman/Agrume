@@ -289,7 +289,7 @@ extension AgrumeCell: UIGestureRecognizerDelegate {
         }
       }
     } else {
-      if vectorDistance > .minFlickDismissalVelocity {
+      if vectorDistance > .minFlickDismissalVelocity || vectorDistance < .maxFlickDismissalVelocity {
         if isDraggingImage {
           dismissWithFlick(velocity)
         } else {
