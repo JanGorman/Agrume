@@ -2,12 +2,30 @@
   "object": {
     "pins": [
       {
-        "package": "SwiftyGif",
-        "repositoryURL": "https://github.com/kirualex/SwiftyGif",
+        "package": "libwebp",
+        "repositoryURL": "https://github.com/SDWebImage/libwebp-Xcode.git",
         "state": {
           "branch": null,
-          "revision": "4d851de4cdecb6c5453c8d529c3578dd49086408",
-          "version": "5.2.0"
+          "revision": "2b3b43faaef54d1b897482428428357b7f7cd08b",
+          "version": "1.2.1"
+        }
+      },
+      {
+        "package": "SDWebImage",
+        "repositoryURL": "https://github.com/SDWebImage/SDWebImage.git",
+        "state": {
+          "branch": null,
+          "revision": "2e63d0061da449ad0ed130768d05dceb1496de44",
+          "version": "5.12.5"
+        }
+      },
+      {
+        "package": "SDWebImageWebPCoder",
+        "repositoryURL": "https://github.com/SDWebImage/SDWebImageWebPCoder",
+        "state": {
+          "branch": null,
+          "revision": "95a6838df13bc08d8064cf7e048b787b6e52348d",
+          "version": "0.8.4"
         }
       }
     ]

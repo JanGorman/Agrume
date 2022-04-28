@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="19529" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="hvw-Fc-Hya">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="20037" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="hvw-Fc-Hya">
     <device id="retina4_7" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19519"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="20020"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -257,6 +257,26 @@
                                         </tableViewCellContentView>
                                         <connections>
                                             <segue destination="cCQ-GJ-dUD" kind="show" id="r46-tO-UZQ"/>
+                                        </connections>
+                                    </tableViewCell>
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" textLabel="WQb-Yk-9oe" style="IBUITableViewCellStyleDefault" id="YeX-nv-rHh">
+                                        <rect key="frame" x="0.0" y="572.5" width="375" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="YeX-nv-rHh" id="mA5-dK-CTB">
+                                            <rect key="frame" x="0.0" y="0.0" width="350.5" height="44"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Animated Webp Support" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="WQb-Yk-9oe">
+                                                    <rect key="frame" x="16" y="0.0" width="326.5" height="44"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                        </tableViewCellContentView>
+                                        <connections>
+                                            <segue destination="1Uc-SQ-r2I" kind="show" id="lEb-Ot-Br2"/>
                                         </connections>
                                     </tableViewCell>
                                 </cells>
@@ -732,6 +752,38 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="LkB-2l-cqS" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="2001" y="2266"/>
+        </scene>
+        <!--Animated Webp View Controller-->
+        <scene sceneID="Pfh-el-6VR">
+            <objects>
+                <viewController id="1Uc-SQ-r2I" userLabel="Animated Webp View Controller" customClass="AnimatedWebpViewController" customModule="Agrume_Example" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="sI2-2R-BVW"/>
+                        <viewControllerLayoutGuide type="bottom" id="Z8F-gd-Ugf"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="xeZ-XO-g0E">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="LXM-9t-5oh">
+                                <rect key="frame" x="146" y="318.5" width="83" height="30"/>
+                                <state key="normal" title="Open Image"/>
+                                <connections>
+                                    <action selector="openImageButtonTapped:" destination="1Uc-SQ-r2I" eventType="touchUpInside" id="Zcs-E1-agf"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="LXM-9t-5oh" firstAttribute="centerY" secondItem="xeZ-XO-g0E" secondAttribute="centerY" id="XmO-bg-mAb"/>
+                            <constraint firstItem="LXM-9t-5oh" firstAttribute="centerX" secondItem="xeZ-XO-g0E" secondAttribute="centerX" id="bHW-XF-SlG"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" id="S4w-bY-b3e"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="aG7-WQ-4He" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-642" y="1621"/>
         </scene>
     </scenes>
     <resources>
