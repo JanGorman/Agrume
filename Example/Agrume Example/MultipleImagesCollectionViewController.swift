@@ -11,7 +11,8 @@ final class MultipleImagesCollectionViewController: UICollectionViewController {
 
   private let images = [
     UIImage(named: "MapleBacon")!,
-    UIImage(named: "EvilBacon")!
+    UIImage(named: "EvilBacon")!,
+    UIImage(named: "TextAndQR")!,
   ]
 
   override func viewDidLoad() {
@@ -35,7 +36,7 @@ final class MultipleImagesCollectionViewController: UICollectionViewController {
   // MARK: UICollectionViewDelegate
 
   override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-    let agrume = Agrume(images: images, startIndex: indexPath.item, background: .blurred(.regular))
+    let agrume = Agrume(images: images, startIndex: indexPath.item, background: .blurred(.regular), enableLiveText: true)
     agrume.didScroll = { [unowned self] index in
       self.collectionView?.scrollToItem(at: IndexPath(item: index, section: 0), at: [], animated: false)
     }

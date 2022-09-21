@@ -4,6 +4,7 @@
 
 import SwiftyGif
 import UIKit
+import VisionKit
 
 protocol AgrumeCellDelegate: AnyObject {
 
@@ -60,12 +61,24 @@ final class AgrumeCell: UICollectionViewCell {
   // if set to true, it means we are updating image on the same cell, so we want to reserve the zoom level & position
   var updatingImageOnSameCell = false
   
+  // enables Live Text analysis & interaction
+  var enableLiveText = false
+  
   var image: UIImage? {
     didSet {
       if image?.imageData != nil, let image = image {
         imageView.setGifImage(image)
       } else {
         imageView.image = image
+        if enableLiveText {
+          if #available(iOS 16, *) {
+            if let image = image {
+              Task {
+                await analyzeImage(image)
+              }
+            }
+          }
+        }
       }
       if !updatingImageOnSameCell {
         updateScrollViewAndImageViewForCurrentMetrics()
@@ -480,6 +493,25 @@ extension AgrumeCell: UIScrollViewDelegate {
     let velocity = scrollView.panGestureRecognizer.velocity(in: scrollView.panGestureRecognizer.view)
     if notZoomed && (abs(velocity.x) > highVelocity || abs(velocity.y) > highVelocity) {
       dismiss()
+    }
+  }
+  
+  @available(iOS 16, *)
+  private func analyzeImage(_ image: UIImage) async {
+    let analyzer = ImageAnalyzer()
+    let interaction = await MainActor.run {
+      let interaction = ImageAnalysisInteraction()
+      imageView.addInteraction(interaction)
+      return interaction
+    }
+    let configuration = ImageAnalyzer.Configuration([.text, .machineReadableCode])
+    do {
+      let analysis = try await analyzer.analyze(image, configuration: configuration)
+      await MainActor.run {
+        interaction.analysis = analysis
+        interaction.preferredInteractionTypes = .automatic
+      }
+    } catch {
     }
   }
 }
