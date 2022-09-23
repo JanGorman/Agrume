@@ -498,6 +498,10 @@ extension AgrumeCell: UIScrollViewDelegate {
   
   @available(iOS 16, *)
   private func analyzeImage(_ image: UIImage) async {
+    guard ImageAnalyzer.isSupported else {
+      return
+    }
+
     let analyzer = ImageAnalyzer()
     let interaction = await MainActor.run {
       let interaction = ImageAnalysisInteraction()

@@ -238,6 +238,14 @@ agrume.onLongPress = helper.makeSaveToLibraryLongPressGesture
 
 You can customise the look and functionality of the image views. To do so, you need create a class that inherits from `AgrumeOverlayView: UIView`. As this is nothing more than a regular `UIView` you can do anything you want with it like add a custom toolbar or buttons to it. The example app shows a detailed example of how this can be achieved.
 
+### Live Text Support
+
+Agrume supports Live Text introduced since iOS 16. This allows user to interact with texts and QR codes in the image. It is available for iOS 16 or newer, on devices with A12 Bionic Chip (iPhone XS) or newer.
+
+```swift
+let agrume = Agrume(image: UIImage(named: "…")!, enableLiveText: true)
+```
+
 ### Lifecycle
 
 `Agrume` offers the following lifecycle closures that you can optionally set:

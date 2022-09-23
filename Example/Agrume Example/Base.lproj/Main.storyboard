@@ -259,6 +259,26 @@
                                             <segue destination="cCQ-GJ-dUD" kind="show" id="r46-tO-UZQ"/>
                                         </connections>
                                     </tableViewCell>
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" textLabel="6Zp-bu-jIU" style="IBUITableViewCellStyleDefault" id="Hfv-Wz-qVQ">
+                                        <rect key="frame" x="0.0" y="578" width="375" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Hfv-Wz-qVQ" id="KQk-qO-EJ6">
+                                            <rect key="frame" x="0.0" y="0.0" width="348.5" height="44"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="With Live Text" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="6Zp-bu-jIU">
+                                                    <rect key="frame" x="16" y="0.0" width="324.5" height="44"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                        </tableViewCellContentView>
+                                        <connections>
+                                            <segue destination="qLg-q5-gAS" kind="show" id="5bd-8h-ouw"/>
+                                        </connections>
+                                    </tableViewCell>
                                 </cells>
                             </tableViewSection>
                         </sections>
@@ -732,6 +752,35 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="LkB-2l-cqS" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="2001" y="2266"/>
+        </scene>
+        <!--Live Text Image View Controller-->
+        <scene sceneID="1WM-Xw-5br">
+            <objects>
+                <viewController title="Live Text Image View Controller" id="qLg-q5-gAS" customClass="LiveTextViewController" customModule="Agrume_Example" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="6HJ-JL-fid"/>
+                        <viewControllerLayoutGuide type="bottom" id="hXH-Vp-sjT"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="Vfa-Ml-qsJ">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dFR-Lm-f5v">
+                                <rect key="frame" x="146" y="318" width="83" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="Open Image"/>
+                                <connections>
+                                    <action selector="openImage:" destination="qLg-q5-gAS" eventType="touchUpInside" id="gRd-G8-Zjs"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="Hrj-fJ-cCk"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="0eg-SZ-Rgn" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1281" y="2956"/>
         </scene>
     </scenes>
     <resources>
