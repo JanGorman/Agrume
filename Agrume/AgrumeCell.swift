@@ -70,14 +70,8 @@ final class AgrumeCell: UICollectionViewCell {
         imageView.setGifImage(image)
       } else {
         imageView.image = image
-        if enableLiveText {
-          if #available(iOS 16, *) {
-            if let image = image {
-              Task {
-                await analyzeImage(image)
-              }
-            }
-          }
+        if #available(iOS 16, *), enableLiveText, let image = image {
+          analyzeImage(image)
         }
       }
       if !updatingImageOnSameCell {
@@ -497,25 +491,24 @@ extension AgrumeCell: UIScrollViewDelegate {
   }
   
   @available(iOS 16, *)
-  private func analyzeImage(_ image: UIImage) async {
+  private func analyzeImage(_ image: UIImage) {
     guard ImageAnalyzer.isSupported else {
       return
     }
-
+    let interaction = ImageAnalysisInteraction()
+    imageView.addInteraction(interaction)
+    
     let analyzer = ImageAnalyzer()
-    let interaction = await MainActor.run {
-      let interaction = ImageAnalysisInteraction()
-      imageView.addInteraction(interaction)
-      return interaction
-    }
     let configuration = ImageAnalyzer.Configuration([.text, .machineReadableCode])
-    do {
-      let analysis = try await analyzer.analyze(image, configuration: configuration)
-      await MainActor.run {
+    
+    Task { @MainActor in
+      do {
+        let analysis = try await analyzer.analyze(image, configuration: configuration)
         interaction.analysis = analysis
         interaction.preferredInteractionTypes = .automatic
+      } catch {
+        print(error.localizedDescription)
       }
-    } catch {
     }
   }
 }
