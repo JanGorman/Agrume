@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		39B9D7C228DE0B500016BE7F /* LiveTextViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39B9D7C128DE0B500016BE7F /* LiveTextViewController.swift */; };
 		39CA658926EFFC5700A5A910 /* URLUpdatedToImageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39CA658826EFFC5700A5A910 /* URLUpdatedToImageViewController.swift */; };
 		771DA7342179EF1800541206 /* SwiftyGif.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 771DA7332179EF1800541206 /* SwiftyGif.framework */; };
 		9464AFE923C692C7006ADEBD /* OverlayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9464AFE823C692C7006ADEBD /* OverlayView.swift */; };
@@ -80,6 +81,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		39B9D7C128DE0B500016BE7F /* LiveTextViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LiveTextViewController.swift; sourceTree = "<group>"; };
 		39CA658826EFFC5700A5A910 /* URLUpdatedToImageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLUpdatedToImageViewController.swift; sourceTree = "<group>"; };
 		771DA7332179EF1800541206 /* SwiftyGif.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = SwiftyGif.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		9464AFE823C692C7006ADEBD /* OverlayView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OverlayView.swift; sourceTree = "<group>"; };
@@ -181,6 +183,7 @@
 				E77809E21D17821400CC60F1 /* SingleImageModalViewController.swift */,
 				F2D9598D1B1A133800073772 /* SingleImageViewController.swift */,
 				F2D959901B1A140200073772 /* SingleURLViewController.swift */,
+				39B9D7C128DE0B500016BE7F /* LiveTextViewController.swift */,
 				39CA658826EFFC5700A5A910 /* URLUpdatedToImageViewController.swift */,
 				F2A520181B130C7E00924912 /* Supporting Files */,
 			);
@@ -362,6 +365,7 @@
 				F2D9598E1B1A133800073772 /* SingleImageViewController.swift in Sources */,
 				F2539BD420F2418900062C80 /* CustomCloseButtonViewController.swift in Sources */,
 				F2A5201B1B130C7E00924912 /* AppDelegate.swift in Sources */,
+				39B9D7C228DE0B500016BE7F /* LiveTextViewController.swift in Sources */,
 				9464AFE923C692C7006ADEBD /* OverlayView.swift in Sources */,
 				F2D959971B1A199F00073772 /* MultipleURLsCollectionViewController.swift in Sources */,
 				F224A73227832DD900A8F5ED /* SwiftUIExampleViewController.swift in Sources */,
