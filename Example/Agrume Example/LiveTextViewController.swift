@@ -17,7 +17,14 @@ final class LiveTextViewController: UIViewController {
       return
     }
     
-    let alert = UIAlertController(title: "Not supported on this device", message: "Live Text is available for devices with iOS 16 (or above) and A12 (or above) Bionic chip (iPhone XS and later, physical device only)", preferredStyle: .alert)
+    let alert = UIAlertController(
+      title: "Not supported on this device",
+      message: """
+      Live Text is available for devices with iOS 16 (or above) and A12 (or above)
+      Bionic chip (iPhone XS and later, physical device only)
+      """,
+      preferredStyle: .alert
+    )
     alert.addAction(UIAlertAction(title: "OK", style: .cancel))
     present(alert, animated: true)
   }

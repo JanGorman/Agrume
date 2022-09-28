@@ -1,7 +1,7 @@
 Pod::Spec.new do |s|
 
   s.name          = "Agrume"
-  s.version       = "5.8.4"
+  s.version       = "5.8.5"
   s.summary       = "An iOS image viewer written in Swift."
   s.swift_version = "5.0"
 
@@ -16,7 +16,7 @@ Pod::Spec.new do |s|
   s.author           = { "Jan Gorman" => "gorman.jan@gmail.com" }
   s.social_media_url = "https://twitter.com/JanGorman"
 
-  s.platform      = :ios, "9.0"
+  s.platform      = :ios, "13.0"
 
   s.source        = { :git => "https://github.com/JanGorman/Agrume.git", :tag => s.version}
 

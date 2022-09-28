@@ -25,7 +25,7 @@ public final class AgrumePhotoLibraryHelper: NSObject {
   /// Save the current photo shown in the user's photo library using Long Press Gesture
   /// Make sure to have NSPhotoLibraryUsageDescription (ios 10) and NSPhotoLibraryAddUsageDescription (ios 11+) in your info.plist
   public func makeSaveToLibraryLongPressGesture(for image: UIImage?, viewController: UIViewController) {
-    guard let image = image else {
+    guard let image else {
       return
     }
     let view = viewController.view!

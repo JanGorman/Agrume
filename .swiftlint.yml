@@ -1,3 +1,7 @@
+excluded:
+  - Frameworks/SwiftyGif
+  - Carthage/Checkouts
+
 identifier_name:
   min_length:
     error: 3
@@ -58,7 +62,3 @@ disabled_rules:
   - vertical_parameter_alignment
   - force_try
   - object_literal
-  
-excluded:
-  - Frameworks/SwiftyGif
-  - Carthage/Checkouts

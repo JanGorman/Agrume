@@ -183,8 +183,8 @@ extension AgrumeCell: UIGestureRecognizerDelegate {
     
     CATransaction.begin()
     CATransaction.setCompletionBlock { [weak self] in
-      // captures self weakly to avoid extending the lifetime of the cell  
-      guard let self = self else { return }
+      // captures self weakly to avoid extending the lifetime of the cell
+      guard let self else { return }
       self.contentView.isUserInteractionEnabled = true
     }
     scrollView.zoom(to: destination, animated: true)
@@ -257,7 +257,7 @@ extension AgrumeCell: UIGestureRecognizerDelegate {
 
   @objc
   private func dismissPan(_ gesture: UIPanGestureRecognizer) {
-    guard let panPhysics = panPhysics else { return }
+    guard let panPhysics else { return }
 
     let translation = gesture.translation(in: gesture.view)
     let locationInView = gesture.location(in: gesture.view)
@@ -311,7 +311,7 @@ extension AgrumeCell: UIGestureRecognizerDelegate {
   }
 
   private func dismissWithFlick(_ velocity: CGPoint) {
-    guard let panPhysics = panPhysics else { return }
+    guard let panPhysics else { return }
 
     flickedToDismiss = true
 

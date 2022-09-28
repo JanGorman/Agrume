@@ -18,7 +18,7 @@ final class ImageDownloader {
           completion(image)
         }
       }
-      guard let data = data, error == nil else {
+      guard let data, error == nil else {
         return
       }
       if isAnimatedImage(data) {
@@ -41,9 +41,10 @@ final class ImageDownloader {
   
   private static func isAnimatedImage(_ data: Data) -> Bool {
     guard let imageSource = CGImageSourceCreateWithData(data as CFData, nil),
-          let imageType = CGImageSourceGetType(imageSource) else {
-            return false
-          }
+          let imageType = CGImageSourceGetType(imageSource)
+    else {
+      return false
+    }
     return UTTypeConformsTo(imageType, kUTTypeGIF)
   }
 
