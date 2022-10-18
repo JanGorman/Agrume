@@ -31,6 +31,15 @@ final class AgrumeCloseButtonOverlayView: AgrumeOverlayView {
     navigationBar.shadowImage = UIImage()
     navigationBar.setBackgroundImage(UIImage(), for: .default)
     navigationBar.items = [navigationItem]
+                                                            
+      if #available(iOS 13.0, *) {
+          let app = UINavigationBarAppearance()
+          app.configureWithOpaqueBackground()
+          app.backgroundColor = .clear
+          UINavigationBar.appearance().standardAppearance = app
+          UINavigationBar.appearance().scrollEdgeAppearance = app
+      }
+      
   }
   
   private lazy var navigationItem = UINavigationItem(title: "")
