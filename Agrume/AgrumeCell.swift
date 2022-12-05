@@ -492,6 +492,7 @@ extension AgrumeCell: UIScrollViewDelegate {
   
   @available(iOS 16, *)
   private func analyzeImage(_ image: UIImage) {
+    #if !targetEnvironment(macCatalyst)
     guard ImageAnalyzer.isSupported else {
       return
     }
@@ -510,5 +511,6 @@ extension AgrumeCell: UIScrollViewDelegate {
         print(error.localizedDescription)
       }
     }
+    #endif
   }
 }
