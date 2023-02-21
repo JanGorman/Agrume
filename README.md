@@ -54,7 +54,7 @@ You can also pass in a `URL` and Agrume will take care of the download for you.
 
 ### SwiftUI
 
-Currently the SwiftUI implementation doesn't surface configurations, so can only be used as a single image basic viewer - PRs welcome to extend its functionality.
+Currently the SwiftUI implementation doesn't surface configurations, so can only be used as a basic image viewer - PRs welcome to extend its functionality.
 
 ```swift
 import Agrume
