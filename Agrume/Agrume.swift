@@ -543,7 +543,10 @@ extension Agrume: UICollectionViewDataSource {
     dataSource?.numberOfImages ?? 0
   }
 
-  public func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+  public func collectionView(
+    _ collectionView: UICollectionView,
+    cellForItemAt indexPath: IndexPath
+  ) -> UICollectionViewCell {
     let cell: AgrumeCell = collectionView.dequeue(indexPath: indexPath)
 
     cell.enableLiveText = enableLiveText
@@ -609,7 +612,11 @@ extension Agrume: AgrumeCellDelegate {
   var isSingleImageMode: Bool {
     dataSource?.numberOfImages == 1
   }
-  
+
+  var presentingController: UIViewController {
+    self
+  }
+
   private func dismissCompletion(_ finished: Bool) {
     presentingViewController?.dismiss(animated: false) { [unowned self] in
       self.cleanup()
