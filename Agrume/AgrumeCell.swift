@@ -9,6 +9,7 @@ import VisionKit
 protocol AgrumeCellDelegate: AnyObject {
 
   var isSingleImageMode: Bool { get }
+  var presentingController: UIViewController { get }
 
   func dismissAfterFlick()
   func dismissAfterTap()
@@ -35,14 +36,23 @@ final class AgrumeCell: UICollectionViewCell {
     imageView.clipsToBounds = true
     imageView.layer.allowsEdgeAntialiasing = true
   }
-  private lazy var singleTapGesture = with(UITapGestureRecognizer(target: self, action: #selector(singleTap))) { gesture in
+  private lazy var singleTapGesture = with(
+    UITapGestureRecognizer(
+      target: self,
+      action: #selector(singleTap)
+    )
+  ) { gesture in
     gesture.require(toFail: doubleTapGesture)
     gesture.delegate = self
   }
-  private lazy var doubleTapGesture = with(UITapGestureRecognizer(target: self, action: #selector(doubleTap))) { gesture in
+  private lazy var doubleTapGesture = with(
+    UITapGestureRecognizer(target: self, action: #selector(doubleTap))
+  ) { gesture in
     gesture.numberOfTapsRequired = 2
   }
-  private lazy var panGesture = with(UIPanGestureRecognizer(target: self, action: #selector(dismissPan))) { gesture in
+  private lazy var panGesture = with(
+    UIPanGestureRecognizer(target: self, action: #selector(dismissPan))
+  ) { gesture in
     gesture.maximumNumberOfTouches = 1
     gesture.delegate = self
   }
@@ -177,7 +187,12 @@ extension AgrumeCell: UIGestureRecognizerDelegate {
 
     let width = scrollView.frame.width / scale
     let height = scrollView.frame.height / scale
-    let destination = CGRect(x: translatedZoom.x - width / 2, y: translatedZoom.y - height / 2, width: width, height: height)
+    let destination = CGRect(
+      x: translatedZoom.x - width / 2,
+      y: translatedZoom.y - height / 2,
+      width: width,
+      height: height
+    )
 
     contentView.isUserInteractionEnabled = false
     
@@ -497,6 +512,7 @@ extension AgrumeCell: UIScrollViewDelegate {
       return
     }
     let interaction = ImageAnalysisInteraction()
+    interaction.delegate = self
     imageView.addInteraction(interaction)
     
     let analyzer = ImageAnalyzer()
@@ -512,5 +528,12 @@ extension AgrumeCell: UIScrollViewDelegate {
       }
     }
     #endif
+  }
+}
+
+@available(iOS 16.0, *)
+extension AgrumeCell: ImageAnalysisInteractionDelegate {
+  func presentingViewController(for interaction: ImageAnalysisInteraction) -> UIViewController? {
+    delegate?.presentingController
   }
 }
