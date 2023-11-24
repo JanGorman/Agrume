@@ -531,9 +531,11 @@ extension AgrumeCell: UIScrollViewDelegate {
   }
 }
 
+#if !targetEnvironment(macCatalyst)
 @available(iOS 16.0, *)
 extension AgrumeCell: ImageAnalysisInteractionDelegate {
   func presentingViewController(for interaction: ImageAnalysisInteraction) -> UIViewController? {
     delegate?.presentingController
   }
 }
+#endif
