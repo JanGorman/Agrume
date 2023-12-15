@@ -80,7 +80,7 @@ final class AgrumeCell: UICollectionViewCell {
         imageView.setGifImage(image)
       } else {
         imageView.image = image
-        if #available(iOS 16, *), enableLiveText, let image = image {
+        if #available(iOS 16, macCatalyst 17.0, *), enableLiveText, let image = image {
           analyzeImage(image)
         }
       }
