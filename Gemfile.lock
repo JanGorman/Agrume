@@ -50,7 +50,7 @@ GEM
       kramdown-parser-gfm (~> 1.0)
       octokit (>= 4.0)
       terminal-table (>= 1, < 4)
-    danger-swiftlint (0.36.1)
+    danger-swiftlint (0.37.0)
       danger
       rake (> 10)
       thor (~> 1.0.0)
