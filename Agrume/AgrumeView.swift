@@ -9,20 +9,50 @@ import UIKit
 public struct AgrumeView: View {
 
   private let images: [UIImage]
+  private let background: Background
+  private let dismissal: Dismissal
+  private let enableLiveText: Bool
   @Binding private var binding: Bool
   @Namespace var namespace
 
-  public init(image: UIImage, isPresenting: Binding<Bool>) {
-    self.init(images: [image], isPresenting: isPresenting)
+  public init(
+    image: UIImage,
+    background: Background = .colored(.black),
+    dismissal: Dismissal = .withPan(.standard),
+    enableLiveText: Bool = false,
+    isPresenting: Binding<Bool>
+  ) {
+    self.init(
+      images: [image],
+      background: background,
+      dismissal: dismissal,
+      enableLiveText: enableLiveText,
+      isPresenting: isPresenting
+    )
   }
 
-  public init(images: [UIImage], isPresenting: Binding<Bool>) {
+  public init(
+    images: [UIImage],
+    background: Background = .colored(.black),
+    dismissal: Dismissal = .withPan(.standard),
+    enableLiveText: Bool = false,
+    isPresenting: Binding<Bool>
+  ) {
     self.images = images
+    self.background = background
+    self.dismissal = dismissal
+    self.enableLiveText = enableLiveText
     self._binding = isPresenting
   }
 
   public var body: some View {
-    WrapperAgrumeView(images: images, isPresenting: $binding)
+    WrapperAgrumeView(
+      images: images,
+      background: background,
+      dismissal: dismissal,
+      enableLiveText: enableLiveText,
+      isPresenting: $binding
+    )
       .matchedGeometryEffect(id: "AgrumeView", in: namespace, properties: .frame, isSource: binding)
       .ignoresSafeArea()
   }
@@ -32,15 +62,33 @@ public struct AgrumeView: View {
 struct WrapperAgrumeView: UIViewControllerRepresentable {
 
   private let images: [UIImage]
+  private let background: Background
+  private let dismissal: Dismissal
+  private let enableLiveText: Bool
   @Binding private var binding: Bool
 
-  public init(images: [UIImage], isPresenting: Binding<Bool>) {
+  public init(
+    images: [UIImage],
+    background: Background,
+    dismissal: Dismissal,
+    enableLiveText: Bool,
+    isPresenting: Binding<Bool>
+  ) {
     self.images = images
+    self.background = background
+    self.dismissal = dismissal
+    self.enableLiveText = enableLiveText
     self._binding = isPresenting
   }
 
   public func makeUIViewController(context: UIViewControllerRepresentableContext<WrapperAgrumeView>) -> UIViewController {
-    let agrume = Agrume(images: images)
+    let agrume = Agrume(
+      images: images,
+      background: background,
+      dismissal: dismissal,
+      enableLiveText: enableLiveText,
+      presentedAsSwiftUI: true
+    )
     agrume.view.backgroundColor = .clear
     agrume.addSubviews()
     agrume.addOverlayView()
