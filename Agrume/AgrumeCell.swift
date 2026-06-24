@@ -10,6 +10,7 @@ protocol AgrumeCellDelegate: AnyObject {
 
   var isSingleImageMode: Bool { get }
   var usesSwiftUIDismissTransition: Bool { get }
+  var presentingController: UIViewController { get }
 
   func dismissAfterFlick()
   func dismissAfterTap()
@@ -36,14 +37,23 @@ final class AgrumeCell: UICollectionViewCell {
     imageView.clipsToBounds = true
     imageView.layer.allowsEdgeAntialiasing = true
   }
-  private lazy var singleTapGesture = with(UITapGestureRecognizer(target: self, action: #selector(singleTap))) { gesture in
+  private lazy var singleTapGesture = with(
+    UITapGestureRecognizer(
+      target: self,
+      action: #selector(singleTap)
+    )
+  ) { gesture in
     gesture.require(toFail: doubleTapGesture)
     gesture.delegate = self
   }
-  private lazy var doubleTapGesture = with(UITapGestureRecognizer(target: self, action: #selector(doubleTap))) { gesture in
+  private lazy var doubleTapGesture = with(
+    UITapGestureRecognizer(target: self, action: #selector(doubleTap))
+  ) { gesture in
     gesture.numberOfTapsRequired = 2
   }
-  private lazy var panGesture = with(UIPanGestureRecognizer(target: self, action: #selector(dismissPan))) { gesture in
+  private lazy var panGesture = with(
+    UIPanGestureRecognizer(target: self, action: #selector(dismissPan))
+  ) { gesture in
     gesture.maximumNumberOfTouches = 1
     gesture.delegate = self
   }
@@ -72,7 +82,7 @@ final class AgrumeCell: UICollectionViewCell {
         imageView.setGifImage(image)
       } else {
         imageView.image = image
-        if #available(iOS 16, *), enableLiveText, let image = image {
+        if #available(iOS 16, macCatalyst 17.0, *), enableLiveText, let image = image {
           analyzeImage(image)
         }
       }
@@ -179,7 +189,12 @@ extension AgrumeCell: UIGestureRecognizerDelegate {
 
     let width = scrollView.frame.width / scale
     let height = scrollView.frame.height / scale
-    let destination = CGRect(x: translatedZoom.x - width / 2, y: translatedZoom.y - height / 2, width: width, height: height)
+    let destination = CGRect(
+      x: translatedZoom.x - width / 2,
+      y: translatedZoom.y - height / 2,
+      width: width,
+      height: height
+    )
 
     contentView.isUserInteractionEnabled = false
     
@@ -562,13 +577,13 @@ extension AgrumeCell: UIScrollViewDelegate {
     }
   }
   
-  @available(iOS 16, *)
+  @available(iOS 16, macCatalyst 17.0, *)
   private func analyzeImage(_ image: UIImage) {
-    #if !targetEnvironment(macCatalyst)
     guard ImageAnalyzer.isSupported else {
       return
     }
     let interaction = ImageAnalysisInteraction()
+    interaction.delegate = self
     imageView.addInteraction(interaction)
     
     let analyzer = ImageAnalyzer()
@@ -583,6 +598,12 @@ extension AgrumeCell: UIScrollViewDelegate {
         print(error.localizedDescription)
       }
     }
-    #endif
+  }
+}
+
+@available(iOS 16.0, macCatalyst 17.0, *)
+extension AgrumeCell: ImageAnalysisInteractionDelegate {
+  func presentingViewController(for interaction: ImageAnalysisInteraction) -> UIViewController? {
+    delegate?.presentingController
   }
 }
