@@ -54,7 +54,7 @@ You can also pass in a `URL` and Agrume will take care of the download for you.
 
 ### SwiftUI
 
-Currently the SwiftUI implementation doesn't surface configurations, so can only be used as a basic image viewer - PRs welcome to extend its functionality.
+The SwiftUI implementation supports the same basic presentation flow as the UIKit API and surfaces common configuration options such as background, dismissal, and Live Text.
 
 ```swift
 import Agrume
@@ -78,7 +78,13 @@ struct ExampleView: View {
 
       if showAgrume {
         // You can pass a single or multiple images
-        AgrumeView(images: images, isPresenting: $showAgrume)
+        AgrumeView(
+          images: images,
+          background: .blurred(.systemUltraThinMaterialDark),
+          dismissal: .withPan(.standard),
+          enableLiveText: true,
+          isPresenting: $showAgrume
+        )
       }
     }
   }
@@ -244,6 +250,7 @@ Agrume supports Live Text introduced since iOS 16. This allows user to interact 
 
 ```swift
 let agrume = Agrume(image: UIImage(named: "…")!, enableLiveText: true)
+let agrumeView = AgrumeView(image: UIImage(named: "…")!, enableLiveText: true, isPresenting: $isPresenting)
 ```
 
 ### Lifecycle

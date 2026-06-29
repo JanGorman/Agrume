@@ -18,6 +18,7 @@ public final class Agrume: UIViewController {
   private let startIndex: Int
   private let dismissal: Dismissal
   private let enableLiveText: Bool
+  private let presentedAsSwiftUI: Bool
   
   private var overlayView: AgrumeOverlayView?
   private weak var dataSource: AgrumeDataSource?
@@ -70,14 +71,16 @@ public final class Agrume: UIViewController {
     background: Background = .colored(.black),
     dismissal: Dismissal = .withPan(.standard),
     overlayView: AgrumeOverlayView? = nil,
-    enableLiveText: Bool = false
+    enableLiveText: Bool = false,
+    presentedAsSwiftUI: Bool = false
   ) {
     self.init(
       images: [image],
       background: background,
       dismissal: dismissal,
       overlayView: overlayView,
-      enableLiveText: enableLiveText
+      enableLiveText: enableLiveText,
+      presentedAsSwiftUI: presentedAsSwiftUI
     )
   }
 
@@ -94,14 +97,16 @@ public final class Agrume: UIViewController {
     background: Background = .colored(.black),
     dismissal: Dismissal = .withPan(.standard),
     overlayView: AgrumeOverlayView? = nil,
-    enableLiveText: Bool = false
+    enableLiveText: Bool = false,
+    presentedAsSwiftUI: Bool = false
   ) {
     self.init(
       urls: [url],
       background: background,
       dismissal: dismissal,
       overlayView: overlayView,
-      enableLiveText: enableLiveText
+      enableLiveText: enableLiveText,
+      presentedAsSwiftUI: presentedAsSwiftUI
     )
   }
 
@@ -120,7 +125,8 @@ public final class Agrume: UIViewController {
     background: Background = .colored(.black),
     dismissal: Dismissal = .withPan(.standard),
     overlayView: AgrumeOverlayView? = nil,
-    enableLiveText: Bool = false
+    enableLiveText: Bool = false,
+    presentedAsSwiftUI: Bool = false
   ) {
     self.init(
       images: nil,
@@ -129,7 +135,8 @@ public final class Agrume: UIViewController {
       background: background,
       dismissal: dismissal,
       overlayView: overlayView,
-      enableLiveText: enableLiveText
+      enableLiveText: enableLiveText,
+      presentedAsSwiftUI: presentedAsSwiftUI
     )
   }
 
@@ -148,7 +155,8 @@ public final class Agrume: UIViewController {
     background: Background = .colored(.black),
     dismissal: Dismissal = .withPan(.standard),
     overlayView: AgrumeOverlayView? = nil,
-    enableLiveText: Bool = false
+    enableLiveText: Bool = false,
+    presentedAsSwiftUI: Bool = false
   ) {
     self.init(
       images: images,
@@ -157,7 +165,8 @@ public final class Agrume: UIViewController {
       background: background,
       dismissal: dismissal,
       overlayView: overlayView,
-      enableLiveText: enableLiveText
+      enableLiveText: enableLiveText,
+      presentedAsSwiftUI: presentedAsSwiftUI
     )
   }
 
@@ -176,7 +185,8 @@ public final class Agrume: UIViewController {
     background: Background = .colored(.black),
     dismissal: Dismissal = .withPan(.standard),
     overlayView: AgrumeOverlayView? = nil,
-    enableLiveText: Bool = false
+    enableLiveText: Bool = false,
+    presentedAsSwiftUI: Bool = false
   ) {
     self.init(
       images: nil,
@@ -185,7 +195,8 @@ public final class Agrume: UIViewController {
       background: background,
       dismissal: dismissal,
       overlayView: overlayView,
-      enableLiveText: enableLiveText
+      enableLiveText: enableLiveText,
+      presentedAsSwiftUI: presentedAsSwiftUI
     )
   }
 
@@ -197,7 +208,8 @@ public final class Agrume: UIViewController {
     background: Background,
     dismissal: Dismissal,
     overlayView: AgrumeOverlayView? = nil,
-    enableLiveText: Bool = false
+    enableLiveText: Bool = false,
+    presentedAsSwiftUI: Bool = false
   ) {
     switch (images, urls) {
     case (let images?, nil):
@@ -213,6 +225,7 @@ public final class Agrume: UIViewController {
     self.background = background
     self.dismissal = dismissal
     self.enableLiveText = enableLiveText
+    self.presentedAsSwiftUI = presentedAsSwiftUI
     super.init(nibName: nil, bundle: nil)
     
     self.overlayView = overlayView
@@ -232,6 +245,8 @@ public final class Agrume: UIViewController {
   }
 
   private var _blurContainerView: UIView?
+  private var _backgroundImageView: UIImageView?
+  private var backgroundImageIndex: Int?
   private var blurContainerView: UIView {
     if _blurContainerView == nil {
       let blurContainerView = UIView()
@@ -245,6 +260,16 @@ public final class Agrume: UIViewController {
       _blurContainerView = blurContainerView
     }
     return _blurContainerView!
+  }
+  private var backgroundImageView: UIImageView {
+    if _backgroundImageView == nil {
+      let imageView = UIImageView(frame: blurContainerView.bounds)
+      imageView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+      imageView.contentMode = .scaleAspectFill
+      imageView.clipsToBounds = true
+      _backgroundImageView = imageView
+    }
+    return _backgroundImageView!
   }
   private var _blurView: UIVisualEffectView?
   private var blurView: UIVisualEffectView {
@@ -391,7 +416,15 @@ public final class Agrume: UIViewController {
     view.autoresizingMask = [.flexibleHeight, .flexibleWidth]
 
     if case .blurred = background {
-      blurContainerView.addSubview(blurView)
+      if presentedAsSwiftUI {
+        if backgroundImageView.superview == nil {
+          blurContainerView.addSubview(backgroundImageView)
+        }
+        updateBackgroundImage(at: startIndex)
+      }
+      if blurView.superview == nil {
+        blurContainerView.addSubview(blurView)
+      }
     }
     view.addSubview(blurContainerView)
     view.addSubview(containerView)
@@ -475,6 +508,23 @@ public final class Agrume: UIViewController {
   public func reload() {
     DispatchQueue.main.async {
       self.collectionView.reloadData()
+      self.updateBackgroundImage(at: self.currentIndex)
+    }
+  }
+
+  private func updateBackgroundImage(at index: Int) {
+    guard presentedAsSwiftUI, case .blurred = background, backgroundImageIndex != index else {
+      return
+    }
+
+    backgroundImageIndex = index
+    dataSource?.image(forIndex: index) { [weak self] image in
+      DispatchQueue.main.async {
+        guard self?.backgroundImageIndex == index else {
+          return
+        }
+        self?._backgroundImageView?.image = image
+      }
     }
   }
   
@@ -602,6 +652,7 @@ extension Agrume: UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
     let center = CGPoint(x: scrollView.contentOffset.x + (scrollView.frame.width / 2), y: (scrollView.frame.height / 2))
     if let indexPath = collectionView.indexPathForItem(at: center) {
       currentIndex = indexPath.row
+      updateBackgroundImage(at: currentIndex)
     }
   }
   
@@ -613,18 +664,25 @@ extension Agrume: AgrumeCellDelegate {
     dataSource?.numberOfImages == 1
   }
 
+  var usesSwiftUIDismissTransition: Bool {
+    presentedAsSwiftUI
+  }
+  
   var presentingController: UIViewController {
     self
   }
 
   private func dismissCompletion(_ finished: Bool) {
-    presentingViewController?.dismiss(animated: false) { [unowned self] in
-      self.cleanup()
-      self.didDismiss?()
+    presentingViewController?.dismiss(animated: false) { [weak self] in
+      self?.cleanup()
+      self?.didDismiss?()
     }
   }
   
   private func cleanup() {
+    _backgroundImageView?.removeFromSuperview()
+    _backgroundImageView = nil
+    backgroundImageIndex = nil
     _blurContainerView?.removeFromSuperview()
     _blurContainerView = nil
     _blurView = nil
@@ -639,6 +697,10 @@ extension Agrume: AgrumeCellDelegate {
 
   func dismissAfterFlick() {
     self.willDismiss?()
+    if presentedAsSwiftUI {
+      return
+    }
+
     UIView.animate(
       withDuration: .transitionAnimationDuration,
       delay: 0,
@@ -656,6 +718,10 @@ extension Agrume: AgrumeCellDelegate {
     view.isUserInteractionEnabled = false
 
     self.willDismiss?()
+    if presentedAsSwiftUI {
+      return
+    }
+
     UIView.animate(
       withDuration: .transitionAnimationDuration,
       delay: 0,

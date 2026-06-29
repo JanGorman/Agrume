@@ -9,6 +9,7 @@ import VisionKit
 protocol AgrumeCellDelegate: AnyObject {
 
   var isSingleImageMode: Bool { get }
+  var usesSwiftUIDismissTransition: Bool { get }
   var presentingController: UIViewController { get }
 
   func dismissAfterFlick()
@@ -64,6 +65,7 @@ final class AgrumeCell: UICollectionViewCell {
   private var imageDragOffsetFromActualTranslation: UIOffset!
   private var imageDragOffsetFromImageCenter: UIOffset!
   private var attachmentBehavior: UIAttachmentBehavior?
+  private var swiftUIDismissDragStartCenter: CGPoint?
   
   // index of the cell in the collection view
   var index: Int?
@@ -274,6 +276,11 @@ extension AgrumeCell: UIGestureRecognizerDelegate {
   private func dismissPan(_ gesture: UIPanGestureRecognizer) {
     guard let panPhysics else { return }
 
+    if delegate?.usesSwiftUIDismissTransition == true {
+      handleSwiftUIDismissPan(gesture, physics: panPhysics)
+      return
+    }
+
     let translation = gesture.translation(in: gesture.view)
     let locationInView = gesture.location(in: gesture.view)
     let velocity = gesture.velocity(in: gesture.view)
@@ -325,6 +332,70 @@ extension AgrumeCell: UIGestureRecognizerDelegate {
     }
   }
 
+  private func handleSwiftUIDismissPan(_ gesture: UIPanGestureRecognizer, physics panPhysics: Dismissal.Physics) {
+    let translation = gesture.translation(in: gesture.view)
+    let locationInView = gesture.location(in: gesture.view)
+    let velocity = gesture.velocity(in: gesture.view)
+
+    switch gesture.state {
+    case .began:
+      isDraggingImage = imageView.frame.contains(locationInView)
+      if isDraggingImage {
+        animator?.removeAllBehaviors()
+        attachmentBehavior = nil
+        swiftUIDismissDragStartCenter = imageView.center
+      }
+    case .changed:
+      guard isDraggingImage, var center = swiftUIDismissDragStartCenter else {
+        return
+      }
+
+      let visibleTranslation = rubberBandedSwiftUIDismissTranslation(translation, physics: panPhysics)
+      if panPhysics.permittedDirections == .horizontalAndVertical {
+        center.x += visibleTranslation.x
+      }
+      center.y += visibleTranslation.y
+      imageView.center = center
+    case .ended, .cancelled, .failed:
+      let velocityDistance: CGFloat
+      let translationDistance: CGFloat
+      switch panPhysics.permittedDirections {
+      case .horizontalAndVertical:
+        velocityDistance = sqrt(pow(velocity.x, 2) + pow(velocity.y, 2))
+        translationDistance = sqrt(pow(translation.x, 2) + pow(translation.y, 2))
+      case .verticalOnly:
+        velocityDistance = abs(velocity.y)
+        translationDistance = abs(translation.y)
+      }
+
+      if velocityDistance > .minFlickDismissalVelocity || translationDistance > contentView.bounds.height * 0.18 {
+        dismiss()
+      } else {
+        cancelCurrentImageDrag(true)
+      }
+      swiftUIDismissDragStartCenter = nil
+    default:
+      break
+    }
+  }
+
+  private func rubberBandedSwiftUIDismissTranslation(_ translation: CGPoint, physics panPhysics: Dismissal.Physics) -> CGPoint {
+    let limit = max(min(contentView.bounds.height, contentView.bounds.width) * 0.22, 96)
+
+    func rubberBand(_ value: CGFloat) -> CGFloat {
+      let sign: CGFloat = value < 0 ? -1 : 1
+      let distance = abs(value)
+      return sign * ((limit * distance) / (distance + limit))
+    }
+
+    switch panPhysics.permittedDirections {
+    case .horizontalAndVertical:
+      return CGPoint(x: rubberBand(translation.x), y: rubberBand(translation.y))
+    case .verticalOnly:
+      return CGPoint(x: 0, y: rubberBand(translation.y))
+    }
+  }
+
   private func dismissWithFlick(_ velocity: CGPoint) {
     guard let panPhysics else { return }
 
@@ -361,6 +432,7 @@ extension AgrumeCell: UIGestureRecognizerDelegate {
     animator?.removeAllBehaviors()
     attachmentBehavior = nil
     isDraggingImage = false
+    swiftUIDismissDragStartCenter = nil
 
     if !animated {
       imageView.transform = .identity
@@ -386,7 +458,7 @@ extension AgrumeCell: UIGestureRecognizerDelegate {
       )
     }
   }
-  
+
   func recenterDuringRotation(size: CGSize) {
     self.recenterImage(size: size)
     self.updateScrollViewAndImageViewForCurrentMetrics()
